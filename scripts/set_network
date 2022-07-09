@@ -1,0 +1,43 @@
+#!/bin/bash
+# (c) 2022 by moshix
+# set_network bash script to set up routing for zLinux for z instance to/from Internet
+# can also be used standalone for other, non-Linux guest OS types. 
+
+# v0.01 all the way back from 2014 for Debian 31bit
+# v0.02 first changes for zLinux
+# v0.03 obtain entwork interface name
+# v0.04 give sensible feedback to user about which network interface is being used
+# v0.05 logging for debugging purposes and problem determination
+
+logit () {                                                                      
+# log to file all messages                                                      
+logdate=`date "+%F-%T"`
+echo "$logdate:$1" >> ./logs/tkbuntu.log.$logdate
+}    
+
+# obtain interface name
+interface=`route | grep '^default' | grep -o '[^ ]*$'`
+
+# set up color attributes variables
+red=`tput setaf 1`                                                              
+green=`tput setaf 2`                                                            
+yellow=`tput setaf 3`                                                           
+blue=`tput setaf 4`                                                             
+magenta=`tput setaf 5`                                                          
+cyan=`tput setaf 6`                                                             
+white=`tput setaf 7`                                                            
+blink=`tput blink`                                                              
+rev=`tput rev`                                                                  
+reset=`tput sgr0`   
+
+echo "${yellow}Interface ${cyan} $interface ${yellow} will be setup for zLinux internet access..${reset}"
+logit "Interface for NAT: $interface"
+
+iptables -F INPUT
+iptables -F OUTPUT
+iptables -F FORWARD
+iptables -t nat -A POSTROUTING -o $interface  -s 10.1.1.0/24 -j MASQUERADE  
+iptables -A FORWARD -s 10.1.1.0/24 -j ACCEPT
+iptables -A FORWARD -d 10.1.1.0/24 -j ACCEPT
+echo 1 > /proc/sys/net/ipv4/ip_forward
+echo 1 > /proc/sys/net/ipv4/conf/all/proxy_arp

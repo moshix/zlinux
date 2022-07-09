@@ -1,0 +1,117 @@
+
+String dump of section '.GCC.command.line':
+  [     0]  -imultiarch x86_64-linux-gnu
+  [    1d]  -D_REENTRANT
+  [    2a]  -D _GNU_SOURCE
+  [    39]  herculesS.c
+  [    45]  -march=haswell
+  [    54]  -mmmx
+  [    5a]  -mno-3dnow
+  [    65]  -msse
+  [    6b]  -msse2
+  [    72]  -msse3
+  [    79]  -mssse3
+  [    81]  -mno-sse4a
+  [    8c]  -mcx16
+  [    93]  -msahf
+  [    9a]  -mmovbe
+  [    a2]  -maes
+  [    a8]  -mno-sha
+  [    b1]  -mpclmul
+  [    ba]  -mpopcnt
+  [    c3]  -mabm
+  [    c9]  -mno-lwp
+  [    d2]  -mfma
+  [    d8]  -mno-fma4
+  [    e2]  -mno-xop
+  [    eb]  -mbmi
+  [    f1]  -mno-sgx
+  [    fa]  -mbmi2
+  [   101]  -mno-pconfig
+  [   10e]  -mno-wbnoinvd
+  [   11c]  -mno-tbm
+  [   125]  -mavx
+  [   12b]  -mavx2
+  [   132]  -msse4.2
+  [   13b]  -msse4.1
+  [   144]  -mlzcnt
+  [   14c]  -mno-rtm
+  [   155]  -mno-hle
+  [   15e]  -mrdrnd
+  [   166]  -mf16c
+  [   16d]  -mfsgsbase
+  [   178]  -mno-rdseed
+  [   184]  -mno-prfchw
+  [   190]  -mno-adx
+  [   199]  -mfxsr
+  [   1a0]  -mxsave
+  [   1a8]  -mxsaveopt
+  [   1b3]  -mno-avx512f
+  [   1c0]  -mno-avx512er
+  [   1ce]  -mno-avx512cd
+  [   1dc]  -mno-avx512pf
+  [   1ea]  -mno-prefetchwt1
+  [   1fb]  -mno-clflushopt
+  [   20b]  -mno-xsavec
+  [   217]  -mno-xsaves
+  [   223]  -mno-avx512dq
+  [   231]  -mno-avx512bw
+  [   23f]  -mno-avx512vl
+  [   24d]  -mno-avx512ifma
+  [   25d]  -mno-avx512vbmi
+  [   26d]  -mno-avx5124fmaps
+  [   27f]  -mno-avx5124vnniw
+  [   291]  -mno-clwb
+  [   29b]  -mno-mwaitx
+  [   2a7]  -mno-clzero
+  [   2b3]  -mno-pku
+  [   2bc]  -mno-rdpid
+  [   2c7]  -mno-gfni
+  [   2d1]  -mno-shstk
+  [   2dc]  -mno-avx512vbmi2
+  [   2ed]  -mno-avx512vnni
+  [   2fd]  -mno-vaes
+  [   307]  -mno-vpclmulqdq
+  [   317]  -mno-avx512bitalg
+  [   329]  -mno-avx512vpopcntdq
+  [   33e]  -mno-movdiri
+  [   34b]  -mno-movdir64b
+  [   35a]  -mno-waitpkg
+  [   367]  -mno-cldemote
+  [   375]  -mno-ptwrite
+  [   382]  --param l1-cache-size=32
+  [   39b]  --param l1-cache-line-size=64
+  [   3b9]  --param l2-cache-size=46080
+  [   3d5]  -mtune=haswell
+  [   3e4]  -g
+  [   3e7]  -g3
+  [   3eb]  -ggdb3
+  [   3f2]  -O3
+  [   3f6]  -Wall
+  [   3fc]  -Wextra
+  [   404]  -frecord-gcc-switches
+  [   41a]  -fno-builtin
+  [   427]  -fasynchronous-unwind-tables
+  [   444]  -fstack-protector-strong
+  [   45d]  -Wformat-security
+  [   46f]  -fstack-clash-protection
+  [   488]  -fcf-protection
+  [   498]  -I .
+  [   49d]  -I ..
+  [   4a3]  -I /home/moshe/hercules-helper/extpkgs/include
+  [   4d2]  -MD bootstrap.d
+  [   4e2]  -MF .deps/bootstrap.Tpo
+  [   4fa]  -MP
+  [   4fe]  -MT bootstrap.o
+  [   50e]  -D HAVE_CONFIG_H
+  [   51f]  -D DYNAMIC_VERSION="4.4.1.10647-SDL-gd0ccfbc9"
+  [   54e]  -D VERS_MAJ=4
+  [   55c]  -D VERS_INT=4
+  [   56a]  -D VERS_MIN=1
+  [   578]  -D VERS_BLD=10647
+  [   58a]  -D PKGDATADIR="/home/moshe/hercules-helper/herc4x/share/hercules"
+  [   5cc]  -D MODULESDIR="/home/moshe/hercules-helper/herc4x/lib/hercules"
+  [   60c]  -D HERC_LOCALEDIR="/home/moshe/hercules-helper/herc4x/share/locale"
+  [   650]  ../bootstrap.c
+  [   65f]  -auxbase-strip bootstrap.o
+

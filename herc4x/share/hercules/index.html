@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><TITLE>
+The Hercules System/370, ESA/390, and z/Architecture Emulator
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="icon" href="images/favicon.ico" />
+</HEAD><BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0" VLINK="#008040" ALINK="#000000">
+
+<table><tr><td>
+
+<table width="300" align="right">
+  <tr>
+   <td></td>
+   <td width="256" align="right">
+     <img vspace="10" src="images/hercpic-rblk-256.gif" alt="Hercules logo" width="256" height="256">
+   </td>
+  </tr>
+  <tr>
+   <td></td>
+   <td width="256" align="right">
+     <center>
+     <a href="http://www.opensource.org/">
+       <img vspace="10" src="images/osi-certified-60x50.jpg" alt="Hercules is OSI Certified Open Source Software" border="1" width="60" height="50">
+     </a>
+     </center>
+   </td>
+  </tr>
+</table>
+
+<h1>The Hercules System/370, ESA/390, and z/Architecture Emulator</h1>
+
+<hr noshade>
+<center><h2>Hercules 4.x Hyperion</h2></center>
+<center><h3>(SoftDevLabs)</h3></center>
+<hr noshade>
+
+<p>
+
+This is the official web page for the <i><u>SoftDevLabs</u></i> maintained
+version of the original 4.0 version of the hercules-390 mainframe emulator,
+code named <b>"Hyperion"</b>.
+
+<br /><br />
+
+<b>Hercules</b> is an open source software implementation of the mainframe
+System/370 and ESA/390 architectures, in addition to the latest 64-bit
+z/Architecture. Hercules runs under Linux, Windows,
+Solaris, FreeBSD,
+and Mac OS X.
+
+<br /><br />
+
+This version of Hercules is the <i>SoftDevLabs</i> development version
+of the Hercules emulator containing bleeding edge changes made by myself
+and others to address bugs that may or may not still exist in the original
+version or to add new features and functionality above and beyond what
+exists in the original version.
+
+<p>
+
+Hercules was created by Roger Bowler.
+Jay Maynard (&#8220;the Tron Guy&#8221;) was the maintainer from 2000 to 2012.
+Jan Jaeger designed and implemented many of the advanced features of
+Hercules, including dynamic reconfiguration, integrated console,
+interpretive execution and z/Architecture support. A dedicated crew of
+programmers is constantly at work implementing new features and fixing bugs.
+
+<hr noshade>
+
+<h2>License</h2>
+
+<p>
+
+Hercules is <a href="http://www.opensource.org/">OSI Certified Open Source Software</a>
+licensed under the terms of the <a href="herclic.html">Q Public Licence</a>.
+
+<br /><br />
+
+<center><hr noshade></center>
+
+<h3>What people are saying about Hercules</h3>
+
+<p>
+
+<em>&#147;
+Never in my wildest dreams did I expect to see MVS
+running on a machine that I personally own.
+Hercules is a marvelous tool.  My thanks to you all for a job
+very well done.
+&#148;</em>
+<br>&#151;
+Reed H. Petty
+<p>
+<em>&#147;
+I do miss my mainframe a lot, and playing with Herc sure brings back
+memories.  Just seeing the IBM message prefixes, and responding to
+console messages again was a wonderful bit of nostalgia!
+&#148;</em>
+<br>&#151;
+Bob Brown
+<p>
+<em>&#147;
+I have installed your absolutely fantastic /390 emulator.
+You won't believe what I felt when I saw the prompt.
+Congratulations, this is a terrific software.
+I really have not had such a fascinating and interesting
+time on my PC lately.
+&#148;</em>
+<br>&#151;
+IBM Large Systems Specialist
+<p>
+<em>&#147;
+Such simulators have been available for a long time.  One of the most
+complete (up to modern 64-bit z/Architecture) is hercules.
+&#148;</em>
+<br>&#151;
+Michel Hack, IBM Thomas J. Watson Research Center
+<p>
+<em>&#147;
+An apparently excellent emulator that allows those open source
+developers with an "itch to scratch", to come to the S/390 table
+and contribute.
+&#148;</em>
+<br>&#151;
+Mike MacIsaac, IBM
+<p>
+<em>&#147;
+BTW grab a copy of Hercules and you can test it at home.
+It's a very good S/390 and zSeries (S/390 64bit) emulator..
+&#148;</em>
+<br>&#151;
+Alan Cox
+<p>
+<em>&#147;
+It works even better than I imagined.
+Hercules is a fine piece of software!
+&#148;</em>
+<br>&#151;
+Dave Sienkiewicz
+<p>
+<em>&#147;
+Hercules is a systems programmer's dream come true.
+&#148;</em>
+<br>&#151;
+Ren&eacute; Vincent Jansen
+<p>
+<em>&#147;
+Aside from the electric trains my parents got
+me in 1953, this is the best toy I've ever been given,
+bar none.&#148;</em>
+<br>&#151;
+Jeffrey Broido
+<p>
+<em>&#147;
+Congratulations to you and your team on a fine piece of work!
+&#148;</em>
+<br>&#151;
+Rich Smrcina
+<p>
+<em>&#147;
+Congratulations on a magnificent achievement!
+&#148;</em>
+<br>&#151;
+Mike Ross
+<p>
+<em>&#147;
+For anyone thinking running Hercules is too much trouble or too hard
+or whatever, I came home from work one day and my 13 year old 8th
+grade son had MVS running under VM under Hercules on Linux. He had
+gotten all the information about how to do this from the Internet.
+When he complained about MVS console configuration and figuring out
+how to get it to work with VM, I knew he had felt all the pain he
+ever needed to feel about mainframes.
+&#148;</em>
+<br>&#151;
+Scott Ledbetter, StorageTek
+<p>
+<em>&#147;
+I am running a fully graphical Centos z/Linux environment on my desktop.
+The Hercules emulator is an amazing feat of engineering.
+I just wanted to send my compliments to the team for an excellent job!
+Thanks much for making this product part of the open-source community!
+&#148;</em>
+<br>&#151;
+Roby Gamboa
+<p>
+<em>&#147;
+I have DOS and DOS/VS running on Hercules with
+some demo applications, both batch and on-line.  It does bring back
+some good memories. My compliments go to the Hercules team.  Thank you.
+&#148;</em>
+<br>&#151;
+Bill Carlborg
+<p>
+<em>&#147;
+This is stunning piece of work. To say that I am blown away is an
+understatement. I have a mainframe on my notebook!!!!!!
+P.S. Now if I can just remember my JCL&#148;</em>
+<br>&#151;
+Roger Tunnicliffe
+
+<center><hr noshade></center>
+
+<h3>News</h3>
+
+Read Hesh Wiener's Technology News article about Hercules at
+<a href="http://www.tech-news.com/another/ap200601b.html">
+http://www.tech-news.com/another/ap200601b.html</a>
+
+<p>
+Read Moshe Bar's BYTE.com article about Hercules at
+<a href="http://web.archive.org/web/20010712143133/http://www.byte.com/documents/s=429/BYT20000801S0002/">
+http://web.archive.org/web/20010712143133/http://www.byte.com/documents/s=429/BYT20000801S0002/</a>
+<p>
+For eighteen months, the IBM Redbook
+<em>SG24-4987 Linux for S/390</em> at
+<a href="http://www.redbooks.ibm.com/abstracts/sg244987.html">
+http://www.redbooks.ibm.com/abstracts/sg244987.html</a>
+contained a chapter written by Richard Higson
+describing how to run Linux/390 under Hercules.
+Then suddenly, all mention of Hercules was mysteriously
+removed from the online edition of the book!
+Read the story of the disappearing Redbook chapter at
+<a href="http://www2.marist.edu/htbin/wlvtype?LINUX-VM.25658">
+http://www2.marist.edu/htbin/wlvtype?LINUX-VM.25658</a>
+
+<p>
+View the foils from Jay Maynard's presentation given at
+SHARE Session 2880
+in San Francisco on 20 August 2002
+as a PDF file (815K) from
+<a href="http://linuxvm.org/Present/SHARE99/S2880JMa.pdf">
+http://linuxvm.org/Present/SHARE99/S2880JMa.pdf</a>
+
+<br /><br />
+
+<center><hr noshade></center>
+
+<h3>To find out more about this particular version of SDL Hercules 4.x Hyperion, follow these links:</h3>
+
+<h4>What's New, Release Notes, etc:</h4>
+<ul>
+    <li><a href="hercnew.html">What's new in this version</a>
+    <li><a href="hercrnot.html"><b>Release notes</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(<b>You should ALWAYS read this!</b>)</i>
+    <li><a href="https://github.com/sdl-hercules-390/hyperion/issues">Issue Tracker</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(Report your BUGS here)</i>
+    <li><a href="https://hercules-390.groups.io/g/group">Support Forum</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(or here)</i>
+    <li><a href="https://github.com/sdl-hercules-390/hyperion/blob/master/README.md"><b>README</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(Supplemental miscellaneous documentation)</i>
+    <li><a href="https://github.com/sdl-hercules-390/hyperion/wiki">Community Wiki</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(Hercules is only as good as <b><u>you</u></b> help make it)</i>
+</ul>
+
+<a name="docs"></a>
+<h4>Web documentation:</h4>
+The below web pages are at this time the only accurate source of documentation
+for this SoftDevLabs version of Hercules 4.x Hyperion.
+<ul>
+    <li><a href="hercinst.html">Hercules Installation and Operation</a>
+    <li><a href="hercconf.html">Hercules Configuration File</a>
+    <li><a href="hercmsg.html">Hercules System Messages</a>
+    <li><a href="hercfaq.html">Hercules Frequently-Asked Questions</a>
+    <li><a href="hercsupp.html">Technical Support</a>
+    <li><a href="herclic.html">The Q Public Licence</a>
+</ul>
+
+<h4>PDF manuals:</h4>
+The below PDF manuals are for the <i>original</i> 4.0 version of Hercules Hyperion,
+<i>not</i> for this SoftDevLabs version. At the moment however they should still be
+reasonably accurate. Over time as more and more changes are made to the SDL version
+however, they might not be. The <a href="#docs">official web documentation</a>
+however should always be accurate and considered as authoritative.
+<ul>
+    <li><a href="http://hercdoc.glanzmann.org/V400/HerculesGeneralInfo.pdf">Hercules General Information</a>
+    <li><a href="http://hercdoc.glanzmann.org/V400/HerculesInstallation.pdf">Hercules Installation Guide</a>
+    <li><a href="http://hercdoc.glanzmann.org/V400/HerculesUserReference.pdf">Hercules User Reference Guide</a>
+    <li><a href="http://hercdoc.glanzmann.org/V400/HerculesOperationsandUtilities.pdf">Hercules Operations and Utilities Guide</a>
+    <li><a href="http://hercdoc.glanzmann.org/V400/HerculesMessagesandCodes.pdf">Hercules Messages and Codes</a>
+    <li><a href="http://hercdoc.glanzmann.org/V400/HerculesReferenceSummary.pdf">Hercules Reference Summary</a>
+</ul>
+
+<h4>Source code and binaries:</h4>
+<ul>
+    <li>Source code:
+    <p>
+    <ul>
+        <li><a href="https://github.com/sdl-hercules-390/hyperion">Source code repository on Github</a>
+        <li><a href="https://github.com/sdl-hercules-390/hyperion/archive/master.zip">Source code .ZIP file from Github</a>
+    </ul>
+    <p>
+    <li>Windows binaries:
+        <p>
+        <ul>
+            <li><a href="http://www.softdevlabs.com/hyperion.html#prebuilt">SDL Hyperion 4.x Pre-built Binaries</a>: &nbsp; (SoftDevLabs)
+            <p>
+                <b>Note:</b> The above development snapshots of SDL Hercules 4.x Hyperion
+                do not come with an installer to install the required Microsoft Visual
+                C++ 2008 Runtime components. The above .zip files contain only the Hercules
+                binaries. You will need to either manually install the
+                <a href="http://support.microsoft.com/kb/2019667">Microsoft Visual C++ 2008 Runtime components</a>
+                yourself, or else install one of the products from Fish's
+                <a href="http://www.softdevlabs.com">SoftDevLabs</a> web site
+                which come with their own standard Windows installers to
+                automatically install the Visual C++ 2008 Runtime components for you.
+        </ul>
+</ul>
+
+<center><hr noshade></center>
+
+<h3>GitHub source code repository:</h3>
+
+<p>
+The complete source code to the current bleeding edge development
+version of SDL Hercules Hyperion is available via anonymous access
+to our git source code repository.
+<p>
+<b>Please note</b> that, as a bleeding edge development repository,
+it may contain faults (bugs) which may or may not be fixed at an
+unspecified later date, and might contain experimental code that
+may not appear in future releases.
+<p>
+Build instructions are contained in the source files <tt>BUILDING</tt>
+and <tt>INSTALL</tt> (for Unix) or <tt>README.WIN64</tt> (for Windows).
+Fish also has a
+"<a href="http://www.softdevlabs.com/hercules-msvc-build.html">Hercules Windows Build Instructions</a>"
+web page on his SoftDevLabs web site.
+
+<br />
+
+<blockquote>
+<dl>
+    <dt>
+        <a href="https://github.com/sdl-hercules-390/hyperion" target="_blank"><b>SDL Hercules Hyperion</b></a>
+        &nbsp; &nbsp; (https://github.com/sdl-hercules-390/hyperion)
+    <dd>
+        <p>
+        This repository is the official <b><i>SoftDevLabs</i></b> version of
+        Hercules Hyperion containing fixes for bugs that may or may not still
+        exist in the original Hercules. It also contains support for QDIO/OSA,
+        MPCPTP6 networking interfaces, a redesigned I/O subsystem and many
+        other advanced features above and beyond the original version of Hercules.
+        </p>
+</dl>
+</blockquote>
+
+<h3>Minimum supported host platforms:</h3>
+<ul>
+
+    <li><b>Windows</b>
+        <p>
+        The current minimum supported Windows platform is Windows Vista.
+        Anyone still running a version of Windows older than Windows Vista
+        is strongly encouraged to upgrade to Windows Vista or greater with
+        Windows 7 being the preferred choice.
+        </p>
+    <li><b>Non-Windows</b>
+        <p>
+        (varies)
+        </p>
+</ul>
+
+<center><hr noshade></center>
+
+<p>
+
+<img src="images/note.gif">
+<big><b>If you have any questions or comments</b></big>
+&nbsp;please consider joining the
+<a href="https://hercules-390.groups.io/g/group">hercules-390 discussion group</a>
+at <a href="https://groups.io">groups.io</a>.
+<p>
+<a href="https://github.com/sdl-hercules-390/hyperion/issues"><b>Bug reports</b></a>
+for <a href="https://sdl-hercules-390.github.io/html/">SDL Hercules Hyperion</a>
+<i>(together with your diagnosis of the fault, please!)</i> should be entered into our
+<a href="https://github.com/sdl-hercules-390/hyperion/issues"><b>Github issue tracker</b></a>
+<i>(preferred)</i>:
+<ul>
+    <li><a href="https://github.com/sdl-hercules-390/hyperion/issues">Issues with SoftDevLabs Hercules 4.x Hyperion</a>
+</ul>
+or alternatively via message to our discussion group:
+<ul>
+    <li><a href="https://hercules-390.groups.io/g/group">hercules-390 discussion group</a>
+</ul>
+If your question or problem is specific to a partuclar mainframe
+operating system product, you might consider joining one of our
+more focused support groups:
+<ul>
+    <li><a href="hercsupp.html#other_forums">Other Hercules Support Forums</a>
+</ul>
+
+<center><hr noshade></center>
+
+<h3>
+Other Hercules-related sites
+</h3>
+
+<ul>
+    <li><a href="http://www.softdevlabs.com">
+        http://www.softdevlabs.com</a>
+        <br><b>Windows GUI</b> for SDL Hercules 4.x Hyperion and other Hercules related software.<p>
+    <li><a href="http://www.bsp-gmbh.com/hercules/index.shtml">
+        http://www.bsp-gmbh.com/hercules/index.shtml</a>
+        <br>Volker Bandke's ready-to-run MVS 3.8J turnkey system and all things MVS.<p>
+    <li><a href="http://cbttape.org/~jmorrison/">http://cbttape.org/~jmorrison/</a>
+        <br>Jim Morrison's downloads (includes 3380 support for MVS 3.8!)<p>
+    <li><a href="http://www.jaymoseley.com/hercules">http://www.jaymoseley.com/hercules</a>
+        <br>Jay Moseley's Hercules site - lots of Hercules and MVS information<p>
+    <li><a href="http://www.tommysprinkle.com/mvs">http://www.tommysprinkle.com/mvs</a>
+        <br>Tommy Sprinkle's MVS 3.8 documentation<p>
+    <li><a href="http://hansen-family.com/mvs">http://hansen-family.com/mvs</a>
+        <br>Bob Hansen's MVS 3.8 documentation<p>
+    <li><a href="http://www.clueful.co.uk/mbeattie/hercules/tso.html">
+        http://www.clueful.co.uk/mbeattie/hercules/tso.html</a>
+        <br>Malcolm Beattie's MVT/TSO documentation<p>
+    <li><a href="http://www.ibiblio.org/jmaynard">http://www.ibiblio.org/jmaynard</a>
+        <br>Jay Maynard's S/360 and S/370 public domain software archive<p>
+    <li><a href="http://www.shedlock.org/Shedlock/Hercules/index.html">
+        http://www.shedlock.org/Shedlock/Hercules/index.html</a>
+        <br>George Shedlock's archive of
+        DOS/VS Release 34 and VM/370 software, books, and information<p>
+    <li><a href="http://www.smrcc.org.uk/members/g4ugm/VM370.htm">
+        http://www.smrcc.org.uk/members/g4ugm/VM370.htm</a>
+        <br>Dave Wade's VM/370 archive<p>
+    <li><a href="http://perso.wanadoo.es/rptv2005/en/index.html">
+        http://perso.wanadoo.es/rptv2005/en/index.html</a>
+        <br>Rafael Pereira's Standalone Programs and 1401 simulator project<p>
+    <li><a href="http://timpinkawa.net/hercules/">http://timpinkawa.net/hercules/</a>
+        <br>Tim Pinkawa's Hercules Page<p>
+    <li><a href="http://www.lightlink.com/mhp/2703/">http://www.lightlink.com/mhp/2703/</a>
+        <br>Max Parke's Hercules 2703 Page - TTY, TCAM, 3705 and more<p>
+    <li><a href="https://github.com/s390guy/SATK">https://github.com/s390guy/SATK</a>
+        <br>Harold Grovesteen's Stand-Alone Tool Kit (SATK)<p>
+</ul>
+
+<center><hr noshade></center>
+
+<p>
+
+<small>
+
+IBM, System/370, ESA/390, and z/Architecture are trademarks or
+registered trademarks of <a href="http://www.ibm.com">IBM Corporation</a>.
+Other product names mentioned here are trademarks of other companies.
+
+</small>
+
+</td></tr></table>
+
+<p><center><hr width=15% noshade>
+<p class="lastupd"><script language="Javascript">
+document.write( "Last updated " + document.lastModified + "" );
+</script></p>
+
+</BODY>
+</HTML>

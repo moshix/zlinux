@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "html.dtd">
+<HTML>
+<HEAD><TITLE>
+Hercules Version 3: System Messages: PN - Control Panel</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+</HEAD>
+<BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0"
+      VLINK="#008040" ALINK="#000000">
+<h1>Hercules Version 3: System Messages: PN - Control Panel</h1>
+<p>
+This page describes the control panel messages for the Hercules S/370,
+ESA/390, and z/Architecture emulator.
+<h3>Messages</h3>
+<dl class="messages">
+<dt><code><a name="HHCPN001I">
+HHCPN001I Control panel thread started: tid=<em>threadid</em>,
+pid=<em>processid</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The control panel thread has been started. Its thread id
+is <code><em>threadid</em></code>, and its process id is
+<code><em>processid</em></code>.
+  <dt>Issued by
+  <dd>panel.c, function panel_display
+  </dl>
+<dt><code><a name="HHCPN002S">
+HHCPN002S Cannot obtain keyboard buffer: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to obtain memory for the keyboard buffer, used to
+hold operator input, failed. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>panel.c, function panel_display
+  </dl>
+<dt><code><a name="HHCPN003S">
+HHCPN003S Cannot obtain message buffer: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to obtain memory for the message buffer, used to
+hold operator output, failed. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>panel.c, function panel_display
+  </dl>
+<dt><code><a name="HHCPN004E">
+HHCPN004E select: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An error was encountered while waiting for input from the
+console. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and retry the operation.
+  <dt>Issued by
+  <dd>panel.c, function panel_display
+  </dl>
+<dt><code><a name="HHCPN005E">
+HHCPN005E keyboard read: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An error was encountered while attempting to read keyboard
+input. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and retry the operation.
+  <dt>Issued by
+  <dd>panel.c, function panel_display
+  </dl>
+<dt><code><a name="HHCPN006E">
+HHCPN006E message pipe read: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An error was encountered while attempting to read from the pipe used
+to communicate to the control panel thread from the rest
+of Hercules. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and retry the operation.
+  <dt>Issued by
+  <dd>panel.c, function panel_display
+  </dl>
+<dt><code><a name="HHCPN007E">
+HHCPN007E RC file <em>filename</em> open failed: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The RC file containing commands to be executed at Hercules
+startup, named <code><em>filename</em></code>, could not be opened. The error is described
+by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules, if necessary. The commands
+contained in the file may be issued manually.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN008I">
+HHCPN008I RC file processing thread started using file <em>filename</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>Processing of the commands contained in the file named
+<code><em>filename</em></code> has begun.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN009E">
+HHCPN009E RC file buffer malloc failed: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to obtain storage for the buffer for commands being
+read from the startup command file failed. The error is described by
+<code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules, if needed. The comands
+contained in the file may be issued manually.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN010W">
+HHCPN010W Ignoring invalid RC file pause statement: <em>argument</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The argument, <code><em>argument</em></code>, on the pause statement
+    in the startup command file is invalid. It must be a number between
+    0.001 and 999.0. Processing will continue without any pause.
+  <dt>Action
+  <dd>Correct the invalid argument and restart Hercules, if desired.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN011I">
+HHCPN011I Pausing RC file processing for <em>delay</em> seconds...
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>Processing of the startup command file
+is being delayed for <code><em>delay</em></code> seconds because of a <code>pause</code>
+statement in the file.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN012I">
+HHCPN012I Resuming RC file processing...
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>Processing of the startup command file has resumed at the expiration
+of the delay interval.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN013I">
+HHCPN013I EOF reached on RC file. Processing complete.
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The end of the startup command file has been reached, and processing
+of the file is complete.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN014E">
+HHCPN014E I/O error reading RC file: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An error was encountered while reading a command
+from the startup command file. The error is described by
+<code><em>error</em></code>. Any remaining commands in the file will not be processed.
+  <dt>Action
+  <dd>Correct the error and restart Hercules, if
+desired. Any unprocessed commands may be issued manually.
+  <dt>Issued by
+  <dd>panel.c, function process_rc_file
+  </dl>
+<dt><code><a name="HHCPN052E">
+HHCPN052E Target CPU <em>nnnn</em> type <em>cputype</em> does not allow ipl
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An ipl command was issued but the target CPU <code><em>nnnn</em></code>
+      is a processor engine of type <code><em>cputype</em></code> which does
+      not support the initial program load procedure.
+  <dt>Action
+  <dd>Use the cpu command to set the target CPU to a processor of type CP,
+      IFL, or ICF, then re-issue the ipl command.
+  <dt>Issued by
+  <dd>hsccmd.c, function ipl_cmd2
+  </dl>
+<dt><code><a name="HHCPN180E">
+HHCPN180E 'sh' commands are disabled
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The 'sh' (shell) command has been purposely disabled
+via a SHCMDOPT configuration file statement. Shell commands
+entered via the Hercules hardware console will not be processed.
+  <dt>Action
+  <dd>Remove or modify the SHCMDOPT configuration file statement
+  and restart Hercules.
+  <dt>Issued by
+  <dd>hsccmd.c, function sh_cmd
+  </dl>
+<dt><code><a name="HHCPN181E">
+HHCPN181E Device number <em>s:CCUU</em> not found
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The device number <code><em>CCUU</em></code>
+      on Logical Channel Subsystem <code><em>s</em></code>
+      was not found in the configuration.
+  <dt>Action
+  <dd>Reissue the command with an existing device number.
+  <dt>Issued by
+  <dd>hsccmd.c, Multiple functions
+  </dl>
+</dl>
+<p><center><hr width=15% noshade></center>
+<p>
+If you have a question about Hercules, see the
+<a href="hercfaq.html">Hercules Frequently-Asked Questions</a> page.
+
+<p><center><hr width=15% noshade>
+<a href="hercmsg.html"><img src="images/back.gif" border=0 alt="back"></a>
+</center>
+<p class="lastupd">Last updated $Date$ $Revision$</p>
+</BODY>
+</HTML>

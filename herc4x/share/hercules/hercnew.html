@@ -1,0 +1,1663 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><TITLE>
+Hercules: What's new
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="icon" href="images/favicon.ico" />
+</HEAD><BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0" VLINK="#008040" ALINK="#000000">
+
+<h1>What's new in Hercules</h1>
+
+<hr noshade>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 4.4.1
+</h2>
+
+<p>Release date: 7 January 2022
+
+<br>Official Source and Binaries:
+<a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.4.1">Release_4.4.1</a>
+
+<br>Refer to the <a href="hercrnot.html#4.4.1">Release notes for SDL Hyperion 4.4.1</a> web page
+for important and more detailed information regarding some of the changes in this release.
+
+<ul>
+
+<li> Implement new Version string format
+<li> Return fullword #of cylinders in RDC bytes 60-63 (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/456">#456</a>)
+<li> Also show real address for virtual address during instruction tracing
+<li> Fix possible Hercules crash after resume from suspend (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/458">#458</a>)
+<li> Improved B220 (SERVC) instruction validation (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/460">#460</a>)
+<li> Fix 20 yr. old CCKD compressed dasd bug causing Locate Record to fail (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/464">#464</a>)
+</ul>
+
+<p>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 4.4
+</h2>
+
+<p>Release date: 18 December 2021
+
+<br>Official Source and Binaries:
+<a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.4">Release_4.4</a>
+
+<br>Refer to the <a href="hercrnot.html#4.4">Release notes for SDL Hyperion 4.4</a> web page
+for important and more detailed information regarding some of the changes in this release.
+
+<ul>
+
+<li> Fix many SIE arch-dep violation bugs
+<li> Fix to SIE handling of STFL/STFLE instructions
+<li> Internal and SIE SKA Storage Key handling fixes
+<li> Fix VM/ESA OPERATOR userid looping bug
+<li> Preliminary SIE ESSA/STHYI instructions support
+<li> Fixes to MVS assist support (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/391">#391</a>)
+<li> ECPS:VM 1.88 fixes
+<p>
+<li> ISK/ISKE, IVSK, RRB/RRBE, SSK/SSKE, RRBM, PFMF instruction fixes
+<li> Fixes to CSP/CSPG/IDTE/IPTE instructions
+<li> Minor LAA/LAAG (et al.) instructions fix
+<li> RRBM instruction fix
+<li> PTFF instruction support for function codes 04, 05, 69 (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/363">#363</a>)
+<li> Fix DAT bug in MVCOS instruction (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/349">#349</a>)
+<p>
+<li> Local-TLB-Clearing Facility (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/77">#77</a>)
+<li> Nonquiescing Key-Setting Facility (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/77">#77</a>)
+<li> Insert Reference Bits Multiple Facility (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/77">#77</a>)
+<li> Miscellaneous-Instruction-Extensions Facilities 2 and 3 (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/77">#77</a>)
+<li> PPA-in-order facility (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/77">#77</a>)
+<li> Allow modifying "IBM" and undefined facility bits (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/353">#353</a>)
+<p>
+<li> LCS device fixes and improvements
+<li> LCS device SNA support (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/348">#348</a>)
+<li> 3270 device connection improvements (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/379">#379</a>)
+<li> CTCE device fixes and improvements (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/369">#369</a>)
+<li> CTCI device fix for VSE (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/446">#446</a>)
+<li> Minor QETH (OSA) device fixes/improvements
+<p>
+<li> CCKDMAP utility CFBA/CFBA64 device support
+<li> Fix to DASDLS utility shadow file logic (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/393">#393</a>)
+<li> CCKDLOAD utility fix (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/374">#374</a>)
+<li> Fix dasd utilities r/o access to r/w images (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/355">#355</a>)
+<li> Minor "faketape" emulated tape format fix
+<li> Fix possible CRASH during compressed dasd attach/detach
+<p>
+<li> PANOPT statement "MSGCOLOR" option
+<li> PANRATE/PANTITLE replaced by PANOPT
+<li> Minor MODEL/PLANT/MANUFACTURER statement fixes
+<li> New -o/--output/--logfile command-line options
+<p>
+<li> Hardware loader fix (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/185">#185</a>, <a href="https://github.com/SDL-Hercules-390/hyperion/issues/337">#337</a>)
+<li> Minor Rexx support fixes and improvements
+<li> Minor External Packages updates
+<li> Fixes to herclin.exe
+<li> Translation Specification PIC 12 fix
+<li> Improved TXF reliability and completeness
+<li> Predefined CPUMODEL $(symbol) values (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/263#issuecomment-664583569">#263</a>)
+<p>
+<li> Improvements to building Hercules on non-Windows platforms
+<li> Improvements to building Hercules on Windows platforms (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/448">#448</a>)
+<li> Many other minor internal/external fixes and improvements
+
+</ul>
+
+<p>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 4.3
+</h2>
+
+<p>Release date: 28 November 2020
+
+<br>Official Source and Binaries:
+<a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.3">Release_4.3</a>
+
+<br>Refer to the <a href="hercrnot.html#4.3">Release notes for SDL Hyperion 4.3</a> web page
+for important and more detailed information regarding some of the changes in this release.
+
+<ul>
+
+<li> Fix ULONG_PTR typedef build errors on RHEL 6.10 (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/245">#245</a>)
+<li> Add missing 3203 printer to DEVEQU table (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/250">#250</a>)
+<li> Fix driver code incompatibility with other Herculeses (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/251">#251</a>)
+<li> Fix issue where thread names are incorrectly set (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/254">#254</a>)
+<li> Fix missing timestamp in daemon mode; add DATESTAMP option (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/259">#259</a>), (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/260">#260</a>)
+<li> Fix CNSLPORT to honor new updated setting (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/318">#318</a>)
+<li> <a href="hercrnot.html#4.3">Watchdog monitoring</a> reinstated.
+<li> New <a href="https://sdl-hercules-390.github.io/html/hercconf.html#PANOPT">PANOPT</a> option MSGCOLOR=DARK/LIGHT
+<li> Fix hang/deadlock in device-attention function (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/277">#277</a>)
+<li> Improved CTCE driver functionality (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/269">#269</a>), (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/273">#273</a>)
+<li> TCPNJE device support. Refer to the <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.TCPNJE.md">README.TCPNJE</a> document for details (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/280">#280</a>)
+<li> TCPNJE Connectivity And Stability Enhancements
+<li> Fix RARP (Reverse ARP) Ethernet frame type constant
+<li> Fix Linux panel high CPU usage (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/289">#289</a>)
+<li> Fix z/VM guest architecture switching (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/295">#295</a>)
+<li> Fix for IPL command without a LOADPARM (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/296">#296</a>)
+<li> Work around VS2019 compiler C4789 Warning bug.
+<li> Fix crash if incomplete network device group defined.
+<li> Fix ooRexx v5.0.0. load failure on Apple Mac (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/301">#301</a>)
+<li> Fix crash in CCKD dasd termination logic (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/303">#303</a>)
+<li> Fix KIMD instruction
+<li> Fix VM FixPage assist
+<li> Fix channel prefetch buffer overrun crash (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/319">#319</a>)
+<li> Fix instruction stepping invalidation/refetch bug (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/321">#321</a>)
+<li> New z15 Secure Boot (Secure IPL) Diagnose 0x308 support
+<li> Preliminary <i>(Experimental)</i> Transactional-Execution Facility (TXF) support (<a href="https://github.com/SDL-Hercules-390/hyperion/issues/263">#263</a>)
+<li> MANY other internal fixes and improvements
+
+</ul>
+
+<p>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 4.2.1
+</h2>
+
+<p>Release date: 10 September 2019
+
+<br>Official Source and Binaries:
+<a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.2.1">Release_4.2.1</a>
+
+<br>Refer to the <a href="hercrnot.html#4.2.1">Release notes for SDL Hyperion 4.2.1</a> web page
+for more detailed information regarding changes in this release.
+
+<ul>
+
+<li> Make HHC02917 a suppressible msglevel debug only message
+<li> Fix CKD suffixed read count file protect bug
+<li> CKD dasd serial number support
+<li> New "dasdser" serial number utility
+<li> Fix various VMFPLC2 issues
+<li> Fix Linux exit/quit hang when no traffic on tuntap device
+<li> Fix QETH (OSA) missing CSCH interrupt under z/VM
+<li> Don't pass "&&" async argument to rexx scripts
+<li> Fix bogus HHC01111W warning and cctape display
+<li> hercifc network interface configuration utility fixes
+<li> SIE fix for z/VM z/Arch real mode guests (e.g. zcms)
+<li> Various important 3215/1052 console fixes
+<li> Various other minor internal fixes and improvements
+
+</ul>
+
+<p>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 4.2</h2>
+
+<p>Release date: 8 July 2019
+
+<br>Official Source and Binaries:
+<a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.2">Release_4.2</a>
+
+<br>Refer to the <a href="hercrnot.html#4.2">Release notes for SDL Hyperion 4.2</a> web page
+for more detailed information regarding changes in this release.
+
+<ul>
+
+<li> Load-and-Zero-Rightmost-Byte Facility
+<li> Load/Store-on-Condition Facility 2
+<li> Full PFPO instruction support
+<li> Fix AR/SR/AGR/SRG instructions Condition Code bug
+<li> Improved CKSM, MVST, CLST, SRST instruction performance
+<li> Optimized CLCL instruction bugfix
+<li> CSST instruction fix
+<li> TCPIP X'75' instruction support
+<li> Improved internal instruction count accuracy
+<li> New Diagnose F09 (enhanced F08) instruction
+<li> Fix long standing occasional crash in CCKD logic
+<li> Fix Shared Devices slow disconnect
+<li> CKD dasd suffixed Read Count bug fix
+<li> CCKD64 support
+<li> QETH/OSA devices HSCH/CSCH instruction fix
+<li> QETH/OSA multiple IP address support
+<li> Various QETH/OSA fixes
+<li> Linux sockdev syn flooding fix
+<li> Minor LCS Checksum / TCP Segmentation Offload fixes
+<li> CTCT device support reinstated
+<li> Tape autoinit fix
+<li> 3590 Tape C2 Medium Sense CCW fix
+<li> Various 3270 terminal handling fixes
+<li> Automatic tn3270 IND$FILE efficiency
+<li> Enhanced VMFPLC2 utility
+<li> dasdpdsu utility fix
+<li> Breakpoint/Stepping optional ASID parameter
+<li> New PANOPT statement/command
+<li> Linux crash dump support (no more machine checks)
+<li> Many various overall reliability, stability and documentation improvements
+
+</ul>
+
+<p>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 4.1</h2>
+
+<p>Release date: 10 November 2018
+
+<br>Official Source and Binaries:
+<a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.1">Release_4.1</a>
+
+<br>Refer to the <a href="hercrnot.html#4.1">Release notes for SDL Hyperion 4.1</a> web page
+for more detailed information regarding changes in this release.
+
+<ul>
+
+<li>Jay Moseley 'maketape' utility added to Hercules
+<li>LRVR, LRV and LRVH eligible added to S37X Facility <i>(Ivan Warren)</i>
+<li>Fix long standing SIE host addressing prefixing bug <i>(Ivan Warren)</i>
+<li>External Package support simplified and fixed to support Raspberry Pi
+<li>QETH (OSA) device support fixes <i>(Ian Shorter, Peter Jansen)</i>
+<li>Various Rexx support fixes
+<li>DIAG 204 (LPAR information) fix <i>(Ivan Warren)</i>
+<li>SoftFloat external package updated to version 3e (fixes square root) <i>(Steve Orso)</i>
+<li>Crypto support fixed to use cryptographically secure random number generator
+<li>ECPS:VM 1.87 enhancements and bug fixes <i>(Bob Polmanter)</i>
+<li>Instruction counting accuracy improved
+<li>Fix ./configure so --enable-optimization always honored
+<li>Fix dasdls crash
+<li>Improved TELNET Terminal Type negotiations
+<li>Fix min/max internal thread priorities
+<li>Fixes to allow building on Apple MacOS <i>(Enrico Sorichetti, Peter Jansen)</i>
+<li>Fix bad commit causing utilities to crash <i>(Paul Gorlinsky)</i>
+<li>Performance of TRT, CLC, CLCL and MVCIN instructions vastly improved <i>(Fish and Ivan Warren)</i>
+
+</ul>
+
+<p>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.11</h2>
+<p>Release date: 15 September 2014
+<ul>
+<li>Floating-Point-Extension Facility (Roger Bowler)
+<li>Enhanced Channel-to-Channel Adapter via TCP/IP (Peter J. Jansen)
+<li>Load/Store-on-Condition Facility corrections (Neale Ferguson)
+<li>LCS corrections (Paul Gorlinsky, David "Fish" Trout, Ivan Warren)
+<li>Floating-Point-Extension Facility corrections (Neale Ferguson)
+<li>CMPSC corrections (Bernard van der Helm)
+<li>Load sequential datasets from XMIT files (Roger Bowler)
+<li>Eliminate compiler warnings for Linux and Mac (Roger Bowler)
+</ul>
+<p>Download
+<a href="http://downloads.hercules-390.eu/hercules-3.11.tar.gz">hercules-3.11.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.10</h2>
+<p>Release date: 1 February 2014
+<ul>
+<li>Fix incorrect PSW IA in SIE mode with PER (Ian Worthington)
+<li>Corrections to build procedures (Mike Frysinger, Dan Horak)
+<li>Fixes for Mac OS X (Butch Anton, Adam Vandenberg, Enrico Sorichetti)
+<li>Configuration topology facility fixes (Paolo Giacobbis)
+<li>Convert BFP instructions to use SoftFloat package (Roger Bowler)
+<li>Preliminary support for 2GB page frames (Roger Bowler)
+<li>PFMF fixes (John P. Hartmann)
+<li>CMPSC corrections (Bernard van der Helm)
+<li>dasdls enhancements (Chris Cheney)
+</ul>
+<p>Download: &nbsp;
+<a href="http://downloads.hercules-390.eu/hercules-3.10.tar.gz">hercules-3.10.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.09</h2>
+<p>Release date: 15 July 2013
+<ul>
+<li>Allow regex replacement variables in HAO commands (Roger Bowler)
+<li>Prevent duplicate EQID (Gordon Bonorchis)
+<li>Permit concurrent read access to printer and punch files (Roger Bowler)
+<li>DFP zoned-conversion facility (Roger Bowler)
+<li>Execution-hint facility (Roger Bowler)
+<li>Miscellaneous-instruction-extensions facility (Roger Bowler)
+<li>Load-and-trap facility (Roger Bowler)
+<li>Fix for VSAM Extended Format (David "Fish" Trout)
+<li>APL\360 2741 patch (Max H. Parke)
+<li>Fix interval timer repeating interrupt (Ivan Warren, Kevin Leonard)
+<li>Corrections to build procedures (Mike Frysinger, Dan Horak)
+<li>Miscellaneous bug fixes (Roger Bowler)
+</ul>
+<p>Download: &nbsp;
+<a href="http://downloads.hercules-390.eu/hercules-3.09.tar.gz">hercules-3.09.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.08</h2>
+<p>Release date: 8 December 2012
+<ul>
+<li>1403 and 3211 FCB support (Enrico Sorichetti)
+<li>Shutdown on SIGTERM (Frans Pop)
+<li>Disable close-window button (Paul Gorlinsky)
+<li>Allow larger IPL text (Laddie Hanus)
+<li>Drop support for Cygwin, Win98, WinNT, Win2000 (Roger Bowler)
+<li>Windows shutdown handlers (Paul Gorlinsky)
+<li>Dynamically loadable instructions (Jan Jaeger)
+<li>Additional codepages (Kevin Leonard)
+<li>Load/Store-on-Condition Facility (Roger Bowler)
+<li>Distinct-Operands Facility (Roger Bowler)
+<li>Population-Count Facility (Roger Bowler)
+<li>High-Word Facility (Roger Bowler)
+<li>Message Security Assist Extensions 3 and 4 (Bernard van der Helm)
+<li>Interlocked-Access Facility (Roger Bowler)
+<li>CMPSC-Enhancement Facility (Bernard van der Helm)
+<li>Fast-BCR-Serialization Facility (Roger Bowler)
+<li>Reset-Reference-Bits-Multiple Facility (Jan Jaeger)
+<li>Access-Exception-Fetch/Store-Indication Facility (Roger Bowler)
+<li>Enhanced-Monitor Facility (Jan Jaeger)
+<li>Load-Program-Parameter Facility (Paul Gorlinsky)
+<li>IPTE-Range Facility (Jan Jaeger)
+<li>Enhanced-DAT Facility (Jan Jaeger)
+<li>Increase CKD_MAXFILES from 4 to 27 for 3390-27 and -54 (Paul Gorlinsky)
+<li>CKD read attention message command (Florian Bilek)
+<li>Support 128 CPUs on 64-bit Linux (Jan Jaeger)
+<li>Issue Hercules commands via HTTP (Robert Hodge)
+<li>Compression performance enhancements (Bernard van der Helm)
+<li>Compression bug fixes (Bernard van der Helm, John P. Hartmann)
+<li>Crypto bug fixes (Bernard van der Helm)
+<li>Hexadecimal floating-point bug fixes (Andy Polyakov)
+<li>SCSI tape enhancements and bug fixes (David "Fish" Trout)
+<li>3420 sense code corrections for MTS (Harold Grovesteen)
+<li>Prevent multiple instances opening same output file under Windows (David "Fish" Trout)
+<li>2703 and 3705 fixes and 3791 support (Max H. Parke, Juergen Winkelmann)
+<li>Enable GUI support as default for all platforms (Jacob Dekel)
+<li>Miscellaneous bug fixes (Paul Gorlinsky, Ivan Warren, David "Fish" Trout, Jan Jaeger,
+Bernard van der Helm, Roger Bowler, Kevin Leonard, Ian Shorter, John P. Hartmann)
+</ul>
+<p>Download: &nbsp;
+<a href="http://downloads.hercules-390.eu/hercules-3.08.tar.gz">hercules-3.08.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.07</h2>
+<p>Release date: 10 March 2010
+<ul>
+<li>Fast Synchronous Data Mover Facility (Guy Desbiens)
+<li>Diagnose 210, 250, 260 (Harold Grovesteen)
+<li>Extended Diagnose 204 feature (Jan Jaeger)
+<li>Complete Diagnose 24 (Harold Grovesteen)
+<li>Configuration-Topology Facility (Fish)
+<li>HFP-Unnormalized-Extensions Facility (Harold Grovesteen)
+<li>CMPSC performance improvements (Bernard van der Helm)
+<li>uptime command (Fish)
+<li>Raise XPNDSIZE limit to 1048576MB (Roger Bowler)
+<li>MAXCPU and LPARNUM configuration statements (Roger Bowler)
+<li>Add capacity model identifiers to MODEL config statement (Roger Bowler)
+<li>SCLPROOT configuration statement (Jan Jaeger)
+<li>Add "noclear" option to printer and card punch devices (Jay Maynard)
+<li>Socket printer support (Fish)
+<li>3705 SNA device support (Max H. Parke)
+<li>TTY and 2741 support for 2703 (Max H. Parke)
+<li>Tracing enhancements (Jan Jaeger)
+<li>Allow configure --enable-external-gui for Unix builds
+<li>Enable tun/tap emulation for 64-bit Windows builds (Ivan Warren)
+<li>64-bit Windows support (Roger Bowler)
+<li>Raise MAX_CPU_ENGINES limit to 64 (Roger Bowler, Ivan Warren)
+<li>Numerous bug fixes (Ivan Warren, Fish, Jan Jaeger, Bernard van der Helm,
+Roger Bowler, Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.07.tar.gz">hercules-3.07.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.06</h2>
+<p>Release date: 11 January 2009
+<ul>
+<li>Integrated 3270 (SYSG) console support (Roger Bowler, Jan Jaeger)
+<li>HMC DVD-RAM read/write support (Jan Jaeger)
+<li>64-bit native version now supported on Mac OS X (Jay Maynard)
+<li>Ability to specify IFL, zIIP, and zAAP engine types (Roger Bowler, Jan
+Jaeger, Ivan Warren)
+<li>Console-like message handling (David "Fish" Trout, Bernard van der Helm)
+<li>Tape automount CCW support (David "Fish" Trout)
+<li>CKD Locate Record Extended CCW (Greg Smith)
+<li>Support for FLEX-ES FakeTape tape images (David "Fish" Trout; FLEX-ES and
+FakeTape are trademarks of Fundamental Software, Inc.)
+<li>More complete 3490 and 3590 tape support (David "Fish" Trout)
+<li>Solaris build support (Jeff Savit)
+<li>FreeBSD build support (Bjoern A. Zeeb)
+<li>Panel enhancements:
+<ul>
+<li>Display virtual storage in primary, secondary, and home space (Paul Leisy)
+<li>Display and modify PSW fields by panel command (Roger Bowler)
+<li>Modify control registers by panel command (Roger Bowler)
+<li>Specify IPL parameter by PARM operand (Ivan Warren)
+<li>New panel commands: automount, cmdtgt, ctc, herc, msghld, pscp, scp,
+sfk (David "Fish" Trout, Bernard van der Helm)
+</ul>
+<li>LEGACYSENSEID configuration statement (Ivan Warren)
+<li>New instruction feature support (introduced with System z10):
+<ul>
+<li>Parsing-Enhancement Facility (Bernard van der Helm)
+<li>Message-Security-Assist Extension 2 (Bernard van der Helm)
+<li>General-Instructions-Extension Facility (Roger Bowler, Jan Jaeger)
+<li>Execute-Extensions Facility (Bernard van der Helm)
+<li>Move-with-Optional-Specifications Facility (Roger Bowler)
+<li>Compare-and-Swap-and-Store Facility 2 (Ivan Warren)
+</ul>
+<li>Many emulation fixes (Roger Bowler, Jan Jaeger, Ivan Warren, David
+"Fish" Trout, Greg Smith, Paul Leisy, Jay Maynard, Bernard van der Helm,
+Kevin Leonard, Tony Harminc)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.06.tar.gz">hercules-3.06.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.05</h2>
+<p>Release date: 23 June 2007
+<ul>
+<li>Prebuilt Cygwin binary no longer supplied; building Cygwin version from
+source still supported (Jay Maynard)
+<li>New system features: Compare-and-Swap-and-Store, Conditional SSKE, Decimal
+Floating Point, Floating Point Support Enhancement (Roger Bowler)
+<li>Extract CPU Time Facility (Jan Jaeger)
+<li>Multiple Logical Channel Subsystems Facility (Jan Jaeger, Ivan Warren)
+<li>3590 tape support (David "Fish" Trout)
+<li>3990-6 control unit and ECKD support (Greg Smith)
+<li>Many performance improvements (Greg Smith, Ivan Warren, Jan Jaeger)
+<li>Many emulation fixes (Greg Smith, Roger Bowler, Ivan Warren, David
+"Fish" Trout, Kevin Leonard, Peter Coghlan)
+<li>Major SCSI tape fixes (David "Fish" Trout)
+<li>Added floating point instructions CGER, CGDR and CGXR (Bernard van der
+Helm)
+<li>Address range options for instruction trace and step (Greg Smith)
+<li>Update gpr registers via panel command (David "Fish" Trout)
+<li>Console connection keepalive (David "Fish" Trout)
+<li>Customizable 3270 connection screen (Ivan Warren)
+<li>dasdconv quiet and stdin options (Roger Bowler)
+<li>Hercules Automatic Operator (Bernard van der Helm, David "Fish" Trout)
+<li>Enhanced symbol substitution (Leland Lucius, Enrico Sorichetti, David "Fish" Trout)
+<li>Miscellaneous new panel commands: qd (Greg Smith), fpc, traceopt (Roger
+Bowler), logopt (Kevin Leonard), cd, pwd, timerint, defsym (David "Fish" Trout)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.05.tar.gz">hercules-3.05.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.04.1</h2>
+<p>Release date: 25 March 2006
+<ul>
+<li>Fix to allow building for Intel-based Mac OS X (Jay Maynard)
+<br>Note: This version only applies to the Mac OS X 10.4 (Tiger) platform.
+Version 3.04 is current for all other platforms.
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.04.1.tar.gz">hercules-3.04.1.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.04</h2>
+<p>Release date: 24 February 2006
+<ul>
+<li>CCKD garbage collection fix (Greg Smith)
+<li>Reworked timing functions (Jan Jaeger)
+<li>Codepage 1047 conversion tables (Kevin Leonard)
+<li>Fixed off-by-one-day bug with SYSEPOCH other than 1900; added new config
+parameter, YROFFSET, and added warning if SYSEPOCH is not 1900 or 1960 (Jay
+Maynard, Jan Jaeger)
+<li>New 2305 CKD disk emulation (Jay Maynard)
+<li>Added floating point instructions CEGR, CDGR and CXGR (Bernard van der
+Helm)
+<li>Added support for cgi-bin dynamic modules (David "Fish" Trout)
+<li>Instruction fixes: PLO, CVB, CXFBR, CXGBR (Bernard van der Helm, David
+"Fish" Trout, Greg Smith, Pasi Pirhonen)
+<li>Fix for Windows ..\relative path dasd files (David "Fish" Trout)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.04.tar.gz">hercules-3.04.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.03.1</h2>
+<p>Release date: 30 December 2005
+<ul>
+<li>Fix translation exception bug that was causing some Linux kernels to
+panic (Fabrizio Calabretta, Greg Smith, Ivan Warren)
+<li>TOD Clock-Steering Facility (Jan Jaeger, Bernard van der Helm)
+<li>Fix bug in shadow file filename processing on native Windows (David
+"Fish" Trout)
+<li>Performance improvements in TM instruction family (Bernard van der Helm)
+<li>Support for Linux zipl LOADPARM of PROMPT (Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.03.1.tar.gz">hercules-3.03.1.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.03</h2>
+<p>Release date: 20 December 2005
+<ul>
+<li>Native Windows version no longer requires Cygwin (David "Fish" Trout,
+Roger Bowler, Ivan Warren)
+<li>SMP host integrity fixes (Greg Smith, David "Fish" Trout, Bob Deblier)
+<li>ALS5, z9 and other architectural enhancements (Roger Bowler, Bernard van
+der Helm, Jan Jaeger, David "Fish" Trout)
+<li>Restructured cryptographic support no longer depends on libgcrypt
+(Bernard van der Helm, Roger Bowler, Ivan Warren)
+<li>Support emulation of up to 32 CPUs; maximum without special build
+options now 8 (Ivan Warren)
+<li>Enhanced semigraphical control panel now uses all of larger console
+windows (Greg Smith, David "Fish" Trout)
+<li>Many emulation fixes (Roger Bowler, Jan Jaeger, Bernard van der Helm,
+David "Fish" Trout, Greg Smith, Ivan Warren, Andy Styles, John Decker)
+<li>CMPSC fixes now produce identical results with real systems (Jacques
+Dilbert, Bernard van der Helm)
+<li>Integrated 1052-C / 3215-C console support (Jan Jaeger)
+<li>tapecopy support for writing as well as reading tapes (Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.03.tar.gz">hercules-3.03.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.02</h2>
+<p>Release date: 11 December 2004
+<ul>
+<li>Significant performance improvements (Jan Jaeger, Greg Smith, Gabor Hoffer)
+<li>SIE performance almost the same as native (Jan Jaeger, Gabor Hoffer)
+<li>SCSI tape support in Windows (David "Fish" Trout)
+<li>Mac OS X CTC networking support (Jay Maynard)
+<li>Suspend/resume facility (Greg Smith)
+<li>ASN-and-LX-Reuse Facility (Roger Bowler)
+<li>Enable or disable ASN-and-LX-reuse in config (Jan Jaeger, Ivan Warren)
+<li>Extended Translation Facility 3 (Bernard van der Helm)
+<li>DAT-enhancement facility (Roger Bowler)
+<li>Immediate CCWs now correctly handled when Suppress Incorrect Length
+Indication is specified (Ivan Warren)
+<li>3270 option provided to control connection to group of devices (Ivan
+Warren)
+<li>3270 connections can be limited by IP address (David "Fish" Trout)
+<li>Remaining 26 binary floating point instructions (Roger Bowler)
+<li>IPL CLear, System Reset, and System Reset Clear operator commands (Ivan
+Warren)
+<li>Pentium 4 optimizations enabled in gcc (Ivan Warren)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.02.tar.gz">hercules-3.02.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.01</h2>
+<p>Release date: 30 November 2003
+<ul>
+<li>Bypass gcc 2.96 optimizer bug that caused incorrect instruction
+execution (Ivan Warren)
+<li>Added command-line control panel command history (Martin Gasparovic,
+Volker Bandke)
+<li>Message Security Assist (Bernard van der Helm, Jan Jaeger)
+<li>Fixed device interrupt pending on IPL that caused OS/360 to have to be
+IPLed twice (David "Fish" Trout, Greg Smith)
+<li>Added pthreads trace function for debugging (Greg Smith)
+<li>Fish threads code rewritten, closer to POSIX thread functionality while
+still performing better (David "Fish" Trout)
+<li>Fixed incompatibility with Windows NT telnet client (Greg Price, David
+"Fish" Trout)
+<li>Performance and integrity enhancements for RS instructions (Greg Smith)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.01.tar.gz">hercules-3.01.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 3.00</h2>
+<p>Release date: 2 October 2003
+<ul>
+<li>Dynamically loaded module support for devices, instructions, and
+operator console panels (Jan Jaeger, David "Fish" Trout, Ivan Warren)
+<li>Shared and remote DASD support (Greg Smith)
+<li>z990 (ALS4) instruction support (Roger Bowler, Jan Jaeger, Bernard van
+der Helm)
+<li>HFP Multiply-Add/Subtract Facility (Roger Bowler)
+<li>Long Displacement Facility (Roger Bowler)
+<li>Simplified network adapter specifications (David "Fish" Trout, Jim
+Pierson)
+<li>New device emulations: 2703, 3410, 3490, 9347 (Ivan Warren)
+<li>ECPS:VM support (Ivan Warren)
+<li>Reworked process priority handling (Mark Gaubatz)
+<li>Greatly improved interval timer resolution (Mark Gaubatz)
+<li>Internal consistency checking improvvements (Greg Smith)
+<li>Corrected 3270 session disconnect processing (Ivan Warren)
+<li>Instruction disassembler in control panel (Jan Jaeger)
+<li>Tape read backward fixes (Jay Jaeger)
+<li>Fix for double memory consumption bug on Windows (Mark D., David
+"Fish" Trout)
+<li>OMA tape processing fixes (Ivan Warren)
+<li>Message logging restructuring (Jan Jaeger, David "Fish" Trout)
+<li>S/370 I/O race condition fixes (Victor Shkamerda, Greg Smith)
+<li>Manual pages for some commands (Jim Morrison)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-3.00.tar.gz">hercules-3.00.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.17.1</h2>
+<p>Release date: 12 February 2003
+<ul>
+<li>Corrected RPM installed files permissions (John Summerfield)
+<li>Corrected dasdload verbosity level (Jay Maynard)
+<li>Corrected card reader eof/intrq option handling, added * to designate
+no file loaded (Jay Maynard)
+<li>Correct SLB instruction condition code (Jan Jaeger)
+<li>Fix dasdutil.c track conversion function (Jim Morrison)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.17.1.tar.gz">hercules-2.17.1.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.17</h2>
+<p>Release date: 1 February 2003
+<ul>
+<li>Restructured DASD subsystem: better use of memory,
+compressed FBA support, framework for shared DASD (Greg Smith)
+<li>New dasdcopy utility replaces ckd2cckd and cckd2ckd, and adds
+compressed FBA support (Greg Smith)
+<li>Native support for Mac OS X 10.2 and above (Paul Scott)
+<li>Reworked CTC and LCS emulation (Jim Pierson)
+<li>SMP host integrity fixes (Greg Smith and Jan Jaeger)
+<li>Fixes for compile errors with gcc 3.x (Greg Smith and David "Fish" Trout)
+<li>S/370 dual address space and MVS assist fixes (Jan Jaeger)
+<li>Renumbered all messages to consistent format, removed duplicate
+numbers, and began message documentation (Jay Maynard)
+<li>Added options for 1052/3215 consoles and card readers (Jay Maynard)
+<li>Numerous instruction and I/O emulation fixes (Greg
+Smith, Jan Jaeger, Juergen Dobrinski, Bernard van der Helm,
+Andy Norrie, and David "Fish" Trout)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.17.tar.gz">hercules-2.17.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.16.5</h2>
+<p>Release date: 8 July 2002
+<ul>
+<li>Correct serious CCKD image file corruption error (Greg Smith)
+<li>Allow tape files to be opened for input if on CD-ROM (Volker Bandke)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.16.5.tar.gz">hercules-2.16.5.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.16.4</h2>
+<p>Release date: 3 July 2002
+<ul>
+<li>Read backward support for emulated tape (Volker Bandke)
+<li>Added 9313, 9332, and 9335 to list of supported devices (Tomas Masek)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.16.4.tar.gz">hercules-2.16.4.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.16.3</h2>
+<p>Release date: 2 July 2002
+<ul>
+<li>CTC fix for TurboLinux bug (Jim Pierson)
+<li>3287 printer support via TN3270 (Tomas Masek)
+<li>S/370 extended memory fixes (Tomas Masek)
+<li>ctcadpt.c compilation fix for FreeBSD (Mark Szlaga)
+<li>Fixed 3270 ERASE ALL UNPROTECTED command to not count data read
+(Tomas Fott)
+<li>Fixes to ckdtab in dasdtab.c (Greg Smith)
+<li>Retrofitted cckd chkdsk fixes/enhancements (Greg Smith)
+<li>FBA fixes contributed by Tomas Masek (Greg Smith)
+<li>Compatibility fixes for cckd and 2.17 (Greg Smith)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.16.3.tar.gz">hercules-2.16.3.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.16.2</h2>
+<p>Release date: 20 May 2002
+<ul>
+<li>Fixed 3350 dasdtab entry (Greg Smith)
+<li>Fixed 370 interval timer error (Valery Pogonchenko)
+<li>Control panel attach command bug fix (David "Fish" Trout)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.16.2.tar.gz">hercules-2.16.2.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.16.1</h2>
+<p>Release date: 4 May 2002
+<ul>
+<li>fthreads locking fixes (David "Fish" Trout)
+<li>dasdload bug fix (Greg Smith)
+<li>FBA dasd devices allow any size disk (Jay Maynard)
+<li>Control panel attach command bug fix (Kris Van Hees)
+<li>Windows versions (finally) accessible from main page (Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.16.1.tar.gz">hercules-2.16.1.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.16</h2>
+<p>Release date: 20 April 2002
+<ul>
+<li>PER support (Jan Jaeger, Paul Leisy)
+<li>S/370 multiprocessor support (Jan Jaeger)
+<li>Licensed software restriction (Jan Jaeger, Jay Maynard)
+<li>Performance mods (Gabor Hoffer, Juergen Dobrinski, Greg Smith, and Paul
+Leisy)
+<li>Interrupt subclass priorities (Greg Smith)
+<li>dasdcat program (Malcolm Beattie, Roger Bowler)
+<li>Updated TCP/IP documentation (Roger Bowler)
+<li>CTCI support for Windows (David "Fish" Trout)
+<li>Print to unix pipe (Roger Bowler)
+<li>Preliminary Lan Channel Station (LCS) support
+<li>HTTP server (Jan Jaeger)
+<li>Various fixes (as recorded in CHANGES) (Paul Leisy, Matt Zimmerman,
+Greg Smith, Volker Bandke, Bernard van der Helm, David "Fish" Trout)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.16.tar.gz">hercules-2.16.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.15</h2>
+<p>Release date: 04 December 2001
+<ul>
+<li> Autoconf added to ease portability (Matt Zimmerman, Fritz Elfert,
+Willem Konynenberg)
+<li> Numerous instruction fixes (Paul Leisy)
+<li> TUN/TAP support for Linux kernels beyond 2.4.6 (Matt Zimmerman)
+<li> Timer fixes (Greg Smith)
+<li> Synchronous I/O (Greg Smith)
+<li> Support for IPL from CD-ROMs as with HMC (Jan Jaeger)
+<li> CTC hang at shutdown fixed (Jan Jaeger)
+<li> CTC TCP/IP now works with VM/ESA (Kris Van Hees)
+<li> Compressed CKD endianness and RAS fixes (Greg Smith)
+<li> Hot reader support (David "Fish" Trout)
+<li> Machine checks now reported for host exceptions, loops, and wait states
+(Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.15.tar.gz">hercules-2.15.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>(There was no Version 2.14)</h2>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.13</h2>
+<p>Release date: 05 July 2001
+<ul>
+<li>Restrict TODEPOCH to 1900, 1928, 1960, 1970, or 1988, and
+    correct offset calculation (Michael Koehne)
+<li>HET unmount option (Michael Koehne)
+<li>quiet command (Michael Koehne)
+<li>Panel instruction disassembly (Jan Jaeger)
+<li>CMPSC corrections (Bernard van der Helm)
+<li>CTCT CTC over TCP/IP (Vic Cross)
+<li>Sundry instruction and channel fixes (Jan Jaeger)
+<li>Numerous instruction fixes (Paul Leisy)
+<li>CKD trace command (Valery Pogonchenko)
+<li>Performance enhancements (Juergen Dobrinski)
+<li>CGEBR/CGDBR instructions (Jan Jaeger)
+<li>CEGBR/CDGBR instructions (Kris Van Hees)
+<li>CKD 9345 support (Greg Smith)
+<li>Storage Key Assist (Jan Jaeger)
+<li>Move Page Facility 2 (Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.13.tar.gz">hercules-2.13.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.12</h2>
+<p>Release date: 04 May 2001
+<ul>
+<li>Numerous instruction fixes (Paul Leisy, Jan Jaeger,
+    Peter Stammbach, Roger Bowler)
+<li>FBA and CKD read-only support (Greg Smith)
+<li>Enable ISKE/RRBE/SSKE in S/370 mode (Valery Pogonchenko)
+<li>CCKD corrections (Greg Smith)
+<li>CMPSC fixes for expansion (Greg Smith)
+<li>Correct prefix alignment for ESA/390 guest in 64 bit mode SIE (Jan Jaeger)
+<li>Card reader multiple files and EBCDIC autopad support
+<li>Support for built-in TUN driver of Linux kernel 2.4.x
+<li>Device I/O thread throttling (Greg Smith, Fish)
+<li>Small optimization of vstore/vfetch and TPI (Jan Jaeger)
+<li>Sense/Set Path Group ID for DASD (Jan Jaeger)
+<li>Dynamic device threads (Jan Jaeger)
+<li>Fast interrupt processing for MCK and PER (Jan Jaeger)
+<li>Allow HET files to reside on read-only media (Leland Lucius)
+<li>Utilities display versioning and copyright info (Greg Smith)
+<li>Present device end on terminating console session (Jan Jaeger)
+<li>sh panel command (Bernard van der Helm)
+<li>9221 power-off diagnose (Jan Jaeger)
+<li>Debug format enhancements (Peter Stammbach)
+<li>Fix for device threads (Juergen Dobrinski)
+<li>Sundry new ESAME instructions and corrections (Roger Bowler, Jan Jaeger)
+<li>Improved interrupt processing (Valery Pogonchenko)
+<li>Incorrect-Length-Indication-Suppression facility (Jan Jaeger)
+<li>S/370 interval timer fixes (Mark Gaubatz)
+<li>64-bit Interpretive Execution (Jan Jaeger)
+<li>IEEE floating point (Willem Konynenberg)
+<li>64-bit panel updates (Roger Bowler)
+<li>LPM fixes and display subchannel command (Nobumichi Kozawa)
+<li>Fix amode64 in load_psw (Ulrich Weigand)
+<li>Multiply Logical instructions (Vic Cross)
+<li>Environment variables to override filenames
+    of hercules.rc hercules.cnf and hercifc (Jan Jaeger)
+<li>Floating point enhancements (Roger Bowler, Jan Jaeger)
+<li>Country codepage tables (Roger Bowler)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.12.tar.gz">hercules-2.12.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.11</h2>
+<p>Release date: 09 February 2001
+<ul>
+<li>Sundry new ESAME instructions and corrections (Jan Jaeger)
+<li>Panel display instruction operands (Roger Bowler)
+<li>TRAP and RP instructions (Jan Jaeger)
+<li>TP instruction (Roger Bowler)
+<li>Tape data chaining patch  (Brandon Hill)
+<li>Bypass Cygwin stack problem (Greg Smith)
+<li>Fixes for Windows port (Volker Bandke)
+<li>SSK/ISK/RRB fix for 2K storage keys (Valery Pogonchenko, Jan Jaeger)
+<li>Extended Translation Facility 2 (Roger Bowler)
+<li>Divide Logical instructions (Vic Cross)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.11.tar.gz">hercules-2.11.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 2.10</h2>
+<p>Release date: 02 February 2001
+<ul>
+<li>z/Architecture support (Jan Jaeger)
+<li>TUN/TAP support for CTC (Roger Bowler)
+<li>OSTAILOR VSE option (Roger Bowler)
+<li>2K/4K storage key support (Jan Jaeger)
+<li>Fully functional CMPSC instruction (Bernard van der Helm)
+<li>Fix read-only AWSTAPE (Roger Bowler)
+<li>Sundry new ESAME instructions (Jan Jaeger, Roger Bowler)
+<li>Format-2 2K/4K IDAW (Roger Bowler)
+<li>ESAME 5-level DAT (Roger Bowler)
+<li>ESAME ASN authorization and ALET translation (Roger Bowler)
+<li>ESAME linkage-stack instructions (Roger Bowler)
+<li>ESAME subspace replacement (Roger Bowler)
+<li>ESAME DUCT format changes (Roger Bowler)
+<li>Unloaded tape drive support (Brandon Hill)
+<li>Extended floating point (Peter Kuschnerus)
+<li>Divide Single instructions (Jan Jaeger)
+<li>EPSW instruction (Roger Bowler)
+<li>Compressed CKD updates (Greg Smith)
+<li>Timer update correction (Valery Pogonchenko)
+<li>Fix MVCLE instruction (Jan Jaeger)
+<li>Interval Timer fix (Bob Abeles)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-2.10.tar.gz">hercules-2.10.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.71</h2>
+<p>Release date: 18 January 2001
+<ul>
+<li> Compressed CKD DASD support release 2, with improved performance, shadow
+file support, and better reliability (Greg Smith)
+<li> Hercules Emulated Tape format support (Leland Lucius)
+<li> Make HET bzip2 compression optional, analogous to CCKD bzip2 (Jay
+Maynard)
+<li> Fix for track overflow record zeroing (Roger Bowler)
+<li> Clarified licensing discussion in FAQ (Roger Bowler)
+<li> Treat printer X'37' CCW as NOP (Jay Maynard, suggested by Brandon Hill)
+<li> Treat X'E503' MVS/XA assist instruction as no-op (Jay Maynard, suggested
+by Brandon Hill)
+<li> Read commands from hercules.rc at startup (Willem Konynenberg)
+<li> New tapelist program prints contents of 80-byte record tapes (Jim
+Morrison)
+<li> Increased MAXDBLK from 3000 to 40000 and MAXTTR from 10000 to 40000 in
+dasdload (Volker Bandke)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.71.tar.gz">hercules-1.71.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.70</h2>
+<p>Release date: 3 December 2000
+<ul>
+<li>New file hercwin32.zip contains build scripts for Win32 version (Volker
+Bandke)
+<li>More performance enhancements (Juergen Dobrinski)
+<li>ALS-1 and ALS-2 support completion (Roger Bowler and Jan Jaeger)
+<li>Extended Translation Facility (Roger Bowler)
+<li>Pick up correct float.c module (Jay Maynard for Peter Kuschnerus)
+<li>Distribute Windows binaries as well as Linux (Jay Maynard)
+<li>Fix orienting bug in CKD DASD search CCW processing (Bob Abeles)
+<li>Obtain TOD clock lock when accessing or updating 370 interval timer (Bob
+Abeles)
+<li>Change license to the QPL Open Source Definition-compliant license (Roger
+Bowler, Jay Maynard, and Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.70.tar.gz">hercules-1.70.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.69</h2>
+<p>Release date: 29 October 2000
+<ul>
+<li>Correct AXR and SXR instruction results when significance exception
+    raised (Peter Kuschnerus, with help from Mario Bezzi)
+<li>Correct CD and CDR instruction condition code logic (Peter Kuschnerus)
+<li>Do not generate support for square root instructions in 370 mode (Peter
+    Kuschnerus)
+<li>Floating point arithmetic tuning (Peter Kuschnerus)
+<li>Performance optimization fixes (Juergen Dobrinski)
+<li>Spelling corrections (Adam Thornton)
+<li>Fixed version number (Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.69.tar.gz">hercules-1.69.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.68</h2>
+<p>Release date: 8 October 2000
+<ul>
+<li>Rewritten and updated FAQ (Dave Morton)
+<li>Compressed CKD DASD support (Greg Smith)
+<li>Many performance improvements (Juergen Dobrinski, with help from
+    Albert Louw and Valery Pogonchenko)
+<li>DASD I/O optimizations (Greg Smith and Malcolm Beattie)
+<li>Simplified building on non-Intel architectures (Jay Maynard)
+<li>Fix for random bug in MP instruction (Mario Bezzi)
+<li>Treat all 3505 card reader read CCWs the same (Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.68.tar.gz">hercules-1.68.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.67</h2>
+<p>Release date: 4 September 2000
+<ul>
+<li>Win32 portability changes (John Kozak)
+<li>Fix for 64K segment length checking in 370 DAT (Jay Maynard, found by
+Mario Bezzi)
+<li>Fix for TPI storing interrupt code when no interrupt pending (Jay
+Maynard, found by Greg Smith)
+<li>Skip to channel 9 and 12 support (Roger Bowler)
+<li>Panel refresh rate speedup and command (Reed Petty)
+<li>Fix storage protection override on fetch (Jan Jaeger)
+<li>SIE support, with S/370 and ESA/390 modes and vector support (Jan Jaeger)
+<li>Bugfix for MXR instruction (by Peter Kuschnerus)
+<li>CONCS, DISCS and RCHP instructions (Jan Jaeger)
+<li>Fix flags on intermediate subchannel status (Jan Jaeger)
+<li>Break SYSCONS output lines when too long (Jan Jaeger)
+<li>Floating point instructions SQDR and SQER (by Peter Kuschnerus)
+<li>Lock Page instruction (Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.67.tar.gz">hercules-1.67.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.66</h2>
+<p>Release date: 3 August 2000
+<ul>
+<li>Simplify logmsg and DEVTRACE macro definitions (Jay Maynard)
+<li>Prevent incorrect length indication on CONTROL NOP CCW (Jay Maynard)
+<li>Complete 370 HIO processing (Jay Maynard)
+<li>Correct nullification of TPI and TSCH (Jan Jaeger)
+<li>Add device locking to MSCH (Jan Jaeger)
+<li>Correct TPROT instruction (Jan Jaeger)
+<li>Correct address wrapping on assist instructions (Jan Jaeger)
+<li>Change interrupt logic to use longjmp on all interrupts (Jan Jaeger)
+<li>Clear remainder of ASTE when loading ASTE with ASF=0 in translate_asn
+(Jan Jaeger)
+<li>Add (incomplete) PLO instruction (Jan Jaeger)
+<li>Fix CLCL interruption problem (Jan Jaeger)
+<li>Fix addresswrap in MVO (Jan Jaeger)
+<li>Make ED and EDMK perform a trial run (Jan Jaeger)
+<li>Fix address wraparound in MVO (Jan Jaeger)
+<li>Fix CR15 corruption in form_stack_entry, fix nullification in
+form_stack_entry and unstack_registers (Jan Jaeger)
+<li>Fix loss of interrupts in PR (Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.66.tar.gz">hercules-1.66.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.65</h2>
+<p>Release date: 22 July 2000
+<ul>
+<li> Track overflow processing fixes (by Jay Maynard, suggested by Valery
+Pogonchenko)
+<li> Added TOD clock update to STCK, STCKE, DIAG 204, and TRACE processing
+(by Jay Maynard)
+<li> Fixed READ DEVICE CHARACTERISTICS alternate track values for 3380 and
+3390 (by Peter Macdonald)
+<li> Skeletal CMPSC instruction (by Bernard van der Helm)
+<li> Added support for 3340 and 3375 DASD (by Jay Maynard, with help from
+Rick Fochtman and David Cole)
+<li> Corrected interval timer update increment (by Jay Maynard)
+<li> float.c optimization for new instruction decode and execution (by Peter
+Kuschnerus)
+<li> Fix program check on TIC ccw (by Jan Jaeger)
+<li> Fix program check on NOP ccw (by Jan Jaeger)
+<li> Instruction decode & execution restructure (by Jan Jaeger)
+<li> Added -fomit-frame-pointer to compiles for improved performance (by Jan
+Jaeger)
+<li> Fix STCKE instruction (by Bernard van der Helm)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.65.tar.gz">hercules-1.65.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.64</h2>
+<p>Release date: 4 July 2000
+<ul>
+<li> Added track overflow processing for CKD DASD (by Jay Maynard)
+<li> Makefile change to allow RPM building with RPM_BUILD_ROOT
+(by David Barth)
+<li> Added NetBSD build definitions to makefile (by Soren Jorvang)
+<li> Moved version definition to version.h and removed
+makefile dependency for source modules (by Jay Maynard)
+<li> Package change: tarball now explodes into hercules-&lt;version&gt;
+subdirectory (by Jay Maynard, suggested by Soren Jorvang)
+<li> Fix backward going TOD clock (by Jan Jaeger)
+<li> Suppress superflous HHC701/HHC702 messages (by Jan Jaeger)
+<li> Rework cpu.c to decode instructions by macro (by Jan Jaeger)
+<li> Bypass bug in IBM telnet client (by Jan Jaeger)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.64.tar.gz">hercules-1.64.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.63</h2>
+<p>Release date: 18 June 2000
+<ul>
+<li>3270 CCW processing improvements (by Jan Jaeger)
+<li>OSTAILOR generalization, and new pgmtrace panel command (by Jan Jaeger)
+<li>VM IUCV instruction correction and DIAGNOSE improvements (by Jan Jaeger)
+<li>CPU timer and clock comparator improvements (by Jan Jaeger, after a
+suggestion by Willem Konynenberg)
+<li>3480 READ BLOCK ID and LOCATE CCW support (by Brandon Hill)
+<li>Networking support via virtual CTCA (by Willem Konynenberg)
+<li>Restructured CPU execution, by function call instead of switch statement
+(by Mike Noel)
+<li>Support for IEBCOPY sequential output datasets in dasdload (by Ronen
+Tzur)
+<li>New dasdls command lists the VTOC of a CKD DASD volume (by Malcolm
+Beattie)
+<li>New AWSTAPE handling commands: tapesplt, tapemap (by Jay Maynard)
+<li><code>make install</code> target to install in /usr/bin (by Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.63.tar.gz">hercules-1.63.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.62</h2>
+<p>Release date: 3 June 2000
+<ul>
+<li>Still more multiprocessor improvements (by Jan Jaeger)
+<lI>Dynamic CPU reconfiguration (by Jan Jaeger)
+<lI>Basic vector facility (by Jan Jaeger)
+<li>Floating point version 6 (by Peter Kuschnerus)
+<li>READ AND RESET BUFFERED LOG CCW (X'A4') support (by Jay Maynard)
+<li>WRITE SPECIAL CKD CCW (X'01') support (by Jay Maynard)
+<li>FBA DASD model reporting fixes (by Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.62.tar.gz">hercules-1.62.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.61</h2>
+<p>Release date: 21 May 2000
+<ul>
+<li>More multiprocessor improvements (by Jan Jaeger)
+<li>New startall/stopall panel commands (by Jan Jaeger)
+<li>STIDP stores processor address in first digit of CPU id
+    (by Roger Bowler)
+<li>Correction to IPTE instruction for S/370 (by Jay Maynard)
+<li>Dummy HIO instruction for S/370 (by Jay Maynard)
+<li>Support for emulated 0671 FBA DASD (by Jay Maynard)
+<li>FBA device reserve/release CCW support (by Jay Maynard)
+<li>New OSTAILOR configuration option allows selective suppression
+    of program check messages (by Jay Maynard)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.61.tar.gz">hercules-1.61.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.60</h2>
+<p>Release date: 14 May 2000
+<ul>
+<li>Multiprocessor locking improvements (by Jan Jaeger)
+<li>Machine check and channel report word (by Jan Jaeger)
+<li>Store Channel Report Word (STCRW) instruction (by Jan Jaeger)
+<li>New attach/detach/define commands to allow dynamic addition
+    and deletion of devices from the configuration (by Jan Jaeger)
+<li>Compare and Swap and Purge (CSP) instruction (by Jan Jaeger)
+<li>Broadcasted purging (by Jan Jaeger)
+<li>Fix LASP instruction SASN authorization using wrong AX if bits 29-31
+    are 010 and SASN \= PASN (by Mario Bezzi)
+<li>Fix SAC instruction special operation exception setting secondary
+    space mode when ASF=0 (by Mario Bezzi)
+<li>Remove intdrag option and replace drag command by toddrag command
+<li>New extpending flag to improve performance (originally contributed
+    by Valery Pogonchenko and enhanced by Jan Jaeger)
+<li>Allow longer host name in console connected message (by Jay Maynard)
+<li>Floating point version 5 including fixes by Mario Bezzi
+    (contributed by Peter Kuschnerus)
+</ul>
+<p>Download: &nbsp;
+<a href="http://www.hercules-390.org/hercules-1.60.tar.gz">hercules-1.60.tar.gz</a>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.59</h2>
+<p>Release date: 30 Apr 2000
+<ul>
+<li>Missing interrupt after CSCH instruction
+<li>S/370 DAT support (contributed by Jay Maynard)
+<li>Tape device sense byte improvements (by Jan Jaeger)
+<li>Read Buffered Log (CCW X'24') for tape devices (by Jan Jaeger)
+<li>Reject Sense ID CCW for 3420 tape devices (by Jan Jaeger)
+<li>Suppress unprintable character in HMC messages (by Jan Jaeger)
+<li>Suppress attention interrupt if subchannel not enabled
+    (by Roger Bowler)
+<li>New interrupt drag factor to improve performance (by Roger Bowler)
+<li>New toddrag and intdrag config options and drag control panel
+    command allow drag factors to be set (by Roger Bowler)
+<li>Light optimization on CPU critical path (by Valery Pogonchenko)
+<li>Eliminate fetch protection override in S/370 mode
+    (by Valery Pogonchenko)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.58</h2>
+<p>Release date: 22 Apr 2000
+<ul>
+<li>Support for CKD DASD volumes exceeding 2GB such as 3390-3
+    (by Roger Bowler)
+<li>3274-1D SELECT RB/RMP/RBP/WRT commands (by Roger Bowler)
+<li>Support for 3270 14-bit SBA addressing and inbound SFE order
+    (by Roger Bowler)
+<li>Command reject if Write Structured Field CCW issued to a
+    3270 without extended attributes (by Roger Bowler)
+<li>Fix missing CSW_IL indication when CCW count exhausted
+    (by Roger Bowler)
+<li>Do not set unit exception if CCW count is zero (by Jan Jaeger)
+<li>Suppress space switch event program check messages (by Jan Jaeger)
+<li>Branch tracing and cross memory tracing for
+    BALR, BASR, BASSM, BAKR, BSA, BSG, SSAR, PC, PT, PR instructions
+    (by Jan Jaeger)
+<li>New diagnose instruction to stop CPU (by Jan Jaeger)
+<li>Drag factor option slows down TOD clock, to decrease overhead
+    on very slow machines (by Jan Jaeger)
+<li>Correction to PR instruction (by Jan Jaeger)
+<li>Correction to LASP instruction (by Jan Jaeger)
+<li>Make CLCLE/MVCLE/CKSM instructions conditional features
+    (by Jan Jaeger)
+<li>Enable channel measurement mode (by Jan Jaeger)
+<li>Modify program_check() to handle shadow registers correctly
+    (by Jan Jaeger)
+<li>Change DAT to favour PSTD in TEA, to give reduction in page
+    fault path length (by Jan Jaeger)
+<li>Avoid clearing registers at CPU reset (by Jan Jaeger)
+<li>Leave GPR, AR and FPR intact during CPU reset for SADUMP
+    (by Jan Jaeger)
+<li>Zeroize field for called space identification in PC stack entry
+    (by Jan Jaeger)
+<li>New CCW X'8D' (Write Update Key and Data) required by STOW
+    (by Jan Jaeger)
+<li>Fix for 0B7 abend in D M=CHP command (by Jan Jaeger)
+<li>Floating point version 4 including fixes by Valery Pogonchenko
+    (contributed by Peter Kuschnerus)
+<li>Fix incorrect second operand address in MVCIN instruction
+    (by Roger Bowler)
+<li>Correct sign of zero result in SRP instruction
+    (by Roger Bowler)
+<li>Erase Gap (CCW X'17') for tape devices (by Roger Bowler)
+<li>Activate MIPS counter on control panel (by Dutch Owen)
+<li>Suppress tracing of ISK, SCK, and DP instructions
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.57</h2>
+<p>Release date: 30 Mar 2000
+<ul>
+<li>Fix program check 0032 due to wrong stack entry being updated
+<li>Fix wrong SSTD loaded by LASP instruction (found by Jan Jaeger)
+<li>Bypass main storage lock in single CP configuration (by Jan Jaeger)
+<li>Fix incorrect condition code in PGIN instruction (by Jan Jaeger)
+<li>Corrections to expanded storage instructions (by Jan Jaeger)
+<li>New STCPS and SCHM instructions (by Jan Jaeger)
+<li>Set more appropriate sense bytes for tape errors
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.56</h2>
+<p>Release date: 28 Mar 2000
+<ul>
+<li>Fix incorrect unit exception on SCSI tape FSB/BSB CCW
+    (reported by Daniel Rudin)
+<li>Fix unit check on AWSTAPE write (reported by Axel Schwarzer)
+<li>Close SCSI tape after tape is ejected
+<li>Detect tapemark during SCSI tape FSB/BSB CCW
+<li>Suppress HMC response prompt (by Jan Jaeger)
+<li>Expanded storage support (by Jan Jaeger)
+<li>Move Page Facility 2
+<li>Correct signed length error in MVCK/MVCS/MVCP (by Jan Jaeger)
+<li>Undetected CC=3 in SRP instruction
+<li>Wrong remainder in DP instruction when dividend is less
+    than divisor
+<li>Specification exception in DP instruction should have higher
+    priority than data exception
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.55</h2>
+<p>Release date: 22 Mar 2000
+<ul>
+<li>FBA minidisk support
+<li>Additional diagnose functions
+<li>Allow real storage frames to be marked unusable (by Jan Jaeger)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.54</h2>
+<p>Release date: 18 Mar 2000
+<ul>
+<li>Address wraparound improvement (contributed by Jan Jaeger)
+<li>Floating point version 3 (contributed by Peter Kuschnerus)
+<li>Correction to SLDA/SRA instructions (contributed by Jan Jaeger)
+<li>Recognize tabs and end-of-file character in ASCII cardrdr files
+<li>Hercules-specific diagnose instructions (contributed by Jay Maynard)
+<li>Correct missing timer interrupt when interval timer goes from
+    zero to negative (thanks to Valery Pogonchenko)
+<li>Enable HMC system console in S/370 mode
+<li>Correct sign propagation in multiply instruction
+<li>Reduce CPU thread priority (thanks to Steve Gay and Reed H.Petty)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.53</h2>
+<p>Release date: 01 Mar 2000
+<ul>
+<li>Add BSF/FSF/BSB/FSB CCW support for tape devices
+<li>Allow final short block in OMA fixed block files
+<li>Allow processing of read-only AWSTAPE files and SCSI tapes
+<li>Skeleton ctcadpt module for future 3088 support
+<li>Correctly nullify IC/NI/OI/XI/CLM/STCM/ICM/TRT instructions
+    on page translation exception (thanks to Jan Jaeger)
+<li>Improved floating point support (contributed by Peter Kuschnerus)
+<li>Correct shift result when shift count exceeds 31 (thanks to
+    Glen Herrmannsfeldt and Jay Maynard)
+<li>Fix incorrect MVCL cc=3 when destination length is 1
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.52</h2>
+<p>Release date: 19 Feb 2000
+<ul>
+<li>Prevent incorrect length indication on 3270 Select CCW
+<li>2K storage protection for S/370
+<li>Prevent wait for console port (thanks to Malcolm Beattie)
+<li>Allow keyword parameters in configuration file
+<li>New sysepoch and tzoffset parameters (thanks to Jay Maynard)
+<li>Adjust TRACE and DIAG204 for extended TOD (thanks to Jan Jaeger)
+<li>Set TOD clock in SCK instruction (thanks to Jan Jaeger)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.51</h2>
+<p>Release date: 15 Feb 2000
+<ul>
+<li>3270 read buffer fix for OS/360 NIP
+<li>Floating point instructions (contributed by Peter Kuschnerus)
+<li>Remove 32-bit pointer dependency from dasdload for Alpha
+<li>HMC system console support (contributed by Jan Jaeger)
+<li>Correct condition code after decimal overflow (thanks to Jan Jaeger)
+<li>Set reference and change bits for PSA access (thanks to Jan Jaeger)
+<li>New CRLF option for printer and card punch (default is now LF)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.50</h2>
+<p>Release date: 10 Feb 2000
+<ul>
+<li>Remove interval timer debugging message
+<li>Fix hung console resulting from attention interrupt fix in 1.49
+<li>Seek and Set Sector (CCW=27) for Itel 7330 DASD controller
+<li>Correct SIGP handling of non-existent CPUs (thanks to Jan Jaeger)
+<li>Extended TOD clock bit in processor features (thanks to Jan Jaeger)
+<li>Alternate control panel help text (contributed by Dutch Owen)
+<li>Card reader end of file option (thanks to Dutch Owen)
+<li>Card reader ASCII/EBCDIC auto-detection
+<li>Fix SIGP RESTART to target correct CPU (thanks to Jan Jaeger)
+<li>Allow VTOC size and location to be specified for dasdload.
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.49</h2>
+<p>Release date: 05 Feb 2000
+<ul>
+<li>Alternate control panel (contributed by Dutch Owen)
+<li>Present attention interrupt when console connects
+<li>Fix dasdload CVOL logic (thanks to Jay Maynard)
+<li>Fix dasdload initialization of empty PDS
+<li>Allow device size to be specified for dasdload
+    <em>Note: the volser record in the pack layout file must
+    be changed to specify the device type and cylinder count;
+    the device type is no longer specified on the command line.</em>
+<li>Add dummy Set Clock instruction (does nothing except set cc 0)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.48</h2>
+<p>Release date: 31 Jan 2000
+<ul>
+<li>Fix dasdload to handle note lists (prevent 32D abend)
+<li>I/O interrupt performance enhancement
+<li>Correctly detect overflow in signed Add/Subtract instructions
+<li>Fix track overflow problem
+<li>3270 Read Modified CCW
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.47</h2>
+<p>Release date: 23 Jan 2000
+<ul>
+<li>Allow tn3270 or telnet client to connect to specific device number
+<li>Align control panel instruction counter (thanks to Mario Bezzi)
+<li>Ensure panel display does not corrupt TEA (by Jan Jaeger)
+<li>STIDP incorrectly propagates high order bit of CPU model
+    (fixed by Jan Jaeger)
+<li>Fix byte-ordering problem with CKD DASD header on non-Intel
+    machines (reported by Adam Thornton)
+<li>STIDC instruction
+<li>Extended TOD clock (STCKE and SCKPF instructions)
+<li>3211 Load FCB and Diagnostic Read CCW
+<li>3270 Read Buffer CCW
+<li>Fix console.c to inhibit input while console has status pending
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.46</h2>
+<p>Release date: 11 Jan 2000
+<ul>
+<li>HSCH instruction
+<li>SIGP instruction
+<li>Suppress tracing of page faults
+<li>Display control registers and access registers after program check
+<li>Add regs parameter to program_check function calls
+<li>New panel command to perform store status function
+<li>Suppress tracing of CCW file protect and end of cylinder errors
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.45</h2>
+<p>Release date: 08 Jan 2000
+<ul>
+<li>Make MVCL/CLCL interruptible (contributed by Jan Jaeger)
+<li>Diagnose 204 (contributed by Jan Jaeger)
+<li>Read Channel Subsystem Info (contributed by Jan Jaeger)
+<li>Fix incorrect register count in TRACE instruction
+<li>Correct nullification of STM/LM/LAM/STAM/STCTL/LCTL/STCM and SS
+    instructions whose operands cross a page boundary
+<li>Suppression on Protection with Virtual-Address enhancement
+<li>Select correct address space for MVCS/MVCP (fixed by Jan Jaeger)
+<li>Correct registers after CLCL/CLCLE with non-zero condition code
+<li>Defer clock comparator interrupt while instruction stepping
+<li>Remove 32K limit on data chained write CCWs for non-CKD devices
+<li>Correct overrun error on data chained write for FBA DASD
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.44</h2>
+<p>Release date: 01 Jan 2000
+<ul>
+<li>Support for 9336 FBA DASD
+<li>Read Replicated Data command for FBA DASD
+<li>Prevent recursive program check after instruction fetch error
+<li>Operand tracing for MVCL/CLCL and RRE instructions
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.43</h2>
+<p>Release date: 27 Dec 1999
+<ul>
+<li>New control panel command: devlist
+<li>Write Update Data (X'85') CCW for CKD devices
+<li>Makefile changed to use $(CC) instead of cc
+<li>Fix dat.c to prevent ASN translation specification exception
+    (program check X'0017') if subspace group facility is installed
+    and ASF is one
+<li>Fix cpu.c to clear ILC before fetching instruction to prevent PSW
+    being backed up if access error occurs during instruction fetch
+<li>Correct program check ILC when instruction is nullified
+<li>Obtain CPU model number for STIDP from configuration file
+    (contributed by Jay Maynard)
+    <em>Note: if upgrading from an earlier release, you must change
+    your hercules.cnf file to add a valid CPU model number after the
+    CPU serial number</em>
+<li>Prevent wait after devinit (thanks to Jay Maynard)
+<li>Open printer with O_SYNC to ensure buffers flushed
+    (suggested by Daniel Seagraves)
+<li>Fix xmem.c to prevent loop in program_call when loading 4-word ETE
+    (thanks to Jan Jaeger)
+<li>Improved TLB lookup (contributed by Jan Jaeger)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.42</h2>
+<p>Release date: 16 Dec 1999
+<ul>
+<li>New makefile builds both S/370 and ESA/390 executables:
+    hercules-370 and hercules-390 (contributed by Jay Maynard)
+<li>3480 Set Path Group Id and Unassign CCWs
+    (contributed by Jan Jaeger)
+<li>CFC and UPT instructions (contributed by Peter Kuschnerus)
+<li>Card punch support
+<li>Erase (X'11') CCW for CKD devices
+<li>Correct setting of translation exception address
+<li>Correct file mode when opening printer file
+<li>Correct condition code for shift arithmetic instructions
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.41</h2>
+<p>Release date: 07 Dec 1999
+<ul>
+<li>Set reference and change bits correctly for main storage accesses
+    by channel, dat, xmem, stack, block, and service modules (thanks
+    to Jan Jaeger)
+<li>New devinit command (contributed by Jay Maynard)
+<li>Reject control panel virtual storage display command if CR1=0
+<li>Fix dasdload to correctly write EOF record for empty file
+    and to correctly fill block overhead fields in format4 DSCB.
+<li>Diagnose functions MSSFCALL and SCPEND (contributed by Jan Jaeger)
+<li>Corrections to service.c and assist.c (contributed by Jan Jaeger)
+<li>Alpha platform portability definitions (contributed by Jay Maynard)
+<li>3480 Assign CCW (thanks to Rick McKelvy)
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.40</h2>
+<p>Release date: 30 Nov 1999
+<ul>
+<li>New DASDISUP program performs OS/360 IEHIOSUP function
+<li>Correct SCSW handling for suspend/resume
+<li>Forward space file CCW for tape devices
+<li>3480 load display CCW (contributed by Jan Jaeger)
+    and sense path group id CCW (thanks to Rick McKelvy)
+<li>Correct handling of OMA tape headers to correctly recognize
+    tape mark and to align headers to 16-byte boundary
+<li>EBCDIC character translation of CCW data displays
+<li>Fix command reject for CKD read commands outside the domain
+    of a locate record
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.39</h2>
+<p>Release date: 24 Nov 1999
+<ul>
+<li>Concurrent sense
+<li>I/O initial status interruption
+<li>Channel program suspend/resume function and RSCH instruction
+<li>Read Device Characteristics CCW for 3480
+<li>Fix incorrect command reject on Sense Subsystem Status CCW
+<li>Increase 3270 write buffer size to prevent console I/O error
+    when using Zap function of ZZSA
+<li>Fix <i>very</i> nasty error in dat.c causing wrong bytes to
+    be fetched or stored when operand crosses page boundary
+<li>Remove temporary fix to ckddasd.c introduced in 1.37
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.38</h2>
+<p>Release date: 22 Nov 1999
+<ul>
+<li>New panel commands to allow storage alteration
+<li>Fix incorrect I/O parameter on attention interrupt
+    (thanks to Jan Jaeger for reporting this bug)
+<li>Clear PMCW correctly during I/O reset
+<li>Change 3270 control unit type to 3274-1D
+<li>Fix restart command broken by 1.37
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.37</h2>
+<p>Release date: 19 Nov 1999
+<ul>
+<li>Storage range display
+<li>EBCDIC character translation of storage displays
+<li>New breakpoint command (contributed by Dan Horak)
+<li>Messages go to log file as well as screen if stdout is redirected
+<li>Fix missing interrupt caused by channel.c failing to obtain device
+    lock before setting interrupt pending
+<li>Fix incorrect cond code 1 in attention SCSW built by console.c
+<li>New Read Channel Path Information service call
+<li>Temporary fix to ckddasd.c multitrack search
+<li>Addition of Read Device Characteristics and Sense Subsystem
+    Status commands for CKD devices
+<li>New DASDPDSU program to unload PDS members from a CKD volume
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.36</h2>
+<p>Release date: 12 Nov 1999
+<ul>
+<li>Clear subchannel instruction
+<li>Correct fault causing control panel display corruption
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.35</h2>
+<p>Release date: 09 Nov 1999
+<ul>
+<li>Improved control panel user interface
+<li>New control panel commands: start, stop, restart, ipl, loadparm
+<li>New loadcore command to load disk image files
+<li>S/370 interval timer
+<li>Allow 31-bit mode linkage in lock instructions
+<li>Support for PCI in ESA/390 mode as well as S/370 mode
+<li>Correct problem causing false channel protection checks
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.34</h2>
+<p>Release date: 29 Oct 1999
+<ul>
+<li>New DASDLOAD program to create a CKD volume from unloaded PDS files
+<li>Correct CKD module to prevent record not found error on
+    multitrack Read Count CCW
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.33</h2>
+<p>Release date: 26 Oct 1999
+<ul>
+<li>Write support for SCSI tapes and AWSTAPE files
+<li>Correct handling of REWIND command for AWSTAPE files
+<li>Correct nasty bug in Subtract Logical instruction (thanks
+    to Roland Goetschi for finding this bug)
+<li>Ensure unique TOD clock values for Store Clock
+<li>Correction to unstacking process for PR instruction
+<li>Implementation of Read Multiple CKD command
+</ul>
+
+<!-- ---------------------------------------------------------------------------- -->
+
+<h2>What's new in Version 1.32</h2>
+<p>Release date: 18 Oct 1999
+<ul>
+<li>Support for virtual tapes in OMA (Optical Media Attach) format
+<li>SCSI tape support (read-only)
+<li>Minor corrections to CKD DASD support
+</ul>
+
+<p><center><hr width=15% noshade></center>
+<p>
+If you have a question about Hercules, see the
+<a href="hercfaq.html">Hercules Frequently-Asked Questions</a> page.
+
+<p><center><hr width=15% noshade>
+<a href="##" onclick="history.go(-1)"><img src="images/back.gif" border=0 alt="back"></a>
+<p class="lastupd"><script language="Javascript">
+document.write( "Last updated " + document.lastModified + "" );
+</script></p>
+</BODY>
+</HTML>

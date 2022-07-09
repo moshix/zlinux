@@ -1,0 +1,89 @@
+#_preseed_V1
+
+d-i debconf/priority string critical
+d-i auto-install/enable boolean true
+
+d-i apt-setup/proposed boolean false
+d-i pkgsel/update-policy select none
+
+# localization
+d-i debian-installer/language string en
+d-i debian-installer/country string US
+d-i debian-installer/locale string en_US.UTF-8
+
+# activate CTC networking
+d-i s390-netdevice/choose_networktype string ctc
+d-i s390-netdevice/ctc/choose_read  select  0.0.0a00
+d-i s390-netdevice/ctc/choose_write select  0.0.0a01
+d-i s390-netdevice/ctc/protocol     select  Linux (1)
+
+# use static network configuration
+d-i netcfg/choose_interface select auto
+d-i netcfg/disable_autoconfig boolean true
+d-i netcfg/get_ipaddress string 10.1.1.2
+d-i netcfg/get_netmask string 255.255.255.0
+d-i netcfg/get_gateway string 10.1.1.1
+d-i netcfg/get_nameservers string 1.1.1.1 8.8.8.8
+d-i netcfg/confirm_static boolean true
+d-i netcfg/hostname string zlinux
+
+# provide network-console password
+# only used during installation -- not carried through to installed system
+d-i network-console/password password install
+d-i network-console/password-again password install
+d-i network-console/start note
+
+# user setup
+d-i passwd/user-fullname string zubuntu
+d-i passwd/username string zubuntu
+d-i passwd/user-password-crypted password $6$7Vm6IdAyUitBN8g7$i0o.m3yLmt0jmrDfBDLUDMp629BydltfkNOnUKNA/b3gC7GYOQ7vBIFUJeMpJ5GP4F4E/YCfHye9Nt0641E5C.
+d-i user-setup/allow-password-weak boolean true
+d-i user-setup/encrypt-home boolean false
+
+# enable shadow passwords
+d-i passwd/shadow boolean true
+
+# hw clock
+d-i clock-setup/utc boolean true
+# time zone
+d-i time/zone string UTC
+
+# release to install
+d-i mirror/suite string bionic
+
+# do not enable live installer, use normal instead
+d-i live-installer/enable boolean false
+
+# activate DASD, dasdfmt if needed
+d-i s390-dasd/dasd string 0.0.0120
+
+# DASD configuration
+d-i s390-dasd/auto-format boolean true
+d-i s390-dasd/force-format boolean true
+
+# overwrite old RAIDs and LVMs ....
+d-i partman-md/device_remove_md boolean true
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+# auto-partition, all files in one partition
+d-i partman-auto/method string regular
+d-i partman-auto/choose_recipe select atomic
+d-i partman/choose_partition select finish
+d-i partman/confirm_nooverwrite boolean true
+d-i partman/confirm boolean true
+
+# software selection
+d-i tasksel/first multiselect standard system utilities, OpenSSH server, \
+Basic Ubuntu server
+
+# don't prompt for restarting services when libraries are updated.
+# also need to explicitly tell it restarting ssh is allowed
+d-i libraries/restart-without-asking boolean true
+d-i libssl1.1/restart-services ssh
+
+# reboot at the end
+d-i finish-install/reboot_in_progress note
+
+

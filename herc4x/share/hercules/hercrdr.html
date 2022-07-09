@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><TITLE>
+Hercules: Socket Reader
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="icon" href="images/favicon.ico" />
+</HEAD><BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0" VLINK="#008040" ALINK="#000000">
+
+<h1>Hercules Version 4: Submitting jobs via the socket reader</h1>
+<p>
+The "sockdev" option allows you to submit cards directly to a Hercules
+card reader from outside of Hercules.  What you do is define your reader
+with the "sockdev" keyword and either a TCP/IP port number or the name
+of a Unix Domain Socket.  Then whenever you want to submit a card deck
+to that particular card reader, you use an external program to connect
+to the socket and transmit the cards to the reader.
+<p>
+Socket readers were implemented by Fish, based upon code originally
+contributed by Malcolm Beattie.
+<p>
+Socket readers are defined in the Hercules configuration file like this:
+<p>
+<blockquote>
+    <code>
+        <i>devnum</i> <i>devtype</i> <i>sockspec</i> sockdev [<i>option ...</i>]
+    </code>
+</blockquote>
+<p>
+The socket specification <i>sockspec</i> can take any of the following
+formats:
+<blockquote>
+<dl>
+    <dt><code><em>ipaddr</em>:<em>port</em></code>
+        <dd><p>The reader listens on the specified IP address and port number.
+        <em>ipaddr</em> must be the IP address of an interface on the local
+        system.
+        For example, <code>127.0.0.1:1234</code> to accept only jobs submitted
+        locally via the loopback interface.
+        <p>
+    <dt><code><em>hostname</em>:<em>port</em></code>
+        <dd><p>Similar to the previous example, where <em>hostname</em> must resolve
+        to an IP address belonging to the local system.
+        Example: <code>localhost:1234</code>.
+        <p>
+    <dt><code><em>port</em></code>
+        <dd><p>The reader listens on the specified port number and accepts jobs
+        submitted to any IP address defined on the local system.
+        Example: <code>1234</code>.
+        <p>
+    <dt><code><em>sockpath/sockname</em></code>
+        <dd><p>The reader listens on the specified Unix Domain Socket.
+        Example: <code>/tmp/hercrdr.00C</code>.
+        <p>
+</dl>
+</blockquote>
+<h3>Examples</h3>
+<pre><code>
+    000A   2501   127.0.0.1:2501    sockdev  ascii  trunc  eof
+    000C   3505   localhost:1234    sockdev  ascii  trunc  eof
+    0012   3505   3505              sockdev  ascii  trunc  eof
+    0014   2501   /tmp/hercrdr.014  sockdev  ascii  trunc  eof
+</code></pre>
+
+<h2>Submitting jobs from Windows</h2>
+<p>
+The "HercRdr" program, distributed as part of Fish's
+<a href="http://www.softdevlabs.com/hercgui">GUI Package</a>,
+allows you to send jobs to a socket reader via TCP/IP.
+Simply enter "HercRdr" from the command line to submit your file(s).
+Here's the "help information" that's displayed whenever you enter
+"HercRdr" without any parameters:
+
+<pre><code>
+    C:\WINDOWS>hercrdr
+    Submits card file(s) to a Hercules card reader bound to a given socket:port.
+
+    Format:
+
+     HERCRDR [-nnn] [host:port] file [file...]
+
+    Where:
+
+     -nnn timeout value in seconds (1-999; default is 3)
+     host:port sock_spec of target reader (if not specified,
+     value of HERCRDR environ var is used, if set)
+     file file(s) to be submitted
+
+    Examples:
+
+     HERCRDR localhost:1234 fileone.txt filetwo.txt
+     set HERCRDR=localhost:1234
+     HERCRDR file3.txt file4.txt
+     HERCRDR override:5678 filefive.txt
+     HERCRDR 192.168.0.1:5678 666.txt 777.txt 888.txt 999.txt
+
+    Returns:
+
+     -1 unclassified error
+     0 file(s) successfully submitted
+     1 no route to host (bad sock_spec or connection refused)
+     2 timeout value exceeded while trying to connect
+     3 transmission error (e.g. connection prematurely closed)
+     4 file not found (or other file error)
+
+</code></pre>
+
+
+<h3>How to submit jobs directly from SPF/PC</h3>
+<p>
+If you are lucky enough to have a copy of
+SPF/PC Version 4 or SPF/Pro (produced by
+<a href="http://www.command-technology.com/ctcinfo.htm">CTC</a>
+but unfortunately no longer available),
+then you can capture the authentic mainframe experience by submitting
+jobs directly from your edit session.  The SUB command can be implemented
+by means of a REXX macro, such as this one provided by Volker Bandke:
+<pre><code>
+    /* +----------------------------- REXX -----------------------------+ */
+    /*                                                                    */
+    /*      Name: D:\APPS\SPFPRO\REXX\USER\SUB.SPF                        */
+    /*                                                                    */
+    /*      Type: SPF edit macro                                          */
+    /*                                                                    */
+    /*      Desc: submit JCL to MVS 3.8                                   */
+    /*                                                                    */
+    /*      Creation date: 24 Aug 1999, creation time: 18:49:40           */
+    /*                                                                    */
+    /*      Author: (c) Volker Bandke                                     */
+    /*                                                                    */
+    /* +----------------------------------------------------------------+ */
+    'isredit macro (p1 p2 p3 p4 p5 p6 p7 p8 p9)'
+    "ISREDIT (member) = MEMBER"
+    "ISPEXEC CONTROL ERRORS CANCEL"
+    parse upper var member file '.' ext
+    do
+    'ISREDIT REPLACE' $$$$$$$$.SPF '.ZF .ZL'
+    ADDRESS "CMD" "HERCRDR 192.168.1.102:3505 $$$$$$$$.SPF"
+    zedsmsg = 'File submitted'
+    zedlmsg = 'The member '||member||' has been submitted to MVS'
+    'ispexec setmsg msg(isrz000)'
+    ADDRESS "CMD" "DELETE $$$$$$$$.SPF"
+    end
+    EXIT 0
+</code></pre>
+
+<h2>Submitting jobs from Unix</h2>
+<h3>Using a Perl script</h3>
+<p>
+Malcolm Beattie has provided a simple Perl script which can
+submit jobs using either TCP/IP or Unix Domain Sockets.
+<p>
+The script is invoked using one of the following command formats:
+<p>
+<blockquote>
+    <pre>
+    hercsub  192.168.1.102:3505  dummy.jcl
+    hercsub  /tmp/hercrdr.00C  dummy jcl</pre>
+</blockquote>
+Here is the sample script:
+<pre><code>
+    #!/usr/bin/perl
+    use Socket;
+    use IO::Socket::UNIX;
+    use IO::Socket::INET;
+
+    if (@ARGV &lt; 1) {
+      print STDERR "Usage: hercsub socket_spec [job]\n";
+      exit 2;
+    }
+
+    my $spec = shift @ARGV;
+    my $sock;
+
+    if ($spec =~ m{^/}) {
+      $sock = IO::Socket::UNIX->new(Peer => $spec);
+    } else {
+      $sock = IO::Socket::INET->new(PeerAddr => $spec);
+    }
+
+    die "Failed to connect to socket $spec: $!\n" unless defined($sock);
+
+    while (&lt;&gt;) {
+      print $sock $_;
+    }
+
+</code></pre>
+
+<h3>Using the netcat program</h3>
+<p>
+The netcat (nc) program can also be used to submit files to a Hercules
+reader via TCP/IP.
+<p>
+Install netcat (which is useful for innumerable other things as well)
+and use:
+<p>
+<blockquote>
+    <code>nc -N localhost 1234 &lt; dummy.jcl</code>
+</blockquote>
+<p>
+It is important to use the <code>-N</code> option to prevent the Hercules
+card reader from hanging due to netcat failing to close its connection.
+The <code>-N</code> option tells netcat to close the socket connection
+once EOF is reached on stdin (i.e. once the entire file has been sent
+to Hercules).
+<p>
+If your version of netcat does not support the <code>-N</code> option,
+then, as an alternative, the <code>-q</code> option should be used. If
+your version of netcat does not support either option, then you should
+probably <i><u>not</u></i> be using netcat to submit jobs to Hercules.
+<p>
+For more information, type &nbsp;<code>man nc</code>.
+
+<p><center><hr width=15% noshade>
+<a href="##" onclick="history.go(-1)"><img src="images/back.gif" border=0 alt="back"></a>
+<p class="lastupd"><script language="Javascript">
+document.write( "Last updated " + document.lastModified + "" );
+</script></p>
+</BODY>
+</HTML>

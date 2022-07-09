@@ -1,0 +1,18 @@
+v 0.2 
+-----
+use our own supplied Hercules version
+User screipts to get iso, create install directory, create initrd
+Put hercules.cnf in assets and swap after finished install
+Check for sudo execution of script or warn user
+Ask user to run newly installed zLinux system
+auto-tune hercules.cnf
+run sanity checks for DASD size selection
+check if iso was really downloaded before attempting to mount it
+made 3GB vs 9GB more permissive in selection
+added cleanup_after_successful_install.bash script to make cleaning up easy
+if not wget then use curl
+deal with file permissions
+more sanity checks (for example see if install/ dir has content etc.)
+don't get ISO if we have it already (somebody could rerun the procedure
+multiple times)
+don't aloow user to be root

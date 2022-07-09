@@ -1,0 +1,151 @@
+<style type="text/css">
+
+<!--
+
+body
+{
+    font-family:  Arial;
+    color:        black;
+    background:   #FFFFCC;
+    margin-left:  50;
+    margin-right: 75;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-family: Arial;
+    font-weight: bold;
+    font-style:  rounded;
+}
+
+h1 {color: blue;}
+h2 {color: red; font-style: italic;}
+
+p, li, dt, dd, td, th {color: black; font-family: Arial;}
+
+p.lastupd
+{
+    font-family:      Arial;
+    font-size:        80%;
+}
+
+p.box
+{
+    padding:          20px;
+    border-width:     1px;
+    border-style:     solid;
+    border-color:     black;
+}
+
+p.note
+{
+    background-color: #FFFFAA;
+    padding:          20px;
+    border-width:     1px;
+    border-style:     solid;
+    border-color:     black;
+}
+
+p.warning
+{
+    color:            red;
+    background-color: #FFFFAA;
+    font-style:       italic;
+    font-weight:      bold;
+    padding:          20px;
+    border-width:     2px;
+    border-style:     solid;
+    border-color:     black;
+}
+
+pre, code {font-family: Courier;}
+
+pre.jcl
+{
+    margin-right:     4%;
+    margin-left:      4%;
+    background-color: #FFFFAA;
+    font-family:      LetterGothic, Monospace;
+    color:            black;
+    font-weight:      normal;
+    padding:          10px;
+    border-width:     1px;
+    border-style:     solid;
+}
+
+pre.report
+{
+    margin-right:     4%;
+    margin-left:      4%;
+    background-color: #CCFFFF;
+    font-family:      LetterGothic, Monospace;
+    color:            black;
+    font-weight:      normal;
+    padding:          10px;
+    border-width:     1px;
+    border-style:     solid;
+}
+
+pre.screen80
+{
+    margin-right:     4%;
+    margin-left:      4%;
+    background-color: #000000;
+    font-family:      Terminal, Monospace;
+    color:            silver;
+    font-weight:      normal;
+    padding:          10px;
+    border-width:     6px;
+    border-style:     ridge;
+    border-color:     light-gray;
+}
+
+/* Messages and codes: Message text */
+dl.messages dt
+{
+    padding:          5px;
+    border-style:     solid none none none;
+    border-width:     1px;
+    margin-top:       1.5em;
+}
+
+/* Messages and codes: Message text */
+dl.messages dt code, dl.messages dt pre, dl.messages dt tt
+{
+    font-family:      Arial;
+    font-style:       italic;
+    font-weight:      bold;
+    font-size:        100%;
+}
+
+/* Messages and codes: Variable items in message text */
+dl.messages dt code em, dl.messages dt pre em, dl.messages dt tt i
+{
+    font-family:      Arial;
+    font-style:       italic;
+    font-weight:      normal;
+    font-size:        100%;
+}
+
+/* Messages and codes: Subheadings in message description */
+dl.messages dd dt
+{
+    font-family:      Arial;
+    font-style:       italic;
+    font-weight:      bold;
+    padding:          2px;
+    border-style:     none;
+    margin-top:       0;
+}
+
+/* Messages and codes: Reference to variable items in message description */
+dl.messages dd dd code em, dl.messages dd dd tt i
+{
+    font-family:      Arial;
+    font-style:       italic;
+    font-weight:      normal;
+    font-size:        100%;
+}
+-->
+
+</style>

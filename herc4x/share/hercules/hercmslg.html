@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "html.dtd">
+<HTML>
+<HEAD><TITLE>
+Hercules Version 3: System Messages: LG - Log functions</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+</HEAD>
+<BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0"
+      VLINK="#008040" ALINK="#000000">
+<h1>Hercules Version 3: System Messages: LG - Log functions</h1>
+<p>
+This page describes messages related to the log funtions of the Hercules S/370,
+ESA/390, and z/Architecture emulator.
+<h3>Messages</h3>
+<dl class="messages">
+<dt><code><a name="HHCLG001E">
+HHCLG001E Error redirecting stdout: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The stdout stream could not be redirected to the system logger,
+the error is described by <code><em>error</em></code>.
+  <dt>Issued by
+  <dd>logger.c, function logger_thread
+  </dl>
+<dt><code><a name="HHCLG002E">
+HHHCLG002E Error reading syslog pipe: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An error occurred while reading the syslog pipe.
+The error is described by <code><em>error</em></code>.
+  <dt>Issued by
+  <dd>logger.c, function logger_thread
+  </dl>
+<dt><code><a name="HHCLG003E">
+HHCLG003E Error writing hardcopy log: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The error as indicated by <code><em>error</em></code> occurred while writeing the hardcopy log.
+  <dt>Issued by
+  <dd>logger.c, function logger_thread
+  </dl>
+<dt><code><a name="HHCLG004E">
+HHCLG004E Error duplicating stderr: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>Stdout could not be redirected to stderr.
+The error is described by <code><em>error</em></code>.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG005E">
+HHCLG005E Error duplicating stdout: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>Stderr could not be redirected to stdout.
+The error is described by <code><em>error</em></code>.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG006E">
+HHCLG006E Duplicate error redirecting hardcopy log: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The error described by <code><em>error</em></code> occurred whilst redirecting the hardcopy log.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG007S">
+HHCLG007S Hardcopy log fdopen failed: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to open a stream for the hardcopy log failed.
+The error is described by <code><em>error</em></code>.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG008S">
+HHCLG008S logbuffer malloc failed: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An instorage buffer for the system log could not be obtained.
+The error is described by <code><em>error</em></code>.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG009S">
+HHCLG009S Syslog message pipe creation failed: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to create the pipe for the system logger failed.
+The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Check that your firewall is not preventing Hercules from
+      opening a listening pipe.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG012E">
+HHCLG012E Cannot create logger thread: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to create the logger thread failed.
+      <code><em>error</em></code> is the description of the error code
+      returned by the pthread_create call.
+  <dt>Action
+  <dd>If the error is &quot;No error&quot; ensure that Hercules has
+      been correctly linked with the pthread library.
+  <dt>Issued by
+  <dd>logger.c, function logger_init
+  </dl>
+<dt><code><a name="HHCLG014E">
+HHCLG014E log not active
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>A <em>log off</em> command was issued but there was no active log file.
+  <dt>Action
+  <dd>None.
+  <dt>Issued by
+  <dd>logger.c, function log_sethrdcpy
+  </dl>
+<dt><code><a name="HHCLG015I">
+HHCLG015I log closed
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The active log file has been closed as a result of a <em>log off</em> command.
+  <dt>Action
+  <dd>None.
+  <dt>Issued by
+  <dd>logger.c, function log_sethrdcpy
+  </dl>
+<dt><code><a name="HHCLG016E">
+HHCLG016E Error opening logfile <em>filename</em>: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The new log file requested by a <em>log</em> command could not be opened.
+      <code><em>error</em></code> is the description of the error code
+      returned by the open call.
+  <dt>Action
+  <dd>Reissue the <em>log</em> command with the correct filename.
+  <dt>Issued by
+  <dd>logger.c, function log_sethrdcpy
+  </dl>
+<dt><code><a name="HHCLG017S">
+HHCLG017S log file fdopen failed for <em>filename</em>: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The logger was unable to obtain the file descriptor for the new
+      log file requested by a <em>log</em> command.
+      <code><em>error</em></code> is the description of the error code
+      returned by the fdopen call.
+  <dt>Action
+  <dd>Reissue the <em>log</em> command with the correct filename.
+  <dt>Issued by
+  <dd>logger.c, function log_sethrdcpy
+  </dl>
+<dt><code><a name="HHCLG018I">
+HHCLG018I log switched to <em>filename</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>As a result of a <em>log</em> command the logger is now writing
+      to the requested log file.
+  <dt>Action
+  <dd>None.
+  <dt>Issued by
+  <dd>logger.c, function log_sethrdcpy
+  </dl>
+</dl>
+<p><center><hr width=15% noshade></center>
+<p>
+If you have a question about Hercules, see the
+<a href="hercfaq.html">Hercules Frequently-Asked Questions</a> page.
+
+<p><center><hr width=15% noshade>
+<a href="hercmsg.html"><img src="images/back.gif" border=0 alt="back"></a>
+</center>
+<p class="lastupd">Last updated $Date$ $Revision$</p>
+</BODY>
+</HTML>

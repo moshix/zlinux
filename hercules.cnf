@@ -1,0 +1,36 @@
+NUMCPU           5
+MAXCPU           5
+MAINSIZE         8192
+#!/usr/bin/env bash                                                             
+#                                                                               
+# (c) 2022 by moshix                                                            
+# TKbuntu and all its components are licensed by the license attached at the    
+# end of this file.  
+
+CPUSERIAL 002623
+CPUMODEL  2086
+OSTAILOR  LINUX
+PANRATE   SLOW
+ARCHMODE  z/Arch
+ALRF     ENABLE
+DIAG8CMD ENABLE
+ECPSVM YES
+ARCHLVL  ENABLE BIT44
+ARCHLVL  ENABLE BIT45
+ARCHLVL  ENABLE BIT37
+ARCHLVL  ENABLE BIT49
+
+# DASD
+0120 3390  ./dasd/hd0.120
+
+
+# network  type                    MTU    TKbuntu    "Linux machine where you are reading this file"
+0A00,0A01  CTCI -n /dev/net/tun -t 1500   10.1.1.2   10.1.1.1
+
+
+# moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED 
+# WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED  
+# WARRANTIES TO THE FULL EXTENT ALLOWED BY APPLICABLE LAW, INCLUDING WITHOUT    
+# LIMITATION ALL IMPLIED WARRANTIES OF, NON-INFRINGEMENT, MERCHANTABILITY, TITLE
+# OR FITNESS FOR ANY PARTICULAR PURPOSE. NO ORAL OR WRITTEN INFORMATION OR ADVICE
+# GIVEN BY moshix, ITS AGENTS OR EMPLOYEES SHALL CREATE A WARRANTY             

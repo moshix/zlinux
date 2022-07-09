@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "html.dtd">
+<HTML>
+<HEAD><TITLE>
+Hercules Version 3: System Messages: IN - Hercules Initialization</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+</HEAD>
+<BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0"
+      VLINK="#008040" ALINK="#000000">
+<h1>Hercules Version 3: System Messages: IN - Hercules Initialization</h1>
+<p>
+This page describes the system initialization messages for the Hercules S/370,
+ESA/390, and z/Architecture emulator.
+<h3>Messages</h3>
+<dl class="messages">
+<dt><code><a name="HHCIN001S">
+HHCIN001S Cannot register SIGINT handler: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to register a handler for the SIGINT signal failed. The
+error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN002E">
+HHCIN002E Cannot suppress SIGPIPE signal: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to ignore the SIGPIPE signal failed. The
+error is described by <code><em>error</em></code>. This will cause Hercules to terminate
+abnormally if a printer device is defined to a pipe, and that pipe is
+closed while data is being written to it.
+  <dt>Action
+  <dd>Correct the error and restart Hercules. Do not print to a pipe until
+you have corrected the error.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN003S">
+HHCIN003S Cannot register SIGILL/FPE/SEGV/BUS/USR handler: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to register a handler for one of the listed signals
+failed. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN004S">
+HHCIN004S Cannot create watchdog thread: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to create the watchdog thread to monitor Hercules execution
+failed. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN005S">
+HHCIN005S Cannot create http_server thread: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to create the HTTP server thread
+failed. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN006S">
+HHCIN006S Cannot create panel thread: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to create the operator control panel thread
+failed. The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN007S">
+HHCIN007S Cannot create <em>devnum</em> connection thread: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The shared device server was unable to create the thread meant to
+manage remote device <em>devnum</em>.
+The error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN008S">
+HHCIN008S DYNGUI.DLL load failed; Hercules terminated.
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>The external GUI interface module 'dyngui.dll' could not loaded. The
+      preceding HHCHD007E message should provide the reason for the failure.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+      If the error is Win32 error 126 ("The specified module could not be
+      found"), check your Windows PATH setting and/or your MODPATH control
+      statement to ensure one or both of them includes the directory where
+      Hercules is executing from.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN009S">
+HHCIN009S Cannot register SIGTERM handler: <em>error</em>
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>An attempt to register a handler for the SIGTERM signal failed. The
+error is described by <code><em>error</em></code>.
+  <dt>Action
+  <dd>Correct the error and restart Hercules.
+  <dt>Issued by
+  <dd>impl.c, function main
+  </dl>
+<dt><code><a name="HHCIN099I">
+HHCIN099I Hercules terminated
+</a></code>
+<dd><dl>
+  <dt>Meaning
+  <dd>Hercules has ended.
+  <dt>Action
+  <dd>None.
+  <dt>Issued by
+  <dd>hsccmd.c, function quit_cmd
+  </dl>
+</dl>
+<p><center><hr width=15% noshade></center>
+<p>
+If you have a question about Hercules, see the
+<a href="hercfaq.html">Hercules Frequently-Asked Questions</a> page.
+
+<p><center><hr width=15% noshade>
+<a href="hercmsg.html"><img src="images/back.gif" border=0 alt="back"></a>
+</center>
+<p class="lastupd">Last updated $Date$ $Revision$</p>
+</BODY>
+</HTML>

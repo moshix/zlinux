@@ -1,0 +1,1289 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><TITLE>
+Hercules: Release Notes
+</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="hercules.css">
+<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="icon" href="images/favicon.ico" />
+<style type="text/css">
+  dt {font-family: Arial; font-weight: bold; font-style: rounded;}
+</style>
+</HEAD><BODY BGCOLOR="#ffffcc" TEXT="#000000" LINK="#0000A0" VLINK="#008040" ALINK="#000000">
+
+<h1>Hercules Release Notes and Known Issues</h1>
+
+<a name=4.4.1></a>
+<hr noshade>
+
+<h2>Release notes for <a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.4.1">SDL Hyperion 4.4.1</a>
+</h2>
+
+<p>
+<dl>
+
+
+  <dt>CCKD compressed dasd Locate Record bug found and fixed
+  <dd>
+  <p>
+    A potentially serious long standing bug in Hercules's compressed CKD (i.e. CCKD/CFBA/CCKD64/CFBA64)
+    dasd emulation logic was recently discovered and quickly fixed. Due to the natue of the bug,
+    Locate Record channel commands (opcodes X'47' or X'E7') would incorrectly prematurely fail in
+    an unusual way causing unexpected guest behavior <i>(e.g. the guest might end up looping or hanging
+    waiting for the I/O to complete for example. See e.g. GitHub Issue
+    <a href="https://github.com/SDL-Hercules-390/hyperion/issues/464">#464</a>).</i>
+  </p>
+  <p>
+    Please note however that due to the nature of this bug, damage to your emulated dasd images
+    <i><b><u>could never occur</u></b></i>. The bug would only cause the guest's I/O to unexpectedly
+    fail or never finish at all. The integrity of the actual Hercules emulated dasd image file would
+    remain intact. Also note that this bug existed <i>only</i> in the "CCKD" compressed dasd image
+    handling logic, and <i>not</i> in the regular non-compressed "CKD" dasd handling logic. Regular
+    uncompressed CKD dasd images were unaffected by this bug and Locate Record would behave correctly.
+  </p>
+
+
+  <dt>Real address also shown during instruction tracing
+  <dd>
+  <p>
+    During instruction stepping/tracing ('<code>t+</code>' or '<code>s+</code>' Hercules commands),
+    when the address of the instruction's operand is a virtual address the corresponding translated
+    real address is now also shown when possible
+    (e.g: &nbsp;<code>HHC02326I CP00: V:20012CD8:R:7FFF3CD8:K:06=00000000 00000000  ........</code>)
+  </p>
+
+
+  <dt>Change in format of reported version
+  <dd>
+  <p>
+    Hercules now reports its version using the format "V.M.R.nnnnn-SDL-ghhhhhhhh"
+    where V.M.R is the major Version, Modification and Revision level (e.g. 4.4.1),
+    nnnnn is an ever increasing internal build number (to ensure strictly sequentally
+    ascending version strings), and hhhhhhhh is the first eight characters of the hash
+    of the most recent commit made to the git source code repository <i>(which identifies
+    <u>exactly</u> which fixes/changes are present in your build and which are not,
+    which is vitally important for bug reporting and problem analysis purposes).</i>
+  </p>
+  <p>
+    For between release development builds the format is "V.M.R.nnnnn-SDL-DEV-ghhhhhhhh"
+    which is identical to the new format but with the extra "DEV-" string to indicate
+    the build is not an official release build but rather is a privately/manually built
+    intermediate development build.
+  </p>
+
+
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<a name=4.4></a>
+<hr noshade>
+
+<h2>Release notes for <a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.4">SDL Hyperion 4.4</a>
+</h2>
+
+<p>
+<dl>
+
+
+  <dt>New <code>-o</code>, <code>--output</code> and <code>--logfile</code> command-line options
+  <dd>
+  <p>
+    New command-line options are now available to make the creation of a log file much easier
+    and less error prone, which is important for bug reporting and problem analysis purposes.
+    Refer to the
+    "<a href="hercinst.html#arguments"><b>Command line arguments</b></a>"
+    section of the
+    "<a href="hercinst.html">Installation and Operation</a>"
+    web page for more information.
+  </p>
+
+
+  <dt>Unreliable operation may occur in certain circumstances when Hercules is built with some versions of the GCC compiler
+  <dd>
+  <p>
+    During development of Hercules Version 4.4 it was noticed Hercules would sometimes
+    experience unreliable operation under certain conditions when built with certain
+    versions of the gcc compiler. The unreliability <i><u>seems</u></i> to most typically
+    occur <i>(but may not be limited to)</i> when a z/Architecture or ESA/390 guest is IPLed
+    under a z/Architecture or ESA/390 VM (i.e. z/VM or VM/ESA). We believe the problem
+    has since been resolved, but are not 100% certain about that.
+  </p>
+  <p>
+    <i>Therefore,</i> if you plan to run an SIE operating system (e.g. VM/ESA or z/VM) as
+    your primary guest under Hercules, we recommend, purely as a precaution, that you build
+    Hercules using the <b>clang</b> compiler and <i>not</i> gcc.
+  </p>
+  <p>
+    Please refer to
+    <a href="https://github.com/SDL-Hercules-390/hyperion/issues/437">GitHub Issue #437</a>
+    for the latest status regarding this particular issue.
+  </p>
+
+
+  <dt>Improvements to building Hercules on non-Windows platforms
+  <dd>
+  <p>
+    Significant efforts have been made to make building Hercules on non-Windows systems
+    (e.g. Linux) easier and more reliable. Please refer to the README for Bill Lewis's
+    highly recommended "<b><a href="https://github.com/wrljet/hercules-helper">Hercules-Helper</a></b>"
+    repository for more information.
+  </p>
+
+
+  <dt>Unresolved bug in PFPO instruction
+  <dd>
+  <p>
+    The PFPO (Perform Floating Point Operation) instruction contains a (minor?)
+    unresolved bug in its handling of the EXTENDED DFP TO LONG HFP operation
+    that <i><u>seems</u></i> to only occur when the value being converted has more
+    than 31 digits in its fractional component. Refer to
+    <a href="https://github.com/SDL-Hercules-390/hyperion/issues/407#issuecomment-892830186">GitHub Issue #407</a>
+    for more information.
+  </p>
+  <p>
+    This bug is currently the only one known to exist in the PFPO instruction, but given
+    that a comprehensive test suite still does not exist yet for the PFPO instruction
+    (such a test suite is still in development), other undiscovered bugs may also exist.
+    Until such time as a thorough PFPO test suite can be completed, the PFPO instruction
+    should be considered experimental.
+  </p>
+
+
+  <dt>TXF (Transactional-Execution Facility) support is now mostly complete
+  <dd>
+  <p>
+    While <u>still considered experimental</u> <i>(since it is not yet 100% complete)</i>,
+    the Hercules implementation of the z/Architecture "Transactional-Execution Facility" feature
+    is largely complete and considered to be reliable. There are still a few items that
+    have not been implemented yet (such as tracing (i.e. PER) support), but on the whole,
+    extensive testing has demonstrated it to be reliable enough for most everyday purposes.
+  </p>
+  <p>
+    Also note that while it is still considered experimental and incomplete, any
+    "<code>FACILITY ENABLE 073_TRANSACT_EXEC</code>" and/or
+    "<code>FACILITY ENABLE 050_CONSTR_TRANSACT</code>" configuration file statements
+    that you may currently have in your Hercules configuration file, are now no longer
+    needed. Beginning with Hercules version 4.4, both facilities are now enabled by default.
+  </p>
+
+
+  <dt>Preliminary SNA support
+  <dd>
+  <p>
+    Significant enhancements have been made to LCS device functionality to support
+    the SNA protocol. Preliminary documentation regarding its configuration and use
+    can be found in our
+    <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.SNA.md">README.SNA</a>
+    readme document.
+  </p>
+
+
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<a name=4.3></a>
+<hr noshade>
+
+<h2>Release notes for <a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.3">SDL Hyperion 4.3</a>
+</h2>
+
+<p>
+<dl>
+
+
+  <dt>Improved CTCE driver functionality.
+  <dd>
+  <p>
+    The CTCE device driver has been enhanced and improved, including changes to
+    the syntax of the device statement parameters, Please refer to the
+    <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.NETWORKING.md">Hercules
+    Networking README</a> as well as to the actual
+    <a href="https://sdl-hercules-390.github.io/html/hercconf.html#CTCE">Hercules
+    Configuration File</a> web page itself for more information.
+  </p>
+
+
+  <dt>New "MSGCOLOR=DARK/LIGHT" panel option
+  <dd>
+  <p>
+    A new <code>MSGCOLOR</code> option has been added to the existing
+    <a href="https://sdl-hercules-390.github.io/html/hercconf.html#PANOPT"><code>PANOPT</code></a>
+    configuration file statement
+    that will colorize non-informational Error, Warning and Debug panel messages to make them more
+    noticable to the user (less likely to be missed). Users are <i>strongly encouraged</i> to enable
+    this new option in their configuration files.
+  </p>
+
+
+  <dt>Watchdog monitoring has been reinstated.
+  <dd>
+  <p>
+    Previously, Hercules had an internal "watchdog" monitoring thread that would
+    monitor all running CPUs to make sure they were functioning properly, and if
+    any of them were determined to be malfunctioning, a Machine Check Interruption
+    for the malfunctioning CPU would be presented to the guest in a vain attempt
+    to allow it to continue running. This functionality was removed in version
+    <a href="#4.2">4.2</a> however, due to it masking/hiding otherwise serious
+    bugs in the Hercules emulator.
+  </p><p>
+    Version 4.3 now re-introduces watchdog monitoring for malfunctioning (hung)
+    CPUs and other serious internal emulator errors (such as deadlock detection),
+    but does not otherwise notify the guest of the problem (i.e. no Machine Check
+    Interruption is presented), nor is any attempt made to allow the emulator to
+    continue. Instead, the problem is reported to the Hercules user via fatal
+    emulator error messages HHC00822S and/or HHC90024S, and the emulator is then
+    immediately terminated with a crash dump to be forwarded to the Hercules
+    development team for analysis.
+  </p><p>
+    For more information regarding crash dumps ("core files" on Linux), such as
+    how to enable their creation and how to analyze them when they occur, please
+    refer to GitHub Issue #199: <i>
+    <a href="https://github.com/SDL-Hercules-390/hyperion/issues/199">"How to
+    analyze a Linux "core" file (i.e. crash dump)"</a></i>.
+  </p>
+
+
+  <dt>EXPERIMENTAL Transactional-Execution Facility (TXF) support
+  <dd>
+  <p>
+    This release of SDL Hyperion includes preliminary <i><u>experimental</u></i>
+    support for the z/Architecture "Transactional-Execution Facility" (bits 73
+    and 50).
+  </p><p>
+    This support is known to be incomplete and not 100% functional yet (it still
+    has some problems, especially under SIE), so it is still considered to be
+    <i><u>highly experimental</u></i> at this stage. It seems to work well enough
+    to allow certain guest operating systems requiring it (such
+    as z/OS 2.4 for example) to successfully IPL and run though.
+  </p><p>
+    Because it is still considered to be experimental and under active development
+    however, it is not enabled by default. Therefore users wishing to take advantage
+    of it must first manually enable it in their Hercules configuration file via the
+    following two <a href="https://sdl-hercules-390.github.io/html/hercconf.html#FACILITY"><code>FACILITY</code></a>
+    configuration file statements:
+  </p><p><pre>
+    FACILITY  ENABLE  073_TRANSACT_EXEC
+    FACILITY  ENABLE  050_CONSTR_TRANSACT</pre>
+  </p><p>
+    Only when the feature has been fully completed and thoroughly tested however,
+    will it then be enabled by default. For the time being however, since it is
+    still under active development and considered to be experimental, it must be
+    manually enabled as described above.
+  </p><p>
+    If you decide to use it, Bug Reports would be <i>greatly appreciated</i>
+    by creating a NEW <a href="https://github.com/SDL-Hercules-390/hyperion/issues">GitHub Issue</a>
+    describing the problem along with all supporting documentation. Thank you!
+  </p>
+
+
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<a name=4.2.1></a>
+<hr noshade>
+
+<h2>Release notes for <a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.2.1">SDL Hyperion 4.2.1</a>
+</h2>
+
+<p>
+<dl>
+
+
+  <dt>CKD serial number support
+  <dd>
+  <p>
+    Version 4.2.1 of SDL Hercules Hyperion introduces support for assigning
+    serial numbers to CKD dasd devices. This is usually only a concern for
+    guests which care about the serial number field in the device's Node Element
+    Descriptor (NED) information returned by the RCD (Read Configuration Data)
+    CCW, such as z/VM SSI (Single System Image) configurations. For most
+    other guests the change is transparent.
+  </p><p>
+    The <code>dasdinit</code> utility now assigns a randomly generated serial
+    number for all CKD dasd images. For existing CKD dasds created with earlier
+    (older) versions of Hercules without serial number support, the CKD dasd's
+    serial number will always be zero.
+  </p><p>
+    However, if an all zero serial number is detected during Hercules's CKD
+    device initialization (indicating the dasd does not have a permanent serial
+    number), a random serial number value is generated and used instead.
+    Because of this, all older dasd images (created with an older version of
+    Hercules and thus always having an all zero serial number) will always appear
+    to have a completely different (unstable ever changing) serial number
+    each time Hercules is started.
+  </p><p>
+    To assign a permanent (stable never changing) serial number to a CKD dasd
+    image (including those created with older versions of Hercules) a new
+    dasd utility has been created called <b><code>dasdser</code></b>. Start
+    <code>dasdser</code> without any arguments for usage information.
+  </p><p>
+    The serial number that Hercules actually uses for a given CKD dasd
+    (whether internally generated or obtained from the actual dasd image file)
+    can also be overridden via a new
+    <a href="hercconf.html#ckdser"><code>ser=nnnnnnnnnnnn</code></a>
+    device configuration file statement option. This new option is supported
+    only for CKD dasd devices and not FBA dasd devices since FBA devices
+    don't support the RCD (Read Configuration Data) CCW opcode and thus do not
+    have any serial number.
+  </p>
+
+
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<a name=4.2></a>
+<hr noshade>
+
+<h2>Release notes for <a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.2">SDL Hyperion 4.2</a></h2>
+
+<p>
+<dl>
+
+
+  <dt>CCKD64 Support
+  <dd>
+  <p>
+    Version 4.2 of SDL Hercules Hyperion introduces support for very large
+    Compressed CKD (CCKD) dasd image files, called <b>CCKD64</b>, which can
+    be much larger than 4GB in size.  More information about <b>CCKD64</b>
+    can be found in the
+    <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.CCKD64.md">README.CCKD64</a>
+    document in the source code distribution.  Detailed CCKD64 <i>file format</i>
+    information can be found on the
+    "<a href="cckddasd.html">Compressed Dasd Emulation</a>"
+    web page.
+  </p>
+
+
+  <dt>SIGABEND Machine Check handler on Linux builds replaced with Crash handler
+  <dd>
+  <p>
+    The original designed "SIGABEND" handler on Linux builds that intercepted Hercules
+    abends (e.g. SIGSEGV, i.e. Hercules crashes, etc) and presented a Machine Check
+    Interruption to the guest in an attempt to allow Hercules and the guest to continue
+    running (in the hope that the guest would be able to either recover from the Machine
+    Check or be able to gracefully shutdown) has been removed since it served no valid
+    purpose other than to hide/mask otherwise very serious bugs in the Hercules emulator
+    making it nearly impossible to find or fix them.
+  </p><p>
+    Now, if Hercules crashes (due to a SIGSEGV, etc), the guest is no longer notified
+    of the event (a Machine Check Interruption does not occur) and Hercules makes no
+    attempt to recover or otherwise continue. Instead, it attempts to issue a message
+    to the Hercules user informing them of the crash and then requests that the host
+    perform default handling of the event (which is usually to create a "core" dump file
+    which can then be analyzed by gdb or by some other means to determine the cause of
+    the crash).
+  </p><p>
+    For more information regarding Linux core files, such as how to enable their creation
+    and how to analyze them when they occur, please refer to the following GitHub Issue:
+    <i>"<a href="https://github.com/SDL-Hercules-390/hyperion/issues/199">How to analyze
+    a Linux "core" file (i.e. crash dump)</a>"</i> (#199).
+  </p>
+
+
+  <dt>Integrated Regina REXX support no longer provided by default
+  <dd>
+  <p>
+    For those who want integrated Regina rexx support in Hercules, you will
+    now have to explicitly request such support on your <code>./configure</code>
+    command by specifying the <code>'--enable-regina-rexx'</code> option.  For
+    everyone else, integrated support for Regina rexx will <i>no longer</i> be
+    automatically provided by Hercules, even if it is installed in their system.
+  </p><p>
+    In other words, you can still have Regina rexx installed on your system
+    and use it as you normally would, but simply having it installed on your
+    system will now <i>no longer</i> cause Hercules to also provide integrated
+    support for it.
+  </p><p>
+    For more information refer to the
+    <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.REXX.md">README.REXX</a>
+    document in the source code distribution.
+  </p>
+
+
+  <dt>PFPO (Perform Floating Point Operation) instruction
+  <dd>
+  <p>
+    Thanks to hard work of one of our developers, Hercules now has a <i>complete</i>
+    implementation of the PFPO (Perform Floating Point Operation) instruction.
+    <i>(previously we had no implementation at all!)</i>
+  </p><p>
+    Efforts are currently under way to develop a formal runtest PFPO instruction
+    verification test for the current implementation to prove that it fully complies
+    with the published architecture, but the effort has not been completed yet.
+    Nevertheless, the current implementation is <i>believed</i> to fully comply
+    with the Principles of Operation even though we can't yet prove that.
+  </p>
+
+
+  <dt>Enhanced VMFPLC2 VM/CMS tape utility
+  <dd>
+  <p>
+    The VMFPLC2 tape utility has been greatly enhanced and now supports the scan
+    and load functions, making it much easier to transfer files between the host
+    system and z/VM or VM/370 systems. Refer to the
+    <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.VMFPLC2.md">README.VMFPLC2</a>
+    document for usage details.
+  </p>
+
+
+  <dt>System/370/390 Vector Facility has been re-disabled
+  <dd>
+  <p>
+    It was a mistake to enable the System/370 and System/390 Vector Facility
+    set of instructions in release 4.1.  Hercules's implementation of the
+    facility only implements 26 of the required 180 instructions the facility
+    provides and thus is so incredibly incomplete as to be virtually unusable.
+  </p><p>
+    Given that virtually no one has ever complained about its unavailability
+    beforehand (and the interference it causes internally with the desired
+    proper functioning of the Hercules S/370 Extension pseudo-facility), it has
+    once again been disabled.
+  </p><p>
+    This is very likely to be a permanent setting given the extreme unlikelihood
+    of the facility ever being fully coded due to its unpopularity and the extreme
+    challenges posed by trying to code all of the missing instructions for a fully
+    compliant facility.
+  </p>
+
+
+  <dt>TCPIP (X'75') instruction integrated
+  <dd>
+  <p>
+    This instruction was developed by Jason Winter to allow the guest OS access
+    to the IP stack of the host OS. It is of particular importance to older
+    operating systems that do not support their own IP stack. It provides full
+    IPv4 networking capabilities to those systems.
+  </p><p>
+    Note that the TCPIP instruction doesn't fully comply with IBM's S/3x0, ESA/390
+    or z/Architecture specifications. For this reason it is not enabled by default.
+    File
+    <a href="https://github.com/SDL-Hercules-390/hyperion/blob/master/readme/README.TCPIP.md">README.TCPIP</a>
+    provides the information needed to enable the instruction.
+  </p>
+
+
+  <dt>Optional ASID parameter added to breakpoint/stepping commands
+  <dd>
+  <p>
+    The <code>b</code> (breakpoint) and <code>s</code> (stepping) commands
+    now support an optional <b><code>asid</code></b> (<b>A</b>ddress <b>S</b>pace
+    <b>ID</b>entifier) parameter. If specified, the breakpoint or stepping
+    will only occur if the instructions being executed are <i>both</i> within
+    the specified address range <i><u>and</u></i> are being executed by the
+    specified address space. If specified, the breakpoint or stepping will
+    <i>not</i> occur for any other address spaces even if the instructions are
+    within the specified address range. If the optional ASID is not specified,
+    breakpoints or steppings occurs normally as before (i.e. if the instruction
+    being executed is within the specified range).
+  </p><p>
+    For more information refer to the <code>help</code> command display
+    for the <code>b</code> and/or <code>s</code> commands (i.e. "help b", "help s", etc).
+  </p>
+
+
+  <dt>New PANOPT configuration file statement and command
+  <dd>
+  <p>
+    Release 4.2 introduces a new configuration file option called
+    <a href="hercconf.html#PANOPT"><code>PANOPT</code></a>
+    that controls how emulated device files are displayed on the screen. The
+    <code>NAMEONLY</code> option will display only the emulated device file's
+    base filename, whereas <code>FULLPATH</code> displays the device file's
+    full path like before.
+  </p>
+
+
+  <dt>New Diagnose F09 instruction
+  <dd>
+  <p>
+    Release 4.2 introduces a new Diagnose F09 instruction that is essentially
+    an enhanced version of the existing Diagnose F08 instruction providing
+    access to Hercules's internal instruction counter. For detailed usage
+    information please refer to the
+    <a href="https://github.com/SDL-Hercules-390/hyperion/issues/211#issuecomment-497233616">
+    final comment</a> in GitHub Issue #211:
+    <a href="https://github.com/SDL-Hercules-390/hyperion/issues/211">
+    "Diagnose F08 Improvement"</a>.
+  </p>
+
+
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+
+<a name=4.1></a>
+<h2>Release notes for <a href="https://github.com/SDL-Hercules-390/hyperion/releases/tag/Release_4.1">SDL Hyperion 4.1</a></h2>
+<p>
+<dl>
+
+
+  <dt>External Packages
+  <dd>
+  <p>
+    Select source code and associated functionality has been moved out of
+    the Hercules repository and into separately maintained External Package
+    repositories.  Refer to the
+    <a href="https://github.com/sdl-hercules-390/hyperion/blob/master/readme/README.EXTPKG.md">README.EXTPKG</a>
+    document for more information.
+  </p>
+
+
+  <dt>Minimum supported Windows platform is now Windows Vista
+  <dd>
+  <p>
+    The new minimum supported Windows platform is now Windows Vista.  All
+    Hercules users still running older versions of Windows should upgrade
+    to at least Windows Vista or greater, with Windows 7 being preferred.
+  </p>
+
+
+  <dt>The ability to define process and thread priorities has been removed
+  <dd>
+  <p>
+    Previously, Hercules supported various commands/statements that allowed the
+    tweaking of Hercules's various internal thread priorities (HERCPRIO, CPUPRIO,
+    TODPRIO, etc). This ability has been removed. Such statements in your
+    configuration file will now cause a "deprecated and ignored" warning message
+    instead. You should remove all such statements from your configuration file.
+  </p>
+
+
+  <dt>ARCHLVL and FACILITY command changes
+  <dd>
+  <p>
+    The <code><a href="hercconf.html#FACILITY">FACILITY</a></code> command was completely
+    redesigned and rewritten in order to more properly support and enforce the concept
+    of prerequisite facilities (i.e. a facility presuming/requiring some other facility).
+    As part of this rewrite the ARCHLVL command functionality to enable/disable/query
+    facilities was moved into a new separate FACILITY command such that the ARCHLVL command
+    now only deals with setting/querying the architecture mode. To enable/disable/query
+    facilities, use the new FACILITY command.
+  </p><p>
+    Additionally, the facility names used in the <code>FACILITY </code> command to
+    enable, disable or query a facility have also been changed. All defined facilities
+    now begin with a 3-digit facility bit number in addition to their abbreviated
+    facility name. This was done to ensure the correct facility was being enabled or
+    disabled due to the similarity of some facility names. For example, the previously
+    named "ASN_LX_REUSE" facility is now named "006_ASN_LX_REUSE".  Similarly, the
+    previously named "PFPO" facility is now named "044_PFPO".
+  </p><p>
+    For a detailed list of the new abbreviated (short) facility names,
+    use the "<code>FACILITY QUERY ...</code>" command.
+  </p>
+
+
+  <dt>"ASN and LX Reuse" now defaults to enabled for z/Architecture
+  <dd>
+  <p>
+    The "ASN and LX Reuse" facility (STFL bit 6) is now enabled by default
+    for the z/Architecture mode, as it should have been all along.  It is
+    still disabled by default for the ESA/390 architecture mode however.
+  </p><p>
+    In earlier versions of Hercules it defaulted to disabled requiring those
+    running z/Architecture guest operating systems to have to manually add
+    an <code>FACILITY ENABLE 006_ASN_LX_REUSE</code> statement to their
+    configuration file. Such statements are now no longer necessary.
+  </p>
+
+
+  <dt>MAXCPU and NUMCPU statements
+  <dd>
+  <p>
+    The combination of <a href="hercconf.html#NUMCPU">NUMCPU</a> and
+    <a href="hercconf.html#MAXCPU">MAXCPU</a> controls the behavior of how many
+    CPU engines will be configured online upon startup and how many can be
+    configured online later. In previous versions this was controlled via
+    the NUMCPU statement and the compile-time constant 'MAX_CPU_ENGS'.
+  </p><p>
+    For compatibility with previous versions of Hercules, if MAXCPU is
+    not specified its value defaults to NUMCPU. If neither is specified
+    it defaults to 1.
+  </p>
+
+
+  <dt>HTTPROOT and HTTPPORT statements are now fully deprecated
+  <dd>
+  <p>
+    Any <code>httproot</code> or <code>httpport</code> statements are now
+    rejected as invalid statements. All users still using either statement
+    format in their configuration files must now replace all occurrences
+    with <code>http root ...</code> and <code>http port ...</code> instead.
+  </p>
+
+
+  <dt>New and improved CMPSC Compression Call 2012 instruction implementation is now the default
+  <dd>
+  <p>
+    The default implementation for the CMPSC Compression Call instruction
+    is now the new cmpsc_2012 implementation. The previous legacy implementation
+    no longer exists. Refer to the
+    <a href="https://github.com/sdl-hercules-390/hyperion/blob/master/readme/README.CMPSC.md">README.CMPSC</a>
+    document of the source code distribution for more information.
+  </p>
+
+
+  <dt>The sequence of certain configuration file statements is important
+  <dd>
+  <p>
+    The <code><a href="hercconf.html#ARCHLVL">ARCHLVL</a></code>
+    statement (previously called <code>ARCHMODE</code> for example, defines
+    the initial architectural mode of the system) should generally <i>precede</i>
+    (come before) any <code>FACILITY</code> statements that enable or disable
+    a given architectural feature.
+  </p><p>
+    For example: on certain IBM operating systems the z/Architecture "PFPO
+    Facility" must be enabled or the system will not IPL. While at the time
+    of this writing Hercules does not currently support the Perform Floating-Point
+    Operation (PFPO) Facility, the STFLE facility bit can nonetheless be
+    forcibly enabled anyway via the
+    <code><a href="hercconf.html#FACILITY">FACILITY ENABLE BIT44</a></code>
+    configuration file statement. Since the facility is a z/Architecture-only
+    feature however, your initial architecture must either be set to "z/Arch"
+    beforehand, or else you need to specify the optional
+    <code><em>[archlvl]</em></code> parameter on your FACILITY ENABLE BIT44 statement.
+    This usually means your "<code>ARCHLVL z/Arch</code>" statement must come
+    <i>before</i> your "<code>FACILITY ENABLE BIT44</code>" statement in your
+    configuration file. Otherwise the PFPO Facility would not get enabled.
+  </p><p>
+    With the introduction of limited automatic LPAR-mode/BASIC-mode switching
+    (see next item below), <code><a href="hercconf.html#LPARNUM">LPARNUM</a></code>
+    statements should follow <code><a href="hercconf.html#ARCHLVL">ARCHLVL</a></code>
+    statements if LPAR mode is truly desired for <code>ARCHLVL S/370</code>
+    (which is usually not the case).
+  </p><p>
+    The <code>ARCHLVL</code> and <code>LPARNUM</code> statements are currently
+    the only known configuration file statements whose sequence matters. The
+    order of all other configuration file statements should not currently matter.
+    This may change in the future however, so be sure to always carefully read
+    through the RELEASE NOTES (this document) with each new update to Hercules.
+  </p>
+
+
+  <dt>Limited automatic LPARNUM updating when setting certain architecture modes
+  <dd>
+  <p>
+    When <code><a href="hercconf.html#ARCHLVL">ARCHLVL S/370</a></code> is set,
+    <code><a href="hercconf.html#LPARNUM">LPARNUM</a></code> is now automatically
+    changed to <code>BASIC</code> (which also changes
+    <a href="hercconf.html#CPUIDFMT">CPUIDFMT</a> to <code>BASIC</code> as well),
+    and when <code>ARCHLVL z/Arch</code> is set, it is then changed back to the
+    default <code>LPARNUM 1</code> again (which also automatically changes the
+    <code>CPUIDFMT</code> back to <code>0</code> as well), but only when needed.
+  </p><p>
+    That is to say, the automatic switching to and from <code>LPARNUM BASIC</code>
+    (and <code>CPUIDFMT BASIC</code>) and <code>LPARNUM 1</code>
+    (and <code>CPUIDFMT 0</code>) only occurs when needed (and only when switching
+    between S/370 and z/Arch). If <code>LPARNUM</code> (and
+    <code>CPUIDFMT</code>) are already set to the expected values they will not
+    be changed. When <code>ARCHLVL ESA/390</code> is set however, <code>LPARNUM</code>
+    and <code>CPUIDFMT</code> are never changed from their current values.
+  </p><p>
+    This new behavior was introduced to eliminate the "surprise" factor that would
+    otherwise occur when, if the <code>LPARNUM</code> remained set to <code>1</code>
+    (or some other number), not doing so causes the STIDP (Store CPU ID) instruction
+    to be stored in an otherwise unexpected format. In most all situations when
+    a Hercules user sets <code>ARCHLVL S/370</code>, they are truly expecting the
+    <code>LPARNUM</code> and <code>CPUIDFMT</code> to be set to <code>BASIC</code>
+    such that the STIDP instruction then stores the CPU ID in the expected format.
+  </p><p>
+    For the unusual case where users actually <i>do</i> want to run a System/370
+    Operating System within an LPAR, you will need to manually re-set your
+    <code>LPARNUM</code> and <code>CPUIDFMT</code> values back to their numeric
+    values <i><u>after</u></i> setting <code>ARCHLVL S/370</code>. That is to say,
+    one should always follow their <code>ARCHLVL S/370</code> statement with a
+    <code>LPARNUM n&#124;nn</code> statement (and <code>CPUIDFMT</code> statement
+    too if needed) if LPAR mode for S/370 is truly desired.
+  </p>
+
+
+  <dt>More architecturally compliant Channel Subsystem implementation
+  <dd>
+  <p>
+    Hercules 4.x Hyperion's channel subsystem implementation now more closely
+    adheres to published and unpublished architectural specifications. It does
+    not precisely adhere to the complete specification but it does adhere much
+    more closely than ever before (and definitely more closely than the legacy
+    implementation still used in the older spinhawk 3.xx series of Hercules).
+  </p><p>
+    If you experience any anomalies in the behavior of your guest operating
+    system, verify that you are using architecurally valid/correct configuration
+    settings that your guest operating system expects.
+  </p><p>
+    Pay <i><u>particular</u></i> attention to your
+    <a href="hercconf.html#ARCHLVL">ARCHLVL</a>,
+    <a href="hercconf.html#LPARNUM">LPARNUM</a>,
+    <a href="hercconf.html#CPUIDFMT">CPUIDFMT</a>,
+    <a href="hercconf.html#CPUMODEL">CPUMODEL</a>,
+    <a href="hercconf.html#CPUSERIAL">CPUSERIAL</a>,
+    <a href="hercconf.html#CPUVERID">CPUVERID</a>,
+    <a href="hercconf.html#MODEL">MODEL</a>,
+    <a href="hercconf.html#PLANT">PLANT</a>
+    and
+    <a href="hercconf.html#MANUFACTURER">MANUFACTURER</a>
+    values since they typically have a direct impact on how
+    certain guest operating systems behave.
+  </p>
+
+
+  <dt>Configuration file statements and panel commands handled identically
+  <dd>
+  <p>
+    Most configuration file statements are now available as and processed as
+    panel commands. Most valid configuration file statements may now also be
+    entered as a panel command. Most panel commands are now also allowed as
+    configuration file statements. See the documentation for full details.
+  </p>
+
+
+  <dt>Improved ECPSVM Support
+  <dd>
+  <p>
+    Hyperion 4.x now provides a mostly complete ECPSVM CP/VM Assist
+    implementation. While still not 100% complete, support for many new
+    assists has been added and several bugs have been fixed. Refer to the
+    <a href="https://github.com/sdl-hercules-390/hyperion/blob/master/readme/README.ECPSVM.md">README.ECPSVM</a>
+    document for more detailed information.
+  </p>
+
+
+  <dt>Integrated Rexx support
+  <dd>
+  <p>
+    Rexx support was first added to Hercules by Jan Jaeger in 2010
+    and has been gradually enhanced over the years by both Enrico Sorichetti
+    and Jan Jaeger as well as a few other people too.
+  </p><p>
+    If you have <a href="http://www.rexxla.org">Rexx</a> installed on your
+    host and Hercules is built with the Rexx build option (the default for
+    the SDL version of Hyperion), then Rexx scripts
+    can be run directly from within the Hercules environment (i.e. directly
+    from the Hercules HMC command line via the Hercules <code>exec</code> command).
+  </p><p>
+    Rexx scripts, when run within Hercules via the 'exec' command, can
+    Address the HERCULES enviroment allowing you to issue Hercules commands
+    and retrieve the results via the builtin 'AWSCMD' Rexx function call.
+  </p><p>
+    For more information please refer to the new
+    <a href="rexx.html">Hercules Integrated Rexx Support</a> web page.
+  </p>
+
+
+  <dt>SHCMDOPT defaults change
+  <dd>
+  <p>
+    The defaults for the <a href="hercconf.html#SHCMDOPT">SHCMDOPT</a> have changed.
+    The old defaults were <code>ENABLE DIAG8</code>.
+    The new defaults are <code>DISABLE NODIAG8</code>.
+    This was done for security reasons.
+  </p>
+
+
+  <dt>SHCMDOPT option also controls Rexx EXEC command
+  <dd>
+  <p>
+    The <code>ENABLE</code> and <code>DISABLE</code> option of the
+    <a href="hercconf.html#SHCMDOPT">SHCMDOPT</a> command now also controls
+    the Rexx <code>exec</code> command as well as the <code>sh</code> command.
+    That is to say, the Rexx <code>exec</code> command is now properly treated
+    as a host shell command. Thus, enabling or disabling the execution of host
+    shell commands via the <a href="hercconf.html#SHCMDOPT">SHCMDOPT</a> option
+    now also enables or disables execution of the <code>exec</code> command as well.
+    This was done for security reasons.
+  </p>
+
+
+  <dt>Change to DIAG8CMD ECHO behavior
+  <dd>
+  <p>
+    The behavior of the <a href="hercconf.html#DIAG8CMD">DIAG8CMD</a> command's
+    <code>ECHO</code> and <code>NOECHO</code> options has changed. Previosuly
+    the echo/noecho option had a a direct impact on the data that was placed into
+    the Diagnose 8 instruction's response buffer. This has been fixed so that now
+    it does not.
+  </p><p>
+    Previously, specifying the ECHO option caused audit trail messages HHC01950I
+    and HHC01603I to also appear in the instruction's response buffer, whereas now
+    only the command's actual output is placed into the response buffer. The ECHO
+    option now properly controls <i><u>only</u></i> the issuing of the HHC01950I
+    and HHC01603I audit messages to both the panel and hardcopy logfile,
+    but does not otherwise impact in any way what is placed into the instruction's
+    response buffer, as was the original intent for this option.
+  </p>
+
+
+  <dt>3088, CTCI-W32, CTCT and VMNET support dropped
+  <dd>
+  <p>
+    Support for 3088, CTCI-W32, CTCT and VMNET devices has been dropped.
+    3088 Channel-To-Channel Adapter support (which was the original intent
+    of CTCT) has instead been replaced with Peter Jansen's vastly improved
+    Enhanced Channel-To-Channel (<a href="hercconf.html#CTCE">CTCE</a>) device
+    support, which provides true Extended mode Channel-To-Channel Adapter
+    capabilities, allowing you to use
+    <a href="https://en.wikipedia.org/wiki/Global_Resource_Serialization">GRS</a>
+    to connect multiple Hercules instances together in a type of
+    <a href="https://en.wikipedia.org/wiki/IBM_Parallel_Sysplex">Sysplex</a>.
+  </p>
+
+
+  <dt>CAPPING support removed
+  <dd>
+  <p>
+    Previous versions of Hercules supported a "CAPPING" configuration statement
+    designed to purposely reduce performance to ensure that your MIPS rate never
+    exceeded the specified value. This functionality has now been removed.
+  </p>
+
+
+  <dt>New NETDEV configuration file statement
+  <dd>
+  <p>
+    A new <code>NETDEV</code> configuration file statement is now supported
+    to allow you to specify which host network adapter should be used by default
+    for Hercules communications devices. It only represents a default and can be
+    overridden on the device statements themselves. Refer to the documentation
+    for the "<code><a href="hercconf.html#NETDEV">NETDEV</a></code>" statement
+    for more information.
+  </p>
+
+
+  <dt>New "t+-" Automatic Tracing command
+  <dd>
+  <p>
+    A new "<code>t+-</code>" (tee-plus-minus) Automatic Tracing command has been
+    created that may prove to be helpful in capturing guest issues that occur
+    very early in the guest's IPL sequence. Refer to the "<code>help t+-</code>"
+    help display for more information.
+  </p>
+
+
+  <dt>Default tape AUTOINIT option is now ON (enabled)
+  <dd>
+  <p>
+    The <code><a href="hercconf.html#AUTOINIT">AUTOINIT</a></code> option
+    controls whether device files for emulated tape volumes should be
+    automatically created or not if they do not exist. The previous default
+    was <code>OFF</code>. The new default is <code><u>ON</u></code>.
+  </p>
+
+
+  <dt>Diagnose X'F14' support removed
+  <dd>
+  <p>
+    Hercules's Diagnose X'F14' functionality was designed to allow
+    a Hercules guest to call into any host system DLL (Dynamic Link
+    Library). Since its use (dubius to begin with) was determined to be
+    a potential security risk (and the code didn't appear to be used
+    anywhere anyway), support for it was removed.
+  </p>
+
+
+  <dt>System/370/390 Vector Facility instructions are now enabled by default
+  <dd>
+  <p>
+    Hercules has always supported the System/370 and System/390 Vector Facility
+    set of instructions but support for them was never enabled by default. This
+    has now been corrected.
+  </p>
+
+
+  <dt>Hercules S/370 Instruction Extension Facility
+  <dd>
+  <p>
+    A new Hercules S/370 Instruction Extension Facility has been implemented to
+    replace the functionality previously provided by the "s37x.dll" dynamically
+    loadable module. Please refer to the
+    <a href="https://github.com/sdl-hercules-390/hyperion/blob/master/readme/README.S37X.md">README.S37X</a>
+    document for more information.
+  </p>
+
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+<h2>Release notes for release 3.06</h2>
+<p>
+<dl>
+  <dt>Tape "AUTOMOUNT" support
+  <dd>
+  <p>
+    Starting with Hercules version 3.06 a new AUTOMOUNT option is available
+    that allows guest operating systems to directly mount, unmount and query
+    tape device filenames for themselves, without any intervention on the
+    part of the Hercules operator.
+  </p><p>
+    Automount support is enabled via the AUTOMOUNT configuration file statement.
+  </p><p>
+    An example guest automount program for VSE called "TMOUNT" is provided in
+    the util subdirectory of the Hercules source code distribution.
+  </p><p>
+    Briefly, the 0x4B (Set Diagnose) CCW is used to mount (or unmount) a file
+    onto a tape drive, and the 0xE4 (Sense Id) CCW opcode is used to query the
+    name of the currently mounted file.
+  </p><p>
+    For mounts, the 0x4B CCW specifies the filename of the file to be mounted
+    onto the drive. The file MUST reside in the specified AUTOMOUNT directory
+    or the automount request will be rejected. To unmount the currently mounted
+    file, simply do a mount of the special filename "OFFLINE".
+  </p><p>
+    To query the name of the currently mounted file, the 0xE4 CCW is used. Note
+    however that the 0xE4 (Sense Id) CCW opcode cannot be used by itself since
+    the drive may also already natively support the Sense Id CCW opcode. Instead,
+    it must be preceded by (command-chained from) a 0x4B CCW with a data transfer
+    length of one byte. The following 0xE4 command is the one that then specifies
+    the i/o buffer and buffer length of where the query function is to place the
+    device's currently mounted host filename.
+  </p><p>
+    In summary:
+    </p><pre>
+        MOUNT:      X'4B', filename, X'20', length
+
+        UNMOUNT:    (same thing but use filename "OFFLINE" instead)
+
+        QUERY:      X'4B', buffer, X'60', 1
+                    X'E4', buffer, X'20', buffersize</pre>
+  </p><p>
+    Again please refer to the provided TMOUNT program for a simple example
+    of how automount support might be implmented on a guest operating system.
+  </p>
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+<h2>Release notes for release 3.05</h2>
+<p>
+<dl>
+  <dt>Use 'startgui' if starting GUI program via 'sh' command
+  <dd>
+  <p>
+    The 'conspawn' utility used to process 'sh' commands now recognizes a
+    specially designed keyword "startgui" to accomodate automatic starting
+    of Windows GUI applications via the .RC file or panel command-line.
+  </p><p>
+    If the first word following 'sh' is "startgui", then the "ShellExecute"
+    API is used to start the requested program rather than the 'system()'
+    API as otherwise.
+  </p><p>
+    The "startgui" keyword must always be used to start any Windows program
+    that is not a command-line program. Hercules, itself being a command-line
+    program, monitors the 'stderr' and 'stdout' pipes so it can log messages
+    received from either pipe directly to the Hercules console log. Programs
+    such as notepad however, because they are not command-line programs, do
+    not use stdout/stderr thus causing Hercules to hang if "start" is used
+    instead.
+  </p><p>
+    This rule applies regardless of how Hercules itself is started (i.e. via
+    HercGUI or directly via the command-line) and regardless of whether the
+    "start" command is wrapped in a batch file or not. That is to say, using
+    the Hercules command "sh batchfile foobar" to start your batch file which
+    then does "start notepad %1" still causes Hercules to hang until notepad
+    first exits. Instead, you should ask Hercules to "sh startgui batchfile",
+    and let the batchfile start notepad however it wants.
+  </p>
+
+  <dt>Real SCSI tape drive support
+  <dd>
+  <p>
+    Real SCSI tape drives used with Hercules must provide a certain minimum set
+    is "IBM compatible" support in their SCSI command set/behavior in order to
+    work properly with Hercules. Furthermore, the Hercules device-type used on
+    your device statement in your Hercules configuration file should match the
+    the level of support/behavior that they provide.
+  </p><p>
+    For example, all SCSI tape drives used with Hercules must provide the ability
+    to set variable-length blocks as well as long erase-gaps (long erase-gaps
+    allows new data to be appended to the end of existing data without having to
+    write a tape-mark to separate the new data from the old existing data first).
+  </p><p>
+    Another example would be using a model of SCSI tape drive that happens to
+    report physical block-id values in a format different from the way real IBM
+    mainframe tape drives report them. 3480/3490 tape drives for example report
+    their block-ids (used in Read Block Id and Locate CCWs) in a very specific
+    format wherein bits 1-7 of the high-order byte of the reported 4-byte block-
+    id indicates the tape's physical "segment" location of where the lower 22-
+    bit block number is physically located on the tape. (The block-id segment
+    is used to allow the tape drive to quickly position itself to the approximate
+    location where the desired block acually resides on the tape and thus allows
+    high-speed positioning for the Locate CCW).
+  </p><p>
+    If the model of SCSI tape drive you are actually using with Hercules does not
+    use this same block-id format however, then it cannot be used with Hercules
+    as a 3480 or 3490 model tape drive with specially defined options.
+  </p><p>
+    If the SCSI tape drive you are using reports its block-ids using a 32-bit
+    block-id value (the same way a 3590 model tape drive does), then similarly,
+    it should be defined to Hercules as a model 3590 device-type as well (since
+    that is how it is behaving with respect the format of the returned blockid
+    values). It you wish to define it in Hercules as a model 3480 or 3490, then
+    you will need to use specially defined options before it will work properly
+    as the model drive you wish it to emulate.
+  </p><p>
+    With all that being said, it should be noted that PARTIAL support for 3590
+    device emulation is possible with judicious use the aforementioned special
+    options, but full/complete 3590 support is unlikely due to lack of publicly
+    available documentation. Details regarding 3590 CCW handling is restricted
+    (confidential) IBM proprietary information, and is not normally available
+    outside of IBM. Not long ago IBM was required by US law to publish such
+    information, but unfortunately for Hercules, such is no longer the case.
+  </p><p>
+    For further information regarding use of SCSI attached tape drives with
+    Hercules and their associated specially defined options, please refer to
+    the section on SCSI tape drives in the Hercules's Device Configuration
+    documentation.
+  </p>
+
+  <dt>Internal thread priorities changed on Windows for platform consistency
+  <dd>
+  <p>
+    In order to ensure proper functioning of the TOD clock with older versions
+    of guest operating systems, the default values of Hercules's internal thread
+    priorities for the Windows version of Hercules were changed to be identical
+    to those used by all other supported platforms. Originally, the default
+    thread priority values for the Windows version of Hercules were:
+    </p><pre>
+              ***  3.04 (and prior) Default Priorities  ***
+
+              Thread    Priority           Meaning
+              -------   --------   ------------------------
+              HERCPRIO     0        Normal Process priority
+
+              DEVPRIO     -8        Above Normal  Thread priority
+              TODPRIO      0        Normal        Thread priority
+              CPUPRIO      0        Normal        Thread priority</pre>
+  </p><p>
+    which caused acceptable performance/functioning on most, but not all, guest
+    operating systems. Beginning with version 3.05 however, the prioriries now
+    default to:
+    </p><pre>
+              ***  3.05 (and later) Default  Priorities  ***
+
+              Thread    Priority           Meaning
+              -------   --------   ------------------------
+              HERCPRIO     0        Normal Process priority
+
+              TODPRIO    -20        Time Critical  Thread priority
+              DEVPRIO      8        Below Normal   Thread priority
+              CPUPRIO     15        Lowest         Thread priority</pre>
+  </p><p>
+    which may on more modern guest operating systems (which handle the TOD clock
+    differently than do older less sophticated versions) cause a slight decrease
+    in overall performance. If such is the case, the original default priorities
+    (and thus the original behavior) can be obtained via addition of appropriate
+    HERCPRIO, TODPRIO, DEVPRIO and CPUPRIO control file statements with values
+    identical to the original version 3.04 default values.
+  </p>
+
+  <dt>Configuration file usability enhancements and Automatic Operator facility
+  <dd>
+  <p>
+    Additional configuration file usability enhancements have been implemented
+    in the form of a new 'INCLUDE' (and associated 'IGNORE') statement, allowing
+    configuration files to "include" statements from a different named file.
+  </p><p>
+    Additonally, a new "enhanced" symbolic substitution syntax is now also
+    supported. Refer to the Hercules "Configuration File" documentation for
+    further information and details.
+  </p><p>
+    A rather nifty "Automatic Operator" facility has also been implemented in
+    the current release as well. While not exactly a "configuration file
+    usability enhancement", it is nevertheless something we hope might prove
+    to be more useful/helpful to our many users. See the "README.HAO" document
+    for more information.
+  </p>
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+<h2>Release notes for release 3.03</h2>
+<p>Release date: 20 December 2005
+<dl>
+<dt>New device types 1052-C and 3215-C
+<dd>
+<p>The new integrated console printer-keyboard is emulated on the
+hercules console. Commands are sent to the console by means of a command character.
+(default '/', thus a logon command is sent by /logon)</p>
+<dt>Message Security Assist
+<dd>
+<p>Starting from release 3.03 the glibcrypt library is no longer needed.</p>
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+<h2>Release notes for release 3.02</h2>
+<p>Release date: 11 December 2004
+<dl>
+<dt>ASN-and-LX-reuse facility
+<dd>
+<p>This is a new feature of z/Architecture which can cause problems with
+certain versions of operating systems running in ARCHLVL=2 mode without
+the so-called "Driver 55" fixes. To avoid such problems, specify
+<code>ASN_AND_LX_REUSE DISABLE</code> in the configuration file. </p>
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+<h2>Release notes for release 3.01</h2>
+<p>Release date: 30 November 2003
+<dl>
+<dt>Library modules and HTTP documents default directories
+<dd><p>
+An error in the 3.00 configuration script caused many users to have to
+override the default modules and HTTP documents directory in the
+Hercules configuration file, or by setting an environment variable. This
+error has been corrected. Hercules also now reports the actual directory
+that it uses by default for these files at startup time. If you specified
+the MODPATH or HTTPROOT configuration file statements because you
+encountered problems, you should examine the messages printed at startup to
+see if the default directories are now correct, and remove the statements
+if so.</p>
+<p>In general, MODPATH and HTTPROOT should not have to be specified
+except in unusual circumstances.</p>
+<dt>Windows default directories
+<dd>
+<p>In conjunction with the fix above, the default directories of the
+Windows distributed binaries have been changed. The new directories are
+under C:\cygwin\usr\local (which is the same as /usr/local under the Cygwin
+environment). No action is needed unless you have specified the MODPATH or
+HTTPROOT configuration file entries; if so, see the previous note.</p>
+<dt>Message Security Assist
+<dd>
+<p>Support for z990 crypto instructions is conditional on the presence of the
+glibcrypt library.
+When Hercules is BUILT, the development files for glibcrypt should be available.
+When hercules is RUN, the runtime files for glibcrypt should be installed.</p>
+<p>Depending on the level of glibcrypt used to *build* hercules, the associated
+level of glibcrypt should also be present on the target machine. On systems
+supporting shared library versioning, multiple levels of the glibcrypt
+runtime libraries can be installed simultaneously, ensuring availability
+of the z990 crypto instructions, regardless of the level of glibcrypt with
+which hercules was initially built.</p>
+<dt>CTC and LCS device numbers
+<dd>
+<p>CTC and LCS devices now <i>MUST</i> specify ALL addresses on the configuration
+statement.
+Previously (i.e. with version 3.00), only the first (even numbered) device
+needed to be defined and Hercules would automatically define the odd numbered
+device for you. Starting with Hercules version 3.01 however, you now need
+to define BOTH devices, just like you did with versions prior to 3.00.
+Once again, starting with version 3.01, you **MUST** define BOTH DEVICES.</p>
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<hr>
+<h2>Release notes for release 3.00</h2>
+<p>Release date: 3 October 2003
+<dl>
+<dt>CTCI device changes
+<dd>
+<ul>
+<li>The CTCI-W32 protocol is deprecated. You should use the CTCI
+protocol instead.</li>
+<li>The VMNET protocol is also deprecated. Not even its author uses it any
+more. Every system on which Hercules is now prebuilt has the TUN/TAP
+driver functionality available in one form or another, and it's much more
+robust.</li>
+</ul>
+<p>Both of these will go away in a future release.</p>
+<p>In addition, you <b>must not</b> define both even/odd CTCI device pairs in
+your configuration file. You should <b>only</b> define the first even
+numbered device. Hercules will automatically define the odd numbered device
+for you. If you define the odd numbered device by mistake, an open error will
+occur on that device. This is by design. See the README.NETWORKING document
+for further details.</p>
+<dt>Hercules Dynamic Loader support
+<dd>
+<p>Starting with version 3.00, Hercules now contains support for the dynamic
+loading of certain modules upon startup on Linux, Windows, and Mac OS X.
+This support should also work on any platform supported by GNU libtool. As a
+result of this new feature, Hercules itself now no longer consists of just the
+'hercules.exe' module by itself, but rather consists of both the 'hercules.exe'
+program as well as whatever dynamic modules (DLLs) that accompany it.</p>
+<p>As a result of this change, whenever you install a new version of Hercules,
+you must ensure that you ALSO install the accompanying new versions of the
+new dynamic modules as well. Attempting to use a version of Hercules with a
+dynamic module that was not specifically built for that version will cause
+loading of that dynamic module to fail.</p>
+<p>You <b>cannot</b> mix versions of Hercules with differing versions of
+dynamically loaded modules.</p>
+<p>Ensure that your library path (set by the environment variable
+LD_LIBRARY_PATH) set correctly such that it includes the directory of your
+Hercules dynamic load libraries. If you see message <code>HHCCF042E</code>,
+which indicates that the system is unable to locate necessary loadable
+modules, this is likely your problem. This should not be necessary if you
+have a binary download, but if you're building from source, especially if
+you've previously installed a binary package, this should be the first thing
+you do.</p>
+<dt>ECPS:VM
+<dd>
+<p>Do not use ECPS:VM (See README.ECPSVM) in an AP or MP environment
+in VM/370. If <code>AP=YES</code> or <code>MP=YES</code> is coded in DMKSYS
+and the AP/MP control file is used to build the CP nucleus and
+<code>NUMCPU</code> is set to more than 1 in the <code>hercules.cnf</code>
+file, any of LOK001, LOK003 or other abends will occur. This occurs because
+the Hercules ECPS:VM CP Assist implementation is not MP safe, and
+particularly, attempts VM dispatching without holding necessary AP or MP
+locks.</p>
+<dt>Memory allocation on Windows
+<dd>
+<p>Due to the change in the "mainstor" memory allocation technique used by Hercules to
+address a "double memory consumption" bug in Cygwin's malloc implementation,
+some Windows Hercules users may experience an "out of memory" error whenever
+Hercules is started with a large <code>MAINSIZE</code> configuration file
+value:</p>
+<p><code>HHCCF031S Cannot obtain nnnMB main storage</code></p>
+<p>This error will most likely occur (if it does at all) for those users who
+have manually adjusted their Cygwin <code>heap_chunk_in_mb</code> Windows
+registry setting value (in order to allow them to specify a large
+<code>MAINSIZE</code> value when running Hercules). If this problem does occur
+(i.e. if you <b>do</b> happen to experience the above mentioned error with
+this new release of Hercules), then either reduce your
+<code>heap_chunk_in_mb</code> value (yes, that's correct: <b>reduce</b> it,
+as in change it to a <b>smaller</b> value) or else remove it altogether (so
+as to let it default).</p>
+<p>A complete discussion of this issue is in the RELEASE.NOTES file
+in the source distribution.</p>
+<dt>Thread priority and other problems
+<dd>
+<p>There is a known problem with thread priority handling under Mac OS
+X. The OS X threading model is different from the one classically used in
+Linux. This causes failures to set the timer thread priority, and slow
+performance as all of Hercules is set to a low execution priority. This
+will be fixed in a future release. A workaround, for now, for slow
+performance is to add the statement</p>
+<p><code>CPUPRIO 0</code></p>
+<p>to your Hercules configuration file.</p>
+<p>A possibly related problem is that Hercules fails in random ways when
+using the NPTL (new POSIX threads library) library under Linux.
+This library is used by default in Red Hat 9, and possibly other systems.
+If problems are encountered on a very recent version of Linux, try issuing
+the command</p>
+<p><code>export LD_ASSUME_KERNEL=2.4.1</code></p>
+<p>before starting Hercules.</p>
+</dl>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<p><center><hr width=15% noshade></center>
+<p>
+If you have a question about Hercules, see the
+<a href="hercfaq.html">Hercules Frequently-Asked Questions</a> page.
+
+<p><center><hr width=15% noshade>
+<a href="##" onclick="history.go(-1)"><img src="images/back.gif" border=0 alt="back"></a>
+<p class="lastupd"><script language="Javascript">
+document.write( "Last updated " + document.lastModified + "" );
+</script></p>
+</BODY>
+</HTML>
