@@ -2,19 +2,19 @@ zLinux Installer
 ================
 
 
-This is a collection of scripts, recipees and strategems to obtain an Ubuntu 18.04 iso image for the s390x architecture, and then install it on fresh DASD 3390 virtual disk under Hercules. 
+This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on fresh DASD 3390 virtual disk under Hercules. 
 
 You just execute the the installer by doing:
 
 >sudo ./zlinux_install.bash
 
-The script will ask to download Ubuntu 18.0.4-5 for s390x in ISO form to your local machine. 
+The script will proceed to download Ubuntu 18.0.4-5 for s390x in ISO form to your local machine. 
 
 It will then ask you to pick a password for the user "zubuntu" on the new system. 
 
 After that it will automatically start a modern Hyperion (which is provided with this repo) and run the full Ubuntu 18.04 server installation procedure. 
 
-This could take 90 minutes to 2 hours, depding on the speed of your machine. 
+This could take 90 minutes to 2 hours, depending on the speed of your machine. 
 
 At the end, the script will shut down Hercules and restart Hercules with the newly installed DASD and you can then ssh into the zLinux instance. 
 
@@ -23,7 +23,7 @@ At the end, the script will shut down Hercules and restart Hercules with the new
 Operation
 =========
 
-A standard Ubuntu 18.04 will be installed. It will have full connectivty to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
+A standard Ubuntu 18.04 will be installed. It will have full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
 
 >ssh zubuntu@10.1.12 
 
