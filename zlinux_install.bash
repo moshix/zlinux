@@ -20,7 +20,7 @@
 
 
 version="0.2" #of zlInux system, not of this script
-caller=""
+caller=""     # will contain the user name who invoked this script
 
 
 who_called () {
@@ -217,6 +217,8 @@ remove_env () {
 	local FILE=./tmp/herc_env
 	rm $FILE
 }
+
+
 # main starts here
 
 oldpath=`echo $PATH`               # needed so we can use supplied Hercules
@@ -224,8 +226,8 @@ oldldpath=`echo $LD_LIBRARY_PATH`
 
 set_colors
 
-
 who_called
+logit "user invoking install script: $caller"
 
 check_if_root # cannot be root
 
@@ -260,10 +262,12 @@ read -p "${white}How big do you want your zLinux disk to be?  (3GB, 9GB): ${rese
 case "$dsize" in
   3*) 
 	  echo "${yellow}Roger, ${cyan} 3GB  ${reset}" 
+	  logit "user asked for 3GB DASD size "
 	  [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
 	  dasdinit64 -bz2 ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
   9*)   
 	  echo "${yellow}Roger, ${cyan} 9GB ${reset}" 
+	  logit "user asked for 9GB DASD size"
 	  [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
 	  dasdinit64 -bz2 ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
   *) 
@@ -294,6 +298,7 @@ echo "${reset}"
 # place DVD IPL hercules.rc into working dir
 rm -f ./hercules.rc
 /bin/cp -rf ./assets/hercules.rc.DVD ./hercules.rc 
+chown $caller.$caller ./hercules.rc
 
 
 # remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf
@@ -335,6 +340,7 @@ read -p "${white} Do you want to run Hercules with the newly installed zLinux no
   case "$runvar" in
      [Yy]*)
           echo "${yellow}Ok, restarting now Hercules and IPLing from DASD... ${reset}" 
+	  logit "user asked to immediately start hercules with new DASD after install"
           /bin/cp -f ./assets/hercules.rc.hd0 hercules.rc
           logdate=`date "+%F-%T"`
 	  FILE=./logs/hercules.log.$logdate
