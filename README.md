@@ -8,7 +8,16 @@ You just execute the the installer by doing:
 
 >sudo ./zlinux_install.bash
 
-and everything else is interactive. 
+The script will ask to download Ubuntu 18.0.4-5 for s390x in ISO form to your local machine. 
+
+It will then ask you to pick a password for the user "zubuntu" on the new system. 
+
+After that it will automatically start a modern Hyperion (which is provided with this repo) and run the full Ubuntu 18.04 server installation procedure. 
+
+This could take 90 minutes to 2 hours, depding on the speed of your machine. 
+
+At the end, the script will shut down Hercules and restart Hercules with the newly installed DASD and you can then ssh into the zLinux instance. 
+
 
 
 Operation
@@ -30,7 +39,7 @@ The latest version of Ubuntu supported currently (as of July 2022) by Hercules i
 
 
 After Installation
-=================
+==================
 
 You will have Ubuntu/s390x installed in dasd/hd0.120
 
