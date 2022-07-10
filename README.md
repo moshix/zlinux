@@ -23,11 +23,11 @@ At the end, the script will shut down Hercules and restart Hercules with the new
 Operation
 =========
 
-After the successful install, you start Ubuntu by running the following script:
+After the successful install, you start Ubuntu by running the following script:  
 
->./run_zlinux.bash
+>./run_zlinux.bash  
 
-A standard Ubuntu 18.04 will be installed. It will have full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
+A standard Ubuntu 18.04 will be installed. It will have full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:  
 
 >ssh zubuntu@10.1.1.2 
 
@@ -37,10 +37,10 @@ Everything else is just normal Linux; ie you can run apt-get, etc. etc.
 
 A few things to know about the generated Ubuntu instance that will IPL from DASD after the install:
 
->Internal IP:   10.1.1.2
->IP of gateway: 10.1.1.1
->DNS server:    1.1.1.1
->user name:     zubuntu/password as set up by you during installation process
+>Internal IP:   10.1.1.2  
+>IP of gateway: 10.1.1.1  
+>DNS server:    1.1.1.1  
+>user name:     zubuntu/password as set up by you during installation process  
 
 The s/390x Linux instance will connect thru a tunnel interface which is set up by the the run_zlinux.bash script in this directory. It then further uses NAT on your default NIC interface to connect to the Internet. 
 
