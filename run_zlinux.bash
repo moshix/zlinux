@@ -6,6 +6,7 @@
 
 # v0.1 copied over a lot of stuff from installer script
 # v0.2 fixed sudo stuff
+# v0.3 fixed RAM calculation
 
 version="0.4" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -131,30 +132,26 @@ get_cpu() {
 
 get_ram ()  {
     # this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
-    bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'  `
+    bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
     let "gbram=$bkram/1024"
 
-    if ((  $gbram < 1300 )); then
-        echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to IPL  zLinux. Exiting now. ${reset}"
-        exit
-    fi
-
-    if [ $gbram -gt 16000 ]; then
-        hercram=8192
-    elif [ $gbram -gt 8192  ]; then
-        hercram=4096
-    elif [ $gbram <  8192 ] && [  $gbram >  6000 ]; then
-        hercram=4096
-    elif [ $gbram >  3000 ]  &&  [ $gbram < 5999 ]; then
-        hercram=2048
-    elif [ $gbram < 2200 ]; then
+    if [[ $gbram -lt 1300 ]]; then
+        echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to IPL zLinux. Exiting now. ${reset}"
+        exit 1
+    elif [[ $gbram -lt 2200 ]]; then
         hercram=1024
+    elif [[ $gbram -lt 6000 ]]; then
+        hercram=2048
+    elif [[ $gbram -lt 16000 ]]; then
+        hercram=4096
+    else
+        hercram=8192
     fi
 
-    echo "${yellow}RAM in KB  ${cyan} $gbram. ${yellow}Setting Hercules to ${cyan} $hercram  ${reset}"
-    echo  "MAINSIZE     $hercram" >> ./tmp/herc_env
+    echo "${yellow}RAM in KB ${cyan}${gbram}.${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
+    echo "MAINSIZE      $hercram" >> ./tmp/herc_env
     logit "MAINSIZE     $hercram"
-    echo "MAINSIZE         $hercram"  >> /tmp/.hercules.cf1
+    echo "MAINSIZE      $hercram" >> /tmp/.hercules.cf1
 }
 
 set_hercenv () {

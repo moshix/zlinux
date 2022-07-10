@@ -42,3 +42,7 @@ export HERCULES_RC properly
 auto-tune now finally works. It's been only 3 weeks fiddling with it...
 set assets/ to non-writable
 
+v 0.5
+-----
+General script cleanup
+Fix RAM auto-tune

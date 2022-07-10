@@ -17,6 +17,7 @@
 # v0.9 ask user to press enter to start hercules so they can see it will last a while
 # v1.0 fix permissions
 # v1.1 don't allow execution as user root
+# v1.2 fixed RAM calculation
 
 version="0.4" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -144,24 +145,20 @@ get_ram ()  {
     bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
     let "gbram=$bkram/1024"
 
-    if (( $gbram < 1300 )); then
-         echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
-          exit
-    fi
-
-    if [ $gbram -gt 16000 ]; then
-        hercram=8192
-    elif [ $gbram -gt 8192  ]; then
-        hercram=4096
-    elif [ $gbram <  8192 ] && [  $gbram >  6000 ]; then
-        hercram=4096
-    elif [ $gbram >  3000 ]  &&  [ $gbram < 5999 ]; then
-        hercram=2048
-    elif [ $gbram < 2200 ]; then
+    if [[ $gbram -lt 1300 ]]; then
+        echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
+        exit 1
+    elif [[ $gbram -lt 2200 ]]; then
         hercram=1024
+    elif [[ $gbram -lt 6000 ]]; then
+        hercram=2048
+    elif [[ $gbram -lt 16000 ]]; then
+        hercram=4096
+    else
+        hercram=8192
     fi
 
-    echo "${yellow}RAM in KB  ${cyan} $gbram. ${yellow}Setting Hercules to ${cyan} $hercram ${reset}"
+    echo "${yellow}RAM in KB ${cyan}${gbram}.${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
     echo "MAINSIZE      $hercram" >> ./tmp/herc_env
     logit "MAINSIZE     $hercram"
     echo "MAINSIZE      $hercram" >> /tmp/.hercules.cf1
