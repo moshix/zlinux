@@ -28,3 +28,4 @@ Expanded README
 made dasd/ and logs/ directory non-empty to make it compatible with git
 Made assets/hercules.rc.hd0 able to shutdown 
 created run_zlinux.bash script to set up environment and start zLinux 
+Fixed tuning for the nth+1 time...

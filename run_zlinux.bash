@@ -136,7 +136,7 @@ get_ram ()  {
 	let "gbram=$bkram/1024"
 
 	if ((  $gbram < 1300 )); then
-		 echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to IPL  zLinux. Exiting now. ${reset}"
+et_hercenv	 echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to IPL  zLinux. Exiting now. ${reset}"
 		  exit
 	fi
 
@@ -161,9 +161,16 @@ get_ram ()  {
 	echo "MAINSIZE         $hercram"  >> /tmp/.hercules.cf1
 }
 
+set_hercenv () {
+	# set path to  supplied hercules
+	export PATH=./herc4x/bin:$PATH
+	export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
+
+}
 
 clear_conf () {
-[-e ./hercules.rc ] && /bin/cp -rf ./assets/hercules.rc.ipl.hd0 ./hercules.rc
+/bin/cp -rf ./assets/hercules.rc.ipl.hd0 ./hercules.rc
 }
 
 clean_conf () {
@@ -214,16 +221,12 @@ get_cores
 
 get_ram
 
-# set path to  supplied hercules
-export PATH=./herc4x/bin:$PATH
-export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
-
+set_hercenv  #set paths for local herc4x hyperion instance
 
 echo " "                                                                        
 echo " "                                                                        
 echo " "
-logit "Starting zLinux installer"
+logit "Starting zLinux "
 
 # quick sanity checks
 check_os
@@ -234,21 +237,20 @@ get_distro
 ./scripts/set_network
 
 
-# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf
-clean_conf
-
-
 # attach rest of hercules.cnf (without MAINSIZE AN NUMCPU)
 cat hercules.cnf >> /tmp/.hercules.cf1
 mv /tmp/.hercules.cf1 hercules.cnf
 
+
+# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf and copy hercules.rc into place
+clean_conf
 
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
 hercules -f hercules.cnf > $FILE
 
-
+logit "Ending zlinux"
 # moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED 
 # WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED 
 # WARRANTIES TO THE FULL EXTENT ALLOWED BY APPLICABLE LAW, INCLUDING WITHOUT 

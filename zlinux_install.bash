@@ -190,6 +190,14 @@ rm ./tmp/.hercules.cnfc
 rm ./tmp/.hercules.cnfd
 }
 
+set_hercenv () {
+        # set path to  supplied hercules
+        export PATH=./herc4x/bin:$PATH
+        export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
+        export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
+
+}
+
 run_sudo () {
 	# are we running as sudo? If not inform user and exit
 arewesudo=`id -u`
@@ -227,11 +235,7 @@ get_cores
 
 get_ram
 
-# set path to  supplied hercules
-export PATH=./herc4x/bin:$PATH
-export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
-
+set_hercenv
 
 echo " "                                                                        
 echo " "                                                                        
