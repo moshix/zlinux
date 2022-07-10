@@ -51,6 +51,9 @@ Why Ubuntu 18.04
 
 The latest version of Ubuntu supported currently (as of July 2022) by Hercules is Ubuntu 18.04. If you attempt to upgrade an existing Ubuntu 18.04 install to version 20.04 or higher, it will fail on IPL. 
 
+By the same token, the last version of Centos (or RHEL) that will IPL on the current Hercules is CENTOS 7, or CLEFOS 7.  
+
+
 
 After Installation
 ==================
