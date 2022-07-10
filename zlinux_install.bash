@@ -19,7 +19,7 @@
 # v1.1 don't allow execution as user root
 
 
-version="0.2" #of zlInux system, not of this script
+version="0.3" #of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
 
 
@@ -115,23 +115,15 @@ get_cores () {
 	# tune CPU number
 	cores=`grep -c ^processor /proc/cpuinfo`
 	intcores=1
-
-	if [ $cores \> 5 ]; then
-		        intcores=5
-	fi
-
-
-	if [ $cores \> 7 ]; then
-		        intcores=6
-	fi
-
-	if [ $cores \< 3 ]; then
-		        intcores=2
-	fi
-
-	if [ $cores \< 2 ]; then
-		        intcores=1
-	fi
+        if [ $cores -gt 7]; then
+           intcores=6
+        elif [ $cores -gt 5]; then
+           intcores=5
+        elif [ $cores -gt 3]; then
+           intcores=2
+        else
+           intcores=1
+        fi
 
 
 	# now put in config file
@@ -150,35 +142,29 @@ get_cpu() {
 }
 
 get_ram ()  {
-	# this function set a sensible amount of RAM for the tkbuntu instance
+	# this function set a sensible amount of RAM for the Ubuntu/s390x installation procedure
 	bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'  `
 	let "gbram=$bkram/1024"
 
 	if ((  $gbram < 1300 )); then
-		 echo "${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to stat tkbuntu. Exiting now. ${reset}"
+		 echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
 		  exit
 	fi
 
-	if ((  gbram > 8000 )); then
+        if [ $gbram -gt 16000 ]; then
+                hercram=8192
+        elif [ $gbram -gt 8192  ]; then
 		hercram=4096
-	fi
 
-	if (( $gbram <  8192 )) && ((  $gbram >  6000 )); then
+	elif [ $gbram <  8192 ] && [  $gbram >  6000 ]; then
 		hercram=4096
-	fi
 
-	if (( $gbram >  3000 ))  &&  (( $gbram < 5999 )); then
+	elif [ $gbram >  3000 ]  &&  [ $gbram < 5999 ]; then
 		hercram=2048
-	fi
-
-	if (( $gbram < 2200 )); then
+	
+	elif [ $gbram < 2200 ]; then
 		hercram=1024
-	fi
-
-	if (( $gbram > 16000  )); then
-		hercram=8192
-	fi
-
+        fi
 
 	echo "${yellow}RAM in KB  ${cyan} $gbram. ${yellow}Setting Hercules to ${cyan} $hercram  ${reset}"
 	echo  "MAINSIZE     $hercram" >> ./tmp/herc_env
@@ -264,12 +250,12 @@ case "$dsize" in
 	  echo "${yellow}Roger, ${cyan} 3GB  ${reset}" 
 	  logit "user asked for 3GB DASD size "
 	  [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
-	  dasdinit64 -bz2 ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
+	  dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
   9*)   
 	  echo "${yellow}Roger, ${cyan} 9GB ${reset}" 
 	  logit "user asked for 9GB DASD size"
 	  [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
-	  dasdinit64 -bz2 ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
+	  dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
   *) 
 	  echo "${red}Unrecognized selection: $dsize. Restart and supply correct input, either 3GB or 9GB... ${reset}" 
 	  exit 1;;
