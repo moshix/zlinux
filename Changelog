@@ -32,7 +32,6 @@ Fixed tuning for the nth+1 time...
 
 v 0.4
 -----
-
 Removed option to start freshly installed Ubuntu from install script
 create dasd/ and logs/ if they don't exist
 fixed small stuff in run_zlinux.bash
@@ -40,4 +39,6 @@ Updated hercules.cnf for FACILITY instead of ARCHLVL
 updated hercules.rc.hd0
 fixed ipl.rc
 export HERCULES_RC properly 
+auto-tune now finally works. It's been only 3 weeks fiddling with it...
+set assets/ to non-writable
 
