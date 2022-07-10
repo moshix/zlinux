@@ -251,8 +251,10 @@ chown $caller.$caller hercules.cnf
 
 # copy correct .rc file 
 clear_conf 
+chown $caller.$caller hercules.rc
+
+
 export HERCULES_RC=hercules.rc
-# just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
 hercules -f hercules.cnf > $FILE
