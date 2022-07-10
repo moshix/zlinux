@@ -19,7 +19,7 @@
 # v1.1 don't allow execution as user root
 
 
-version="0.3" #of zlinux system, not of this script
+version="0.4" #of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
 
 

@@ -20,7 +20,6 @@ don't aloow user to be root
 
 v 0.3
 -----
-
 Made tuning logic more streamlined
 Same for RAM tuning
 created run_zlinux script to run Ubuntu and setup NAT and tunneling
@@ -29,3 +28,11 @@ made dasd/ and logs/ directory non-empty to make it compatible with git
 Made assets/hercules.rc.hd0 able to shutdown 
 created run_zlinux.bash script to set up environment and start zLinux 
 Fixed tuning for the nth+1 time...
+
+
+v 0.4
+-----
+
+Removed option to start freshly installed Ubuntu from install script
+create dasd/ and logs/ if they don't exist
+fixed small stuff in run_zlinux.bash

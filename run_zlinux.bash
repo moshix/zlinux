@@ -5,9 +5,10 @@
 # Uses a provided Hercules environment and not any pre-installed version of Hercules
 
 # v0.1 copied over a lot of stuff from installer script
+# v0.2 fixed sudo stuff
 
 
-version="0.3" #of zlinux system, not of this script
+version="0.4" #of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
 
 
