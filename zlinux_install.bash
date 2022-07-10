@@ -326,35 +326,16 @@ chown -R $caller ./install/
 chmod -R 644 ./install
 
 
+echo "${yellow}It seems that the instllation was successful. Start it with: ${reset}"
+echo "${magenta}sudo ./run_zlinust.bash ${reset}"
+echo " "
+echo "${yellow}Good bye!${reset}"
 
-# now ask user if to run the newly created image or if to exit
-while true; do
-read -p "${white} Do you want to run Hercules with the newly installed zLinux now? (y/n) ${reset}" runvar
 
-  case "$runvar" in
-     [Yy]*)
-          echo "${yellow}Ok, restarting now Hercules and IPLing from DASD... ${reset}" 
-	  logit "user asked to immediately start hercules with new DASD after install"
-          /bin/cp -f ./assets/hercules.rc.hd0 hercules.rc
-          logdate=`date "+%F-%T"`
-	  FILE=./logs/hercules.log.$logdate
-          hercules -f hercules.cnf > $FILE   
-	  exit;
-     [Nn]* )
-          echo "${yellow}Ok, terminating now....  ${reset}" 
-          # restore path variables to before we got executed by firing squad
-	  unset PATH
-	  unset LD_LIBRARY_PATH
-          export PATH=$oldpath
-          export LD_LIBRARY_PATH=$oldldpath
-          exit;;
-     *)
-          echo "${red}Unrecognized selection: $runvar. y or n  ${reset}" ;;
-  esac
-done
+exit
 
 # ask if to clean up after successful install
-./cleanup_after_successful_install.bash
+#./cleanup_after_successful_install.bash
 
 # moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED 
 # WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED 
@@ -362,5 +343,4 @@ done
 # LIMITATION ALL IMPLIED WARRANTIES OF, NON-INFRINGEMENT, MERCHANTABILITY, TITLE
 # OR FITNESS FOR ANY PARTICULAR PURPOSE. NO ORAL OR WRITTEN INFORMATION OR ADVICE
 # GIVEN BY moshix, ITS AGENTS OR EMPLOYEES SHALL CREATE A WARRANTY
-exit
 

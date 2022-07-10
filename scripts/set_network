@@ -12,7 +12,7 @@
 logit () {                                                                      
 # log to file all messages                                                      
 logdate=`date "+%F-%T"`
-echo "$logdate:$1" >> ./logs/tkbuntu.log.$logdate
+echo "$logdate:$1" >> ./logs/setnetwork.log.$logdate
 }    
 
 # obtain interface name
