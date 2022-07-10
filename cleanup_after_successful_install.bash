@@ -74,7 +74,7 @@ read -p "${white} Do you want to clean up your directory after a successful inst
 
   case "$runvar" in
      [Yy]*)
-          echo "${yellow}Ok, restarting now Hercules and IPLing from DASD... ${reset}"
+          echo "${yellow}Roger, cleaing it all up now... ${reset}"
           clean_stuff 
           ;;
      [Nn]* )

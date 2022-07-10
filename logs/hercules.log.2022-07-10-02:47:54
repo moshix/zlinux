@@ -1,0 +1,153 @@
+02:47:54 HHC00100I Thread id 00007f7ccbe06540, prio 5, name 'impl_thread' started
+02:47:54 HHC00100I Thread id 00007f7ccbd03700, prio 4, name 'logger_thread' started
+02:47:54 HHC01413I Hercules version 4.4.1.10647-SDL-gd0ccfbc9
+02:47:54 HHC01414I (C) Copyright 1999-2022 by Roger Bowler, Jan Jaeger, and others
+02:47:54 HHC01417I ** The SoftDevLabs version of Hercules **
+02:47:54 HHC01415I Build date: Jun 27 2022 at 16:09:37
+02:47:54 HHC01417I Built with: GCC 9.4.0
+02:47:54 HHC01417I Build type: GNU/Linux x86_64 host architecture build
+02:47:54 HHC01417I Modes: S/370 ESA/390 z/Arch
+02:47:54 HHC01417I Max CPU Engines: 128
+02:47:54 HHC01417I Using   shared libraries
+02:47:54 HHC01417I Using   setresuid() for setting privileges
+02:47:54 HHC01417I Using   POSIX threads Threading Model
+02:47:54 HHC01417I Using   Error-Checking Mutex Locking Model
+02:47:54 HHC01417I With    Shared Devices support
+02:47:54 HHC01417I With    Dynamic loading support
+02:47:54 HHC01417I With    External GUI support
+02:47:54 HHC01417I With    IPV6 support
+02:47:54 HHC01417I With    HTTP Server support
+02:47:54 HHC01417I With    sqrtl support
+02:47:54 HHC01417I With    Signal handling
+02:47:54 HHC01417I With    Watchdog monitoring
+02:47:54 HHC01417I With    CCKD BZIP2 support
+02:47:54 HHC01417I With    HET BZIP2 support
+02:47:54 HHC01417I With    ZLIB support
+02:47:54 HHC01417I With    Regular Expressions support
+02:47:54 HHC01417I Without Object REXX support
+02:47:54 HHC01417I Without Regina REXX support
+02:47:54 HHC01417I With    Automatic Operator support
+02:47:54 HHC01417I Without National Language Support
+02:47:54 HHC01417I With    CCKD64 Support
+02:47:54 HHC01417I With    Transactional-Execution Facility support
+02:47:54 HHC01417I With    "Optimized" instructions
+02:47:54 HHC01417I With    OPTION_USE_SKAIP_AS_LOCK
+02:47:54 HHC01417I With    OPTION_SIE2BK_FLD_COPY
+02:47:54 HHC01417I Machine dependent assists: cmpxchg1 cmpxchg4 cmpxchg8 cmpxchg16 hatomics=C11
+02:47:54 HHC01417I Running on: ovh3 (Linux-5.4.0-107-generic x86_64) MP=6
+02:47:54 HHC01417I Built with crypto external package version 1.0.0.50-geed8a86
+02:47:54 HHC01417I Built with decNumber external package version 3.68.0.100-g208ee4c
+02:47:54 HHC01417I Built with SoftFloat external package version 3.5.0.103-g9ba90c7
+02:47:54 HHC01417I Built with telnet external package version 1.0.0.60-g524b6e8
+02:47:54 HHC00017W Crash dumps NOT enabled
+02:47:54 HHC00007I Previous message from function 'impl' at impl.c(1063)
+02:47:54 HHC00018I Hercules is running in elevated mode
+02:47:54 HHC00150I Crypto module loaded (C) Copyright 2003-2016 by Bernard van der Helm
+02:47:54 HHC00151I Activated facility: Message Security Assist
+02:47:54 HHC00151I Activated facility: Message Security Assist Extension 1, 2, 3 and 4
+02:47:54 HHC00111I Thread CPU Time IS available (_POSIX_THREAD_CPUTIME=0)
+02:47:54 HHC00100I Thread id 00007f7ccb8c1700, prio 2, name 'Processor CP00' started
+02:47:54 HHC00811I Processor CP00: architecture mode z/Arch
+02:47:54 HHC00100I Thread id 00007f7ccb7c0700, prio 7, name 'timer_thread' started
+02:47:54 HHC00100I Thread id 00007f7ccaebd700, prio 2, name 'Processor CP01' started
+02:47:54 HHC00811I Processor CP01: architecture mode z/Arch
+02:47:54 HHC00100I Thread id 00007f7cca5ba700, prio 2, name 'Processor CP02' started
+02:47:54 HHC00811I Processor CP02: architecture mode z/Arch
+02:47:54 HHC00100I Thread id 00007f7cc9cb7700, prio 2, name 'Processor CP03' started
+02:47:54 HHC00811I Processor CP03: architecture mode z/Arch
+02:47:54 HHC00100I Thread id 00007f7cc93b4700, prio 2, name 'Processor CP04' started
+02:47:54 HHC00811I Processor CP04: architecture mode z/Arch
+02:47:54 HHC02204I NUMCPU         set to 5
+02:47:54 HHC02204I MAXCPU         set to 5
+02:47:54 HHC17003I MAIN     storage is 8G (mainsize); storage is not locked
+02:47:54 HHC02204I CPUSERIAL      set to 002623
+02:47:54 HHC02204I CPUMODEL       set to 2086
+02:47:54 HHC02256W Command 'PANRATE' is deprecated; use PANOPT RATE=xxx instead
+02:47:54 HHC00007I Previous message from function 'panrate_cmd' at hsccmd.c(4355)
+02:47:54 HHC02204I PANRATE        set to SLOW
+02:47:54 HHC02204I ARCHLVL        set to z/Arch
+02:47:54 HHC02256W Command 'ALRF' is deprecated; use 'ARCHLVL ENABLE 006_ASN_LX_REUSE' instead
+02:47:54 HHC00007I Previous message from function 'alrf_cmd' at hscpufun.c(1115)
+02:47:54 HHC01600E Unknown command ;, enter 'help' for a list of valid commands
+02:47:54 HHC00007I Previous message from function 'DoCallHercCmdLine' at cmdtab.c(441)
+02:47:54 HHC01441E Config file[15] hercules.cnf: error processing statement: ALRF ENABLE
+02:47:54 HHC00007I Previous message from function 'process_config' at script.c(431)
+02:47:54 HHC02204I DIAG8CMD       set to ENABLE  NOECHO
+02:47:54 HHC02204I ECPSVM         set to enabled, trap support enabled
+02:47:54 HHC00898I Facility( 044_PFPO ) Enabled for z/Arch
+02:47:54 HHC00887W Note: Enabling/Disabling/Querying facilities via 'ARCHLVL' is deprecated.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(289)
+02:47:54 HHC00888W       Please use the new FACILITY command instead.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(290)
+02:47:54 HHC00898I Facility( 045_DISTINCT_OPERANDS ) Enabled for z/Arch
+02:47:54 HHC00887W Note: Enabling/Disabling/Querying facilities via 'ARCHLVL' is deprecated.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(289)
+02:47:54 HHC00888W       Please use the new FACILITY command instead.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(290)
+02:47:54 HHC00898I Facility( 037_FP_EXTENSION ) Enabled for z/Arch
+02:47:54 HHC00887W Note: Enabling/Disabling/Querying facilities via 'ARCHLVL' is deprecated.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(289)
+02:47:54 HHC00888W       Please use the new FACILITY command instead.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(290)
+02:47:54 HHC00898I Facility( 049_EXECUTION_HINT ) Enabled for z/Arch
+02:47:54 HHC00887W Note: Enabling/Disabling/Querying facilities via 'ARCHLVL' is deprecated.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(289)
+02:47:54 HHC00888W       Please use the new FACILITY command instead.
+02:47:54 HHC00007I Previous message from function 'archlvl_cmd' at archlvl.c(290)
+02:47:54 HHC00470I 0:0120 CKD64 file ./dasd/hd0.120: model 3390-9 cyls 10017 heads 15 tracks 150255 trklen 56832
+02:47:54 HHC00901I 0:0A00 CTCI: Interface tun0, type TUN opened
+02:47:54 HHC02385W CPUMODEL 2086 does not technically support TXF
+02:47:54 HHC00007I Previous message from function 'txf_model_warning' at transact.c(2529)
+02:47:54 HHC17736W TXF: TIMERINT 50 is too small; using default of 400 instead
+02:47:54 HHC00007I Previous message from function 'txf_set_timerint' at transact.c(2554)
+02:47:54 HHC00100I Thread id 00007f7cc8ab1700, prio 2, name 'rubato_thread' started
+02:47:54 HHC02499I Hercules utility hercifc - Hercules Network Interface Configuration Program - version 4.4.1.10647-SDL-gd0ccfbc9
+02:47:54 HHC01414I (C) Copyright 1999-2022 by Roger Bowler, Jan Jaeger, and others
+02:47:54 HHC01417I ** The SoftDevLabs version of Hercules **
+02:47:54 HHC01415I Build date: Mar 28 2022 at 11:41:08
+02:47:54 HHC00166E hercifc: ioctl error doing SIOCSIFADDR on tun0: 1 Operation not permitted
+02:47:54 HHC00007I Previous message from function 'main' at hercifc.c(257)
+02:47:54 HHC00166E hercifc: ioctl error doing SIOCSIFDSTADDR on tun0: 1 Operation not permitted
+02:47:54 HHC00007I Previous message from function 'main' at hercifc.c(257)
+02:47:54 HHC00166E hercifc: ioctl error doing SIOCSIFNETMASK on tun0: 1 Operation not permitted
+02:47:54 HHC00007I Previous message from function 'main' at hercifc.c(257)
+02:47:54 HHC00166E hercifc: ioctl error doing SIOCSIFMTU on tun0: 1 Operation not permitted
+02:47:54 HHC00007I Previous message from function 'main' at hercifc.c(257)
+02:47:54 HHC00166E hercifc: ioctl error doing SIOCSIFFLAGS on tun0: 1 Operation not permitted
+02:47:54 HHC00007I Previous message from function 'main' at hercifc.c(257)
+02:47:54 HHC02260I Script 1: begin processing file hercules.rc
+02:47:54 HHC01603I hao tgt Requesting system reboot
+02:47:54 HHC00077I The target was placed at index 0
+02:47:54 HHC01603I hao cmd quit force
+02:47:54 HHC00077I The command was placed at index 0
+02:47:54 HHC01603I ipl install/ubuntu.ins
+02:47:54 HHC00100I Thread id 00007f7cc88af700, prio 5, name 'hao_thread' started
+02:47:54 HHC00811I Processor CP02: architecture mode ESA/390
+02:47:54 HHC00811I Processor CP01: architecture mode ESA/390
+02:47:54 HHC00811I Processor CP04: architecture mode ESA/390
+02:47:54 HHC00811I Processor CP00: architecture mode ESA/390
+02:47:54 HHC00811I Processor CP03: architecture mode ESA/390
+02:47:54 HHC00600E SCE file install/ubuntu.ins: error in function realpath(): No such file or directory
+02:47:54 HHC00007I Previous message from function 'set_sce_basedir' at scedasd.c(79)
+02:47:54 HHC02264I Script 1: file hercules.rc processing ended
+02:48:00 HHC01603I quit
+02:48:00 HHC01420I Begin Hercules shutdown
+02:48:00 HHC01423I Calling termination routines
+02:48:00 HHC01423I Calling termination routines
+02:48:00 HHC00101I Thread id 00007f7cc88af700, prio 5, name 'hao_thread' ended
+02:48:00 HHC00101I Thread id 00007f7ccb8c1700, prio 2, name 'Processor CP00' ended
+02:48:00 HHC00101I Thread id 00007f7ccaebd700, prio 2, name 'Processor CP01' ended
+02:48:00 HHC00101I Thread id 00007f7cca5ba700, prio 2, name 'Processor CP02' ended
+02:48:00 HHC00101I Thread id 00007f7cc9cb7700, prio 2, name 'Processor CP03' ended
+02:48:00 HHC00101I Thread id 00007f7cc93b4700, prio 2, name 'Processor CP04' ended
+02:48:00 HHC00333I 0:0120   32/64       size free  nbr st   reads  writes l2reads    hits switches
+02:48:00 HHC00335I 0:0120 ------------------------------------------------------------------------
+02:48:00 HHC00336I 0:0120 [*] 64 00834563548 000% 6734    0000000 0000000 0000000 0000000  0000000
+02:48:00 HHC00338I 0:0120 ./dasd/hd0.120
+02:48:00 HHC00339I 0:0120 [0] 64 00834563548 000% 6734 rw 0000000 0000000 0000000
+02:48:00 HHC01427I Main storage released
+02:48:00 HHC01427I Expanded storage released
+02:48:00 HHC01422I Configuration released
+02:48:00 HHC00101I Thread id 00007f7cc8ab1700, prio 2, name 'rubato_thread' ended
+02:48:00 HHC00101I Thread id 00007f7ccb7c0700, prio 7, name 'timer_thread' ended
+02:48:01 HHC00101I Thread id 00007f7ccbe06540, prio 5, name 'panel_display' ended
