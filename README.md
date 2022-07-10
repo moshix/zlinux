@@ -33,7 +33,7 @@ A standard Ubuntu 18.04 will be installed. It will have full connectivity to the
 
 and provide the password you specified for this user during installation. 
 
-Everything else is just normal Linux; ie you can run apt-get, etc. etc. 
+Everything else is just normal Linux; i.e. you can run apt-get, etc., etc. 
 
 A few things to know about the generated Ubuntu instance that will IPL from DASD after the install:
 
@@ -42,7 +42,7 @@ A few things to know about the generated Ubuntu instance that will IPL from DASD
 >DNS server:    1.1.1.1  
 >user name:     zubuntu/password as set up by you during installation process  
 
-The s/390x Linux instance will connect thru a tunnel interface which is set up by the the run_zlinux.bash script in this directory. It then further uses NAT on your default NIC interface to connect to the Internet. 
+The s/390x Linux instance will connect through a tunnel interface which is set up by the the run_zlinux.bash script in this directory. It then further uses NAT on your default NIC interface to connect to the Internet. 
 
 
 
@@ -51,7 +51,7 @@ Why Ubuntu 18.04
 
 The latest version of Ubuntu supported currently (as of July 2022) by Hercules is Ubuntu 18.04. If you attempt to upgrade an existing Ubuntu 18.04 install to version 20.04 or higher, it will fail on IPL. 
 
-By the same token, the last version of Centos (or RHEL) that will IPL on the current Hercules is CENTOS 7, or CLEFOS 7.  
+By the same token, the last version of CentOS (or RHEL) that will IPL on the current Hercules is CentOS 7, or ClefOS 7.  
 
 
 

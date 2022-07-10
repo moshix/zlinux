@@ -18,7 +18,7 @@ run_sudo () {
 # are we running as sudo? If not inform user and exit
 arewesudo=`id -u`
 if [ $arewesudo  -ne 0 ]; then
-        echo "${red}${rev} You need to execute this script sudo or it wont' work! ${reset}"
+        echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
         exit
 fi
 }
@@ -74,7 +74,7 @@ read -p "${white} Do you want to clean up your directory after a successful inst
 
   case "$runvar" in
      [Yy]*)
-          echo "${yellow}Roger, cleaing it all up now... ${reset}"
+          echo "${yellow}Roger, cleaning it all up now... ${reset}"
           clean_stuff 
           ;;
      [Nn]* )

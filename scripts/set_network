@@ -5,7 +5,7 @@
 
 # v0.01 all the way back from 2014 for Debian 31bit
 # v0.02 first changes for zLinux
-# v0.03 obtain entwork interface name
+# v0.03 obtain network interface name
 # v0.04 give sensible feedback to user about which network interface is being used
 # v0.05 logging for debugging purposes and problem determination
 
@@ -30,7 +30,7 @@ blink=`tput blink`
 rev=`tput rev`                                                                  
 reset=`tput sgr0`   
 
-echo "${yellow}Interface ${cyan} $interface ${yellow} will be setup for zLinux internet access..${reset}"
+echo "${yellow}Interface ${cyan} $interface ${yellow} will be setup for zLinux internet access...${reset}"
 logit "Interface for NAT: $interface"
 
 iptables -F INPUT

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Copyright 2022 by moshix
-# installation sceripot for S390x Ubuntu 18.04 
-# does not necessarily work with prior or later version of Ubuntu
-# Obtains virign ISO from Ubuntu, runs hercules-based install and then creates runtime environment
-# Uses a provided Hercules environment and not any pre-installed version of Hercules
+# Installation script for S390x Ubuntu 18.04 .
+# Does not necessarily work with prior or later version of Ubuntu.
+# Obtains virgin ISO from Ubuntu, runs hercules-based install and then creates runtime environment.
+# Uses a provided Hercules environment and not any pre-installed version of Hercules.
 
 # v0.1 get location of ISO
 # v0.2 inform user where it's being taken from
-# v0.3 use scripts/ scripot to download, mount, create hdisk 
+# v0.3 use scripts/ scripts to download, mount, create hdisk 
 # v0.4 Use our supplied hercules
 # v0.5 detect OS and distro and block if not compatible
 # v0.6 check for sudo
@@ -19,7 +19,7 @@
 # v1.1 don't allow execution as user root
 
 
-version="0.4" #of zlinux system, not of this script
+version="0.4" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
 
 
@@ -38,7 +38,7 @@ fi
 }
 
 logit () {
-# log to file all messages                                                      
+# log to file all messages
 logdate=`date "+%F-%T"`
 echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logdate
 }
@@ -60,20 +60,20 @@ check_os () {
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "  "
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "${red}Macos detected. Sorry, Macos is not yet supported.{$reset}"
+        echo "${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
         exit
 elif [[ "$OSTYPE" == "cygwin" ]]; then
-        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.{$reset}"
+        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
         exit
 elif [[ "$OSTYPE" == "win32" ]]; then
-        echo "${red}Windows detected. Sorry, Windows is not supported.{$reset}"
+        echo "${red}Windows detected. Sorry, Windows is not supported.${reset}"
         exit
         # I'm not sure this can happen.
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
-         echo "${red}FreeBSD detected. Sorry, FreeBSD  is not yet supported.{$reset}"
+         echo "${red}FreeBSD detected. Sorry, FreeBSD  is not yet supported.${reset}"
         exit
 else
-        echo "${red}Unrecognzied operating system. Exiting now.{$reset}"
+        echo "${red}Unrecognized operating system. Exiting now.${reset}"
         exit
 fi
 } 
@@ -145,7 +145,7 @@ get_cpu() {
 }
 
 get_ram ()  {
-	# this function set a sensible amount of RAM for the Ubuntu/s390x installation procedure
+	# this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
 	bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'  `
 	let "gbram=$bkram/1024"
 
@@ -203,7 +203,7 @@ run_sudo () {
 	# are we running as sudo? If not inform user and exit
 arewesudo=`id -u`
 if [ $arewesudo  -ne 0 ]; then 
-	echo "${red}${rev} You need to execute this script sudo or it wont' work! ${reset}"
+	echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
 	exit
 fi
 }
@@ -300,7 +300,7 @@ chown $caller.$caller ./hercules.rc
 clean_conf
 
 
-# attach rest of hercules.cnf (without MAINSIZE AN NUMCPU)
+# attach rest of hercules.cnf (without MAINSIZE AND NUMCPU)
 cat hercules.cnf >> /tmp/.hercules.cf1
 mv /tmp/.hercules.cf1 hercules.cnf
 
@@ -327,7 +327,7 @@ chown -R $caller ./install/
 chmod -R 644 ./install
 
 
-echo "${yellow}It seems that the instllation was successful. Start it with: ${reset}"
+echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}sudo ./run_zlinust.bash ${reset}"
 echo " "
 echo "${yellow}Good bye!${reset}"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright 2022 by moshix
-# set ups networking etc. and then IPLs zlinux
+# sets up networking etc. and then IPLs zlinux
 # Uses a provided Hercules environment and not any pre-installed version of Hercules
 
 # v0.1 copied over a lot of stuff from installer script
@@ -21,7 +21,7 @@ check_if_root () {
 # check if I am root
 if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
 if [[ $caller == "root" ]]; then
-	echo "${rev} ${red}You are root. There is no need to be root to run zlinux. Please as a normal user...${reset}"
+	echo "${rev} ${red}You are root. There is no need to be root to run zlinux. Please run as a normal user...${reset}"
 	exit 1
 fi
 }
@@ -49,20 +49,20 @@ check_os () {
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "  "
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "${red}Macos detected. Sorry, Macos is not yet supported.{$reset}"
+        echo "${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
         exit
 elif [[ "$OSTYPE" == "cygwin" ]]; then
-        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.{$reset}"
+        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
         exit
 elif [[ "$OSTYPE" == "win32" ]]; then
-        echo "${red}Windows detected. Sorry, Windows is not supported.{$reset}"
+        echo "${red}Windows detected. Sorry, Windows is not supported.${reset}"
         exit
         # I'm not sure this can happen.
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
-         echo "${red}FreeBSD detected. Sorry, FreeBSD  is not yet supported.{$reset}"
+         echo "${red}FreeBSD detected. Sorry, FreeBSD is not yet supported.${reset}"
         exit
 else
-        echo "${red}Unrecognzied operating system. Exiting now.{$reset}"
+        echo "${red}Unrecognzied operating system. Exiting now.${reset}"
         exit
 fi
 } 
@@ -134,7 +134,7 @@ get_cpu() {
 }
 
 get_ram ()  {
-	# this function set a sensible amount of RAM for the Ubuntu/s390x installation procedure
+	# this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
 	bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'  `
 	let "gbram=$bkram/1024"
 
@@ -199,7 +199,7 @@ run_sudo () {
         # are we running as sudo? If not inform user and exit
 arewesudo=`id -u`
 if [ $arewesudo  -ne 0 ]; then
-        echo "${red}${rev} You need to execute this script sudo or it wont' work! ${reset}"
+        echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
         exit
 fi
 }
@@ -224,7 +224,7 @@ remove_env
 check_os
 get_distro
 
-# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf and copy hercules.rc into place
+# remove MAINSIZE and NUMCPU and MAXCPU from hercules.cnf and copy hercules.rc into place
 clean_conf
 
 
@@ -244,7 +244,7 @@ logit "Starting zLinux "
 ./scripts/set_network
 
 
-# attach rest of hercules.cnf (without MAINSIZE AN NUMCPU)
+# attach rest of hercules.cnf (without MAINSIZE and NUMCPU)
 cat hercules.cnf >> /tmp/.hercules.cf1
 mv /tmp/.hercules.cf1 hercules.cnf
 chown $caller.$caller hercules.cnf

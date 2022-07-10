@@ -3,7 +3,7 @@
 # v0.1 get location of ISO
 # v0.2 inform user where it's being taken from
 # v0.3 give out error if wget failed
-# v0.4 what ir no wget or curl available??
+# v0.4 what if no wget or curl available??
 
 logit () {
 	# log to file all messages                                                      
@@ -115,7 +115,7 @@ fi
 
 # sanity check if there is stuff in install/
 if [ -z "$(ls -A ./install)" ]; then
-   echo "${rev}${red}Catastrophic error. No content in install/. Either mount or download did not succeed in mysterioius weawys. Terminating...${reset}"
+   echo "${rev}${red}Catastrophic error. No content in install/. Either mount or download did not succeed in mysterioius ways. Terminating...${reset}"
 else
    echo "${yellow}Download, mount, and copy of install DVD has succeeded...${reset}"
 fi

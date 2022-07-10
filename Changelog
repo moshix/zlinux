@@ -1,7 +1,7 @@
 v 0.2 
 -----
 use our own supplied Hercules version
-User screipts to get iso, create install directory, create initrd
+Use scripts to get iso, create install directory, create initrd
 Put hercules.cnf in assets and swap after finished install
 Check for sudo execution of script or warn user
 Ask user to run newly installed zLinux system
@@ -15,7 +15,7 @@ deal with file permissions
 more sanity checks (for example see if install/ dir has content etc.)
 don't get ISO if we have it already (somebody could rerun the procedure
 multiple times)
-don't aloow user to be root
+don't allow user to be root
 
 
 v 0.3
