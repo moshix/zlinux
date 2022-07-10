@@ -245,6 +245,9 @@ mv /tmp/.hercules.cf1 hercules.cnf
 # remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf and copy hercules.rc into place
 clean_conf
 
+# copy correct .rc file 
+clear_conf 
+
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
