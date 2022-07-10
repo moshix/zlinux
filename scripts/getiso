@@ -6,28 +6,28 @@
 # v0.4 what if no wget or curl available??
 
 logit () {
-	# log to file all messages                                                      
-	logdate=`date "+%F-%T"`
-	echo "$logdate:$1" >> ./logs/getiso.log.$logdate
+    # log to file all messages
+    logdate=`date "+%F-%T"`
+    echo "$logdate:$1" >> ./logs/getiso.log.$logdate
 }
 
 who_called () {
-# establish which user called before sudo
-if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
+    # establish which user called before sudo
+    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
 }
 
 get_iso () {
-if  command -v wget  &> /dev/null
-then
-    set -x
-    wget http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso
-    set +x 
-elif command -v curl &> /dev/null
-then
-    set -x
-    curl http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso -o ./ubuntu-18.04.5-server-s390x.iso
-    set +x
-fi
+    if command -v wget  &> /dev/null
+    then
+        set -x
+        wget http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso
+        set +x
+    elif command -v curl &> /dev/null
+    then
+        set -x
+        curl http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso -o ./ubuntu-18.04.5-server-s390x.iso
+        set +x
+    fi
 }
 
 # main starts here
@@ -58,8 +58,7 @@ then
     exit 1
 fi
 
-
-echo "${yellow}Downloading Ubuntu 18.04 ISO from ${cyan} http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso ${yellow}." 
+echo "${yellow}Downloading Ubuntu 18.04 ISO from ${cyan} http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso ${yellow}."
 echo "This could take a few moments, depending on your internet speed... ${reset}"
 
 start=`date`
@@ -72,25 +71,23 @@ download=./ubuntu-18.04.5-server-s390x.iso
 minimumsize=635576192
 actualsize=`wc -c < $download`
 #echo "size: $actualsize"
-#if the file does not exist or less than a seemingly full iso then get it
+# if the file does not exist or less than a seemingly full iso then get it
 if [[ ! -f ./ubuntu-18.04.5-server-s390x.iso ]] || [[ $actualsize -le $minimumsize ]]; then
-      get_iso  #go get it
-      #echo "trying to get it...."
-else 
-   echo "${yellow}You seem to have a downloaded iso file already. I will use it...${reset}"
+    get_iso  #go get it
+    #echo "trying to get it...."
+else
+    echo "${yellow}You seem to have a downloaded iso file already. I will use it...${reset}"
 fi
- 
-
 
 start=`date`
-logit "Download finished  at $start"
+logit "Download finished at $start"
 
 sleep 3
 
 if [ ! -f ./ubuntu-18.04.5-server-s390x.iso ]
 then
     echo "${rev}${red}Ubuntu ISO download failed. Bad internet connection? Terminating... ${reset}"
-   exit 1
+    exit 1
 else
     echo "${yellow}ISO is seemingly available now. Installation continues...${reset}"
 fi
@@ -99,25 +96,24 @@ ISO=./ubuntu-18.04.5-server-s390x.iso
 point=/tmp/mntiso
 
 if test -f "$ISO"; then
-   mkdir -p /tmp/mntiso # create if not exist 
-   mount -o loop ubuntu-18.04.5-server-s390x.iso /tmp/mntiso >/dev/null 2>&1
+    mkdir -p /tmp/mntiso # create if not exist
+    mount -o loop ubuntu-18.04.5-server-s390x.iso /tmp/mntiso >/dev/null 2>&1
 else
     mount -o loop ubuntu-18.04.5-server-s390x.iso /tmp/mntiso >/dev/null 2>&1
 fi
-   
 
-   mkdir -p install # create dir if not exist
-   chown $caller.$caller install/
-   chmod 644 install/
-   /bin/cp -r /tmp/mntiso/* install/.  # copy install DVD into install/ folder
-   echo "${yellow}Ubuntu 18.04 was obtained, mounted and copied to install/ ...${reset}"
-   umount /tmp/mntiso
+mkdir -p install # create dir if not exist
+chown $caller.$caller install/
+chmod 644 install/
+/bin/cp -r /tmp/mntiso/* install/.  # copy install DVD into install/ folder
+echo "${yellow}Ubuntu 18.04 was obtained, mounted and copied to install/ ...${reset}"
+umount /tmp/mntiso
 
 # sanity check if there is stuff in install/
 if [ -z "$(ls -A ./install)" ]; then
-   echo "${rev}${red}Catastrophic error. No content in install/. Either mount or download did not succeed in mysterioius ways. Terminating...${reset}"
+    echo "${rev}${red}Catastrophic error. No content in install/. Either mount or download did not succeed in mysterioius ways. Terminating...${reset}"
 else
-   echo "${yellow}Download, mount, and copy of install DVD has succeeded...${reset}"
+    echo "${yellow}Download, mount, and copy of install DVD has succeeded...${reset}"
 fi
 
 # set right privileges for the iso

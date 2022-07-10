@@ -1,4 +1,5 @@
 #!/bin/bash
+
 chmod +w install/boot
 cd install/boot
 cp initrd.ubuntu initrd.gz

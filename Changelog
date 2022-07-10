@@ -1,4 +1,4 @@
-v 0.2 
+v 0.2
 -----
 use our own supplied Hercules version
 Use scripts to get iso, create install directory, create initrd
@@ -25,8 +25,8 @@ Same for RAM tuning
 created run_zlinux script to run Ubuntu and setup NAT and tunneling
 Expanded README
 made dasd/ and logs/ directory non-empty to make it compatible with git
-Made assets/hercules.rc.hd0 able to shutdown 
-created run_zlinux.bash script to set up environment and start zLinux 
+Made assets/hercules.rc.hd0 able to shutdown
+created run_zlinux.bash script to set up environment and start zLinux
 Fixed tuning for the nth+1 time...
 
 
@@ -38,7 +38,7 @@ fixed small stuff in run_zlinux.bash
 Updated hercules.cnf for FACILITY instead of ARCHLVL
 updated hercules.rc.hd0
 fixed ipl.rc
-export HERCULES_RC properly 
+export HERCULES_RC properly
 auto-tune now finally works. It's been only 3 weeks fiddling with it...
 set assets/ to non-writable
 
