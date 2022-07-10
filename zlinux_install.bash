@@ -115,15 +115,17 @@ get_cores () {
 	# tune CPU number
 	cores=`grep -c ^processor /proc/cpuinfo`
 	intcores=1
-        if [ $cores -gt 7]; then
+
+        if [[ $cores -gt 7 ]]; then
            intcores=6
-        elif [ $cores -gt 5]; then
+        elif [[ $cores -gt 5 ]]; then
            intcores=5
-        elif [ $cores -gt 3]; then
+        elif [[ $cores -gt 3 ]]; then
            intcores=2
         else
            intcores=1
         fi
+
 
 
 	# now put in config file
