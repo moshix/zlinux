@@ -130,6 +130,7 @@ get_cores () {
 
 	# now put in config file
 	echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
+	sleep 3
 	echo  "NUMCPU       $intcores" >> ./tmp/herc_env
 	echo  "MAXCPU       $intcores" >> ./tmp/herc_env
 	logit "NUMCPU       $intcores"

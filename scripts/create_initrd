@@ -1,25 +1,13 @@
 #!/bin/bash
-set -x
 chmod +w install/boot
-sleep 1
 cd install/boot
-sleep 1
 cp initrd.ubuntu initrd.gz
-sleep 1
 gunzip initrd.gz
-sleep 1
 chmod +w initrd
-sleep 1
 cp ../../assets/preseed ./preseed.cfg
-sleep 1
 echo "preseed.cfg" | cpio -o -H newc -A -F initrd
-sleep 1
 gzip initrd
-sleep 1
 mv initrd.gz initrd.ubuntu
-sleep 1
 chmod +w initrd.siz
-sleep 1
 printf "0: %08x" $(du -b initrd.ubuntu | awk '{print $1}') | xxd -r > initrd.siz
-sleep 1
-set +x 
+exit

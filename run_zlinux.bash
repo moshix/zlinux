@@ -118,6 +118,8 @@ get_cores () {
 
 	# now put in config file
 	echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
+	
+	sleep 2
 	echo  "NUMCPU       $intcores" >> ./tmp/herc_env
 	echo  "MAXCPU       $intcores" >> ./tmp/herc_env
 	logit "NUMCPU       $intcores"
@@ -171,7 +173,7 @@ set_hercenv () {
 }
 
 clear_conf () {
-/bin/cp -rf ./assets/hercules.rc.ipl.hd0 ./hercules.rc
+/bin/cp -rf ./assets/hercules.rc.hd0 ./hercules.rc
 }
 
 clean_conf () {
@@ -214,13 +216,21 @@ logit "user invoking install script: $caller"
 
 check_if_root # cannot be root
 
-run_sudo 
+run_sudo      # must run with sudo (because of NAT setting)
 
 remove_env
 
-get_cores
+# quick sanity checks
+check_os
+get_distro
 
-get_ram
+# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf and copy hercules.rc into place
+clean_conf
+
+
+get_cores     # autotune CP for hercules.cnf
+
+get_ram       # autotune RAM
 
 set_hercenv  #set paths for local herc4x hyperion instance
 
@@ -228,10 +238,6 @@ echo " "
 echo " "                                                                        
 echo " "
 logit "Starting zLinux "
-
-# quick sanity checks
-check_os
-get_distro
 
 
 # execute network configurator
@@ -241,14 +247,11 @@ get_distro
 # attach rest of hercules.cnf (without MAINSIZE AN NUMCPU)
 cat hercules.cnf >> /tmp/.hercules.cf1
 mv /tmp/.hercules.cf1 hercules.cnf
-
-
-# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf and copy hercules.rc into place
-clean_conf
+chown $caller.$caller hercules.cnf
 
 # copy correct .rc file 
 clear_conf 
-
+export HERCULES_RC=hercules.rc
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate

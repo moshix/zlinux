@@ -36,3 +36,8 @@ v 0.4
 Removed option to start freshly installed Ubuntu from install script
 create dasd/ and logs/ if they don't exist
 fixed small stuff in run_zlinux.bash
+Updated hercules.cnf for FACILITY instead of ARCHLVL
+updated hercules.rc.hd0
+fixed ipl.rc
+export HERCULES_RC properly 
+
