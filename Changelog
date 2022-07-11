@@ -1,7 +1,7 @@
-v 0.2 
+v 0.2
 -----
 use our own supplied Hercules version
-User screipts to get iso, create install directory, create initrd
+Use scripts to get iso, create install directory, create initrd
 Put hercules.cnf in assets and swap after finished install
 Check for sudo execution of script or warn user
 Ask user to run newly installed zLinux system
@@ -15,7 +15,7 @@ deal with file permissions
 more sanity checks (for example see if install/ dir has content etc.)
 don't get ISO if we have it already (somebody could rerun the procedure
 multiple times)
-don't aloow user to be root
+don't allow user to be root
 
 
 v 0.3
@@ -25,8 +25,8 @@ Same for RAM tuning
 created run_zlinux script to run Ubuntu and setup NAT and tunneling
 Expanded README
 made dasd/ and logs/ directory non-empty to make it compatible with git
-Made assets/hercules.rc.hd0 able to shutdown 
-created run_zlinux.bash script to set up environment and start zLinux 
+Made assets/hercules.rc.hd0 able to shutdown
+created run_zlinux.bash script to set up environment and start zLinux
 Fixed tuning for the nth+1 time...
 
 
@@ -38,7 +38,23 @@ fixed small stuff in run_zlinux.bash
 Updated hercules.cnf for FACILITY instead of ARCHLVL
 updated hercules.rc.hd0
 fixed ipl.rc
-export HERCULES_RC properly 
+export HERCULES_RC properly
 auto-tune now finally works. It's been only 3 weeks fiddling with it...
 set assets/ to non-writable
 
+
+v 0.5
+-----
+General script cleanup and fixes
+Fix RAM auto-tune
+Offer 27GB (3390-27) disk type; improve DASD creation
+Switch to template-based preseed and hercules.cnf creation. Only create config
+  during initial installation; don't overwrite user changes on future runs
+Fix wget/curl detection; improvements to ISO download and mount
+Use a Hercules built with ./herc4x/lib and ./herc4x/lib/hercules runpath;
+  include build script for reference
+Run as regular user, not with sudo or as root. Run specific commands with sudo
+Detect installation success
+Only make one log file per script per run
+Don't remove write permissions on anything -- we want user to be able to
+  easily rm this entire directory without trouble if they want to

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Copyright 2022 by moshix
-# installation sceripot for S390x Ubuntu 18.04 
-# does not necessarily work with prior or later version of Ubuntu
-# Obtains virign ISO from Ubuntu, runs hercules-based install and then creates runtime environment
-# Uses a provided Hercules environment and not any pre-installed version of Hercules
+# Installation script for S390x Ubuntu 18.04 .
+# Does not necessarily work with prior or later version of Ubuntu.
+# Obtains virgin ISO from Ubuntu, runs hercules-based install and then creates runtime environment.
+# Uses a provided Hercules environment and not any pre-installed version of Hercules.
 
 # v0.1 get location of ISO
 # v0.2 inform user where it's being taken from
-# v0.3 use scripts/ scripot to download, mount, create hdisk 
+# v0.3 use scripts/ scripts to download, mount, create hdisk
 # v0.4 Use our supplied hercules
 # v0.5 detect OS and distro and block if not compatible
 # v0.6 check for sudo
@@ -17,331 +17,275 @@
 # v0.9 ask user to press enter to start hercules so they can see it will last a while
 # v1.0 fix permissions
 # v1.1 don't allow execution as user root
+# v1.2 fixed RAM calculation
+# v1.3 remove unused, unnecessary, and broken code;
+#      always exist with error status when exiting due to error
+# v1.4 do not leave directories without execute bit set
+# v1.5 offer 27GB (3390-27) disk option; improve DASD creation
+# v1.6 switch to template-based preseed and hercules.cnf creation
+# v1.7 use a Hercules build with a relative rpath set
+# v1.8 run as regular user, only using sudo when necessary
+# v1.9 detect successful installation
+# v1.10 misc fixes:
+#         put all log messages for this run in same log file
+#         fixup permissions of set_network log
+#         dasdinit log typo
+#         rename assets directory to templates
 
+version="0.5" # of zlinux system, not of this script
 
-version="0.4" #of zlinux system, not of this script
-caller=""     # will contain the user name who invoked this script
+# This is the command we will use when we need superuser privileges. It is
+# exported so scripts we call will also use this value. If you use "doas" you
+# may change it here.
+SUDO="sudo"
+export SUDO
 
-
-who_called () {
-# establish which user called before sudo 
-if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
+test_sudo () {
+    echo "${yellow}Testing if '$SUDO' command works ${reset}"
+    if [[ $($SUDO id -u) -ne 0 ]]; then
+        echo "${rev}${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
+        exit 1
+    fi
 }
 
 check_if_root () {
-# check if I am root
-if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
-if [[ $caller == "root" ]]; then
-	echo "${rev} ${red}You are root. This installer must run with sudo, but not as root. Terminating...${reset}"
-	exit 1
-fi
+    # check if I am root and terminate if so
+    if [[ $(id -u) -eq 0 ]]; then
+        echo "${rev}${red}You are root. You must run this installer as a regular user. Terminating...${reset}"
+        exit 1
+    fi
 }
 
+logextension=`date "+%F-%T"`
 logit () {
-# log to file all messages                                                      
-logdate=`date "+%F-%T"`
-echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logdate
+    # log to file all messages
+    logdate=`date "+%F-%T"`
+    echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logextension
 }
 
 set_colors() {
-red=`tput setaf 1`
-green=`tput setaf 2`
-yellow=`tput setaf 3`
-blue=`tput setaf 4`
-magenta=`tput setaf 5`
-cyan=`tput setaf 6`
-white=`tput setaf 7`
-blink=`tput blink`
-rev=`tput rev`
-reset=`tput sgr0`
+    red=`tput setaf 1`
+    green=`tput setaf 2`
+    yellow=`tput setaf 3`
+    blue=`tput setaf 4`
+    magenta=`tput setaf 5`
+    cyan=`tput setaf 6`
+    white=`tput setaf 7`
+    blink=`tput blink`
+    rev=`tput rev`
+    reset=`tput sgr0`
 }
 
 check_os () {
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "  "
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "${red}Macos detected. Sorry, Macos is not yet supported.{$reset}"
-        exit
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.{$reset}"
-        exit
-elif [[ "$OSTYPE" == "win32" ]]; then
-        echo "${red}Windows detected. Sorry, Windows is not supported.{$reset}"
-        exit
-        # I'm not sure this can happen.
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-         echo "${red}FreeBSD detected. Sorry, FreeBSD  is not yet supported.{$reset}"
-        exit
-else
-        echo "${red}Unrecognzied operating system. Exiting now.{$reset}"
-        exit
-fi
-} 
-
-
-get_distro() {
-if [ -f /etc/os-release ]; then
-    # freedesktop.org and systemd
-    . /etc/os-release
-    OS=$NAME
-    VER=$VERSION_ID
-elif type lsb_release >/dev/null 2>&1; then
-    # linuxbase.org
-    OS=$(lsb_release -si)
-    VER=$(lsb_release -sr)
-elif [ -f /etc/lsb-release ]; then
-    # For some versions of Debian/Ubuntu without lsb_release command
-    . /etc/lsb-release
-    OS=$DISTRIB_ID
-    VER=$DISTRIB_RELEASE
-elif [ -f /etc/debian_version ]; then
-    # Older Debian/Ubuntu/etc.
-    OS=Debian
-    VER=$(cat /etc/debian_version)
-elif [ -f /etc/SuSe-release ]; then
-    # Older SuSE/etc.
-    ...
-elif [ -f /etc/redhat-release ]; then
-    # Older Red Hat, CentOS, etc.
-    ...
-else
-    # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
-    OS=$(uname -s)
-    VER=$(uname -r)
-fi
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
+        exit 1
+    elif [[ "$OSTYPE" == "cygwin" ]]; then
+        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
+        exit 1
+    elif [[ "$OSTYPE" == "win32" ]]; then
+        echo "${red}Windows detected. Sorry, Windows is not supported.${reset}"
+        exit 1
+    else
+        echo "${red}Unrecognized operating system. Exiting now.${reset}"
+        exit 1
+    fi
 }
 
 get_cores () {
-	# tune CPU number
-	cores=`grep -c ^processor /proc/cpuinfo`
-	intcores=1
+    # tune CPU number
+    cores=`grep -c ^processor /proc/cpuinfo`
+    intcores=1
 
-        if [[ $cores -gt 7 ]]; then
-           intcores=6
-        elif [[ $cores -gt 5 ]]; then
-           intcores=5
-        elif [[ $cores -gt 3 ]]; then
-           intcores=2
-        else
-           intcores=1
-        fi
+    if [[ $cores -gt 7 ]]; then
+        intcores=6
+    elif [[ $cores -gt 5 ]]; then
+        intcores=5
+    elif [[ $cores -gt 3 ]]; then
+        intcores=2
+    else
+        intcores=1
+    fi
 
-
-
-	# now put in config file
-	echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
-	sleep 3
-	echo  "NUMCPU       $intcores" >> ./tmp/herc_env
-	echo  "MAXCPU       $intcores" >> ./tmp/herc_env
-	logit "NUMCPU       $intcores"
-	logit "MAXCPU       $intcores"
-	# below to start to prepare new hercules.cnf 
-	echo "NUMCPU           $intcores"  > /tmp/.hercules.cf1
-	echo "MAXCPU           $intcores"  >> /tmp/.hercules.cf1
+    echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
+    sleep 2
 }
 
-get_cpu() {
-	cputype=`cat /proc/cpuinfo`
-}
+get_ram () {
+    # this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
+    bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
+    let "gbram=$bkram/1024"
 
-get_ram ()  {
-	# this function set a sensible amount of RAM for the Ubuntu/s390x installation procedure
-	bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'  `
-	let "gbram=$bkram/1024"
+    if [[ $gbram -lt 1300 ]]; then
+        echo "${rev}${red}You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
+        exit 1
+    elif [[ $gbram -lt 2200 ]]; then
+        hercram=1024
+    elif [[ $gbram -lt 6000 ]]; then
+        hercram=2048
+    elif [[ $gbram -lt 16000 ]]; then
+        hercram=4096
+    else
+        hercram=8192
+    fi
 
-	if ((  $gbram < 1300 )); then
-		 echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
-		  exit
-	fi
-
-        if [ $gbram -gt 16000 ]; then
-                hercram=8192
-        elif [ $gbram -gt 8192  ]; then
-		hercram=4096
-
-	elif [ $gbram <  8192 ] && [  $gbram >  6000 ]; then
-		hercram=4096
-
-	elif [ $gbram >  3000 ]  &&  [ $gbram < 5999 ]; then
-		hercram=2048
-	
-	elif [ $gbram < 2200 ]; then
-		hercram=1024
-        fi
-
-	echo "${yellow}RAM in KB  ${cyan} $gbram. ${yellow}Setting Hercules to ${cyan} $hercram  ${reset}"
-	echo  "MAINSIZE     $hercram" >> ./tmp/herc_env
-	logit "MAINSIZE     $hercram"
-	echo "MAINSIZE         $hercram"  >> /tmp/.hercules.cf1
-}
-
-
-clear_conf () {
-[-e ./hercules.rc ] && /bin/cp -rf ./assets/hercules.rc.ipl.hd0 ./hercules.rc
-}
-
-clean_conf () {
-# remove MAINSIZE, MAXCPU and NUMCPU from hercules.cnf file
-# so we can then add the auto-tuned values before starting hercules
-sed '/^MAINSIZE/d' hercules.cnf > ./tmp/.hercules.cnfc
-sed '/^NUMCPU/d' ./tmp/.hercules.cnfc > ./tmp/.hercules.cnfd
-sed '/^MAXCPU/d' ./tmp/.hercules.cnfd > ./tmp/.hercules.cnfe
-mv ./tmp/.hercules.cnfe hercules.cnf
-rm ./tmp/.hercules.cnfc
-rm ./tmp/.hercules.cnfd
+    echo "${yellow}RAM in KB ${cyan}${gbram}. ${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
+    sleep 2
 }
 
 set_hercenv () {
-        # set path to  supplied hercules
-        export PATH=./herc4x/bin:$PATH
-        export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
-        export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
-
+    # set path to supplied hercules
+    export PATH=./herc4x/bin:$PATH
 }
 
-run_sudo () {
-	# are we running as sudo? If not inform user and exit
-arewesudo=`id -u`
-if [ $arewesudo  -ne 0 ]; then 
-	echo "${red}${rev} You need to execute this script sudo or it wont' work! ${reset}"
-	exit
-fi
+create_conf () {
+    cp templates/hercules.cnf.template hercules.cnf
+    chmod +w hercules.cnf
+    sed -i "s/__CPU__/$intcores/" hercules.cnf
+    sed -i "s/__RAM__/$hercram/" hercules.cnf
 }
 
-remove_env () {
-	# this function checks if the environment file is there from previous run and 
-	# deletes it, if it is. 
-	local FILE=./tmp/herc_env
-	rm $FILE
+check_already_installed () {
+    if [[ -f install_success ]]; then
+        logit "there is already an install_success file"
+        echo "${yellow}It appears you have already completed a successful installation."
+        echo -n "Do you really want to start over? (Y/N):${reset} "
+        read startover
+        startover && [[ $startover == [yY] || $startover == [yY][eE][sS] ]] || exit 1
+        logit "user chose to overwrite current installation"
+        rm -f install_success
+    fi
 }
-
 
 # main starts here
 mkdir -p logs/
 mkdir -p dasd/
 
-oldpath=`echo $PATH`               # needed so we can use supplied Hercules
-oldldpath=`echo $LD_LIBRARY_PATH`
-
 set_colors
 
-who_called
-logit "user invoking install script: $caller"
-
 check_if_root # cannot be root
+logit "user invoking install script: $(whoami)"
 
-run_sudo 
-
-remove_env
-
-get_cores
-
-get_ram
-
-set_hercenv
-
-echo " "                                                                        
-echo " "                                                                        
-echo "${green}    Starting zLinux installer Version $version ${reset}"
-echo "${green}    ===================================== ${reset}"
-echo " "
-logit "Starting zLinux installer"
+test_sudo     # but we must have sudo capability
 
 # quick sanity checks
 check_os
-get_distro
 
-#ask user for disk size
-read -p "${white}How big do you want your zLinux disk to be?  (3GB, 9GB): ${reset} " dsize
+get_cores
+get_ram
+create_conf
 
-case "$dsize" in
-  3*) 
-	  echo "${yellow}Roger, ${cyan} 3GB  ${reset}" 
-	  logit "user asked for 3GB DASD size "
-	  [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
-	  dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
-  9*)   
-	  echo "${yellow}Roger, ${cyan} 9GB ${reset}" 
-	  logit "user asked for 9GB DASD size"
-	  [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
-	  dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
-  *) 
-	  echo "${red}Unrecognized selection: $dsize. Restart and supply correct input, either 3GB or 9GB... ${reset}" 
-	  exit 1;;
-esac
+set_hercenv
 
+echo
+echo
+echo "${green}    Starting zLinux installer Version $version ${reset}"
+echo "${green}    ===================================== ${reset}"
+echo
+logit "Starting zLinux installer"
 
+# ask user for disk size; loop until we get valid selection
+diskvalid="no"
+while [[ $diskvalid = "no" ]]; do
+    read -p "${white}How big do you want your zLinux disk to be?  (3GB, 9GB, 27GB): ${reset} " dsize
+
+    case "$dsize" in
+    3*)
+        echo "${yellow}Roger, ${cyan} 3GB  ${reset}"
+        logit "user asked for 3GB DASD size"
+        [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
+        dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasdinit_error.log
+        dasdresult=$?
+        diskvalid="yes"
+        ;;
+    9*)
+        echo "${yellow}Roger, ${cyan} 9GB ${reset}"
+        logit "user asked for 9GB DASD size"
+        [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
+        dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasdinit_error.log
+        dasdresult=$?
+        diskvalid="yes"
+        ;;
+    27*)
+        echo "${yellow}Roger, ${cyan} 27GB ${reset}"
+        logit "user asked for 27GB DASD size"
+        [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
+        dasdinit64 -z ./dasd/hd0.120 3390-27 HD0 > logs/dasdinit.log 2> ./logs/dasdinit_error.log
+        dasdresult=$?
+        diskvalid="yes"
+        ;;
+    *)
+        echo "${red}Unrecognized selection: $dsize. Try again and supply correct input, either 3GB, 9GB, or 27GB.${reset}"
+        ;;
+    esac
+
+    if [[ $dasdresult -ne 0 ]]; then
+        echo "${red}Error creating DASD file. Check logs/dasdinit.log and logs/dasdinit_error.log.${reset}"
+        exit 1
+    fi
+done
 
 # ask for confirmation before downloading iso....
 read -p "${white}Continue with 700MB ISO download? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 echo "${reset}"
-#user said it's ok to download. get iso 
-./scripts/getiso
-# assume download succeded
+# user said it's ok to download. get iso
+./scripts/getiso || exit 1
 
-
-
-#ask password for user zubuntu
-./scripts/generpass
-
-#create initrd
-./scripts/create_initrd
+# Get user password and embed the preseed file into the initrd for install
+./scripts/config_preseed
 
 # execute network configurator
-./scripts/set_network
+$SUDO ./scripts/set_network
+$SUDO chown $(id -u):$(id -g) ./logs/setnetwork.log*
 
-# place DVD IPL hercules.rc into working dir
-rm -f ./hercules.rc
-/bin/cp -rf ./assets/hercules.rc.DVD ./hercules.rc 
-chown $caller.$caller ./hercules.rc
+# The hercifc util needs to be setuid root to manage network interface. We will
+# copy the as-installed copy, which is owned by the user and not root, so that
+# we can restore the original owner and permissions after Hercules is done.
+# But we won't overwrite an existing backup, in case previous runs failed and
+# we're starting again
+if [[ ! -f herc4x/bin/hercifc.orig ]]; then
+    cp herc4x/bin/hercifc herc4x/bin/hercifc.orig
+fi
+$SUDO chown root:root herc4x/bin/hercifc
+$SUDO chmod +s herc4x/bin/hercifc
 
+# copy correct .rc file for installation
+cp templates/hercules.rc.DVD hercules.rc
+chmod +w hercules.rc   # ...just in case, for easy replacement later
 
-# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf
-clean_conf
-
-
-# attach rest of hercules.cnf (without MAINSIZE AN NUMCPU)
-cat hercules.cnf >> /tmp/.hercules.cf1
-mv /tmp/.hercules.cf1 hercules.cnf
-
-
-echo "${yellow} Starting hercules with installation script now. Be patient. ${reset}"
-read -p "${white} Please press ENTER to continue with install now. ${reset}" pressenter
+echo "${yellow}Starting hercules with installation script now. Be patient. ${reset}"
+read -p "${white}Please press ENTER to continue with install now. ${reset}" pressenter
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
-hercules -f hercules.cnf > $FILE
+HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
 
-# set correct permissions
-who_called
-chmod 644 ./dasd/hd0.120
-chown $caller ./dasd/*
-chown $caller.$caller ./hercules*
-chmod 644 ./hercules*
-chown $caller.$caller ./hercules*
-chmod 644 ./logs/*
-chmod -w ./assets/*
-chown $caller *.iso*
-chmod -w *.iso
-chown -R $caller ./install/
-chmod -R 644 ./install
+# After hercules finishes, restore the original hercifc
+# This is for two reasons: less time leaving a suid binary sitting around,
+# and make it easier for the user to clean up later by "rm -rf ..." this
+# entire directory and not run into problems deleting a file owned by root.
+$SUDO rm -f herc4x/bin/hercifc
+mv herc4x/bin/hercifc.orig herc4x/bin/hercifc
 
+if [[ ! -f install_success ]]; then
+    echo "${rev}${red}It seems Hercules quit before the installation finished successfully."
+    echo "Check for errors in the logs in logs/, and try running the installation script again.${reset}"
+    exit 1
+fi
 
-echo "${yellow}It seems that the instllation was successful. Start it with: ${reset}"
-echo "${magenta}sudo ./run_zlinust.bash ${reset}"
-echo " "
+# copy the correct hercules.rc for future use
+cp templates/hercules.rc.hd0 hercules.rc
+
+echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
+echo "${magenta}./run_zlinux.bash ${reset}"
+echo
 echo "${yellow}Good bye!${reset}"
 
-
-exit
-
-# ask if to clean up after successful install
-#./cleanup_after_successful_install.bash
-
-# moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED 
-# WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED 
-# WARRANTIES TO THE FULL EXTENT ALLOWED BY APPLICABLE LAW, INCLUDING WITHOUT 
+# moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED
+# WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED
+# WARRANTIES TO THE FULL EXTENT ALLOWED BY APPLICABLE LAW, INCLUDING WITHOUT
 # LIMITATION ALL IMPLIED WARRANTIES OF, NON-INFRINGEMENT, MERCHANTABILITY, TITLE
 # OR FITNESS FOR ANY PARTICULAR PURPOSE. NO ORAL OR WRITTEN INFORMATION OR ADVICE
 # GIVEN BY moshix, ITS AGENTS OR EMPLOYEES SHALL CREATE A WARRANTY
-

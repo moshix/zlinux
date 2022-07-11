@@ -1,0 +1,9 @@
+# We don't want any files created by the installation process to show
+# as changes to git
+dasd/*
+logs/*
+install_success
+*.iso
+install/
+hercules.rc
+hercules.cnf
