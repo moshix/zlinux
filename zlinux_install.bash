@@ -192,7 +192,6 @@ logit "Starting zLinux installer"
 
 # quick sanity checks
 check_os
-get_distro
 
 # ask user for disk size; loop until we get valid selection
 diskvalid="no"
