@@ -66,6 +66,6 @@ You can remove all unnecessary files by executing
 
 
 
-Racingsmars/Moshix
+Racingmars/Moshix
 July 2022
 Milan
