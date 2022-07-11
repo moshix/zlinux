@@ -11,7 +11,7 @@
 # v0.4 no sudo required
 # v0.5 consistent log file name for all messages during one run
 
-version="0.5"
+source ./Version
 
 logextension=`date "+%F-%T"`
 logit () {
@@ -34,7 +34,7 @@ set_colors() {
 }
 
 clean_stuff () {
-    echo "${yellow}Cleanup Procedure ${reset}"
+    echo "${yellow}Cleanup Procedure Version: $version${reset}"
     echo
     sleep 1
 
