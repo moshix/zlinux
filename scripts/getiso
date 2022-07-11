@@ -5,11 +5,28 @@
 # v0.3 give out error if wget failed
 # v0.4 what if no wget or curl available??
 # v0.5 fix install directory permissions to include execute bit
+# v0.6 fix wget/curl presence test logic; misc improvements
+
+ubuntuURL="http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso"
+ubuntuISO="ubuntu-18.04.5-server-s390x.iso"
 
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
     echo "$logdate:$1" >> ./logs/getiso.log.$logdate
+}
+
+set_colors() {
+    red=`tput setaf 1`
+    green=`tput setaf 2`
+    yellow=`tput setaf 3`
+    blue=`tput setaf 4`
+    magenta=`tput setaf 5`
+    cyan=`tput setaf 6`
+    white=`tput setaf 7`
+    blink=`tput blink`
+    rev=`tput rev`
+    reset=`tput sgr0`
 }
 
 who_called () {
@@ -18,60 +35,40 @@ who_called () {
 }
 
 get_iso () {
-    if command -v wget  &> /dev/null
+    if command -v wget &> /dev/null
     then
         set -x
-        wget http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso
+        wget "$ubuntuURL"
         set +x
     elif command -v curl &> /dev/null
     then
         set -x
-        curl http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso -o ./ubuntu-18.04.5-server-s390x.iso
+        curl "$ubuntuURL" -o ./ubuntu-18.04.5-server-s390x.iso
         set +x
     fi
 }
 
 # main starts here
-# set up color attributes variables
-red=`tput setaf 1`
-green=`tput setaf 2`
-yellow=`tput setaf 3`
-blue=`tput setaf 4`
-magenta=`tput setaf 5`
-cyan=`tput setaf 6`
-white=`tput setaf 7`
-blink=`tput blink`
-rev=`tput rev`
-reset=`tput sgr0`
+
+set_colors
 
 who_called # establish name of caller
 
 # check if we have wget or curl installed
-if ! command -v wget  &> /dev/null
-then
-    echo "${rev}${red}wget is not available! please install it now and restart the install script. ${reset}"
+foundtool="true"
+type wget &> /dev/null || type curl &> /dev/null || foundtool="false"
+if [[ $foundtool != "true" ]]; then
+    echo "${rev}${red}Neither curl nor wget are available! Please install one now and restart the install script. ${reset}"
     exit 1
 fi
-
-if ! command -v curl  &> /dev/null
-then
-    echo "${rev}${red}curl command  is not available! please install it now and restart the install script. ${reset}"
-    exit 1
-fi
-
-echo "${yellow}Downloading Ubuntu 18.04 ISO from ${cyan} http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso ${yellow}."
-echo "This could take a few moments, depending on your internet speed... ${reset}"
-
-start=`date`
-logit "Download start at $start"
-
-# check if already downloaded
-download=./ubuntu-18.04.5-server-s390x.iso
-minimumsize=635576192
-actualsize=`wc -c < $download`
 
 # if the file does not exist or less than a seemingly full iso then get it
-if [[ ! -f ./ubuntu-18.04.5-server-s390x.iso ]] || [[ $actualsize -le $minimumsize ]]; then
+minimumsize=635576192
+if [[ ! -f "$ubuntuISO" ]] || [[ $(wc -c < "$ubuntuISO") -lt $minimumsize ]]; then
+    echo "${yellow}Downloading Ubuntu 18.04 ISO from ${cyan}${ubuntuURL}${yellow}."
+    echo "This could take a few moments, depending on your internet speed... ${reset}"
+
+    logit "Download start at $(date)"
     get_iso  #go get it
 else
     echo "${yellow}You seem to have a downloaded iso file already. I will use it...${reset}"
@@ -79,39 +76,31 @@ fi
 
 logit "Download finished at $(date)"
 
-if [ ! -f ./ubuntu-18.04.5-server-s390x.iso ]
-then
+if [ ! -f "$ubuntuISO" ]; then
     echo "${rev}${red}Ubuntu ISO download failed. Bad internet connection? Terminating... ${reset}"
     exit 1
 else
     echo "${yellow}ISO is seemingly available now. Installation continues...${reset}"
 fi
 
-ISO=./ubuntu-18.04.5-server-s390x.iso
-point=/tmp/mntiso
-
-if test -f "$ISO"; then
-    mkdir -p /tmp/mntiso # create if not exist
-    mount -o loop ubuntu-18.04.5-server-s390x.iso /tmp/mntiso >/dev/null 2>&1
-else
-    mount -o loop ubuntu-18.04.5-server-s390x.iso /tmp/mntiso >/dev/null 2>&1
-fi
+point=$(mktemp -d)
+mount -o loop,ro $ubuntuISO $point
 
 mkdir -p install # create dir if not exist
 chown $caller.$caller install/
 chmod 755 install/
-/bin/cp -r /tmp/mntiso/* install/.  # copy install DVD into install/ folder
+cp -r $point/* install/  # copy install DVD into install/ folder
 echo "${yellow}Ubuntu 18.04 was obtained, mounted and copied to install/ ...${reset}"
-umount /tmp/mntiso
+umount $point
+rmdir $point
 
 # sanity check if there is stuff in install/
 if [ -z "$(ls -A ./install)" ]; then
     echo "${rev}${red}Catastrophic error. No content in install/. Either mount or download did not succeed in mysterioius ways. Terminating...${reset}"
+    exit 1
 else
     echo "${yellow}Download, mount, and copy of install DVD has succeeded...${reset}"
 fi
 
 # set right privileges for the iso
 chown $caller.$caller *.iso*
-
-exit

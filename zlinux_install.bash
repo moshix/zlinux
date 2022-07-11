@@ -216,8 +216,7 @@ done
 read -p "${white}Continue with 700MB ISO download? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 echo "${reset}"
 # user said it's ok to download. get iso
-./scripts/getiso
-# assume download succeded
+./scripts/getiso || exit 1
 
 # Get user password and embed the preseed file into the initrd for install
 ./scripts/config_preseed
