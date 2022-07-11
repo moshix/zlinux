@@ -9,13 +9,15 @@
 
 # v0.3 clean up
 # v0.4 no sudo required
+# v0.5 consistent log file name for all messages during one run
 
 version="0.5"
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/cleanup.log.$logdate
+    echo "$logdate:$1" >> ./logs/cleanup.log.$logextension
 }
 
 set_colors() {

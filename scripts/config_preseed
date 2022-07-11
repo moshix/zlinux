@@ -3,10 +3,11 @@
 # Script to create the preseed file and update the initrd in the Ubuntu
 # install CD file tree.
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/config_preseed.log.$logdate
+    echo "$logdate:$1" >> ./logs/config_preseed.log.$logextension
 }
 
 set_colors() {
@@ -23,11 +24,14 @@ set_colors() {
 }
 
 set_pass() {
-    echo "${white}You will now be asked for a password for zLinux user zubuntu.."
+    echo; echo
+    echo "${cyan}You will now be asked for a password for zLinux user zubuntu."
+    echo "This is the password you will log in with after installation is complete.${reset}"
+    echo
     # now let's inject the newly created password
     until encryptedPass=`openssl passwd -6`
     do
-        echo "${red}Passwords not matching! Retry...${reset}"
+        echo "${red}Passwords didn't matching! Retry...${reset}"
         sleep 1
     done
     echo "${yellow}Encrypted password has been generated ${reset}"
@@ -66,7 +70,7 @@ rebuild_initrd() {
 set_colors
 
 # Prepare the preseed template
-cp assets/preseed.template preseed.cfg
+cp templates/preseed.template preseed.cfg
 set_pass
 
 rebuild_initrd

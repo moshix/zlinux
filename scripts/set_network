@@ -8,11 +8,14 @@
 # v0.03 obtain network interface name
 # v0.04 give sensible feedback to user about which network interface is being used
 # v0.05 logging for debugging purposes and problem determination
+# v0.06 use a consistent log file name for all messages during one run
 
+
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/setnetwork.log.$logdate
+    echo "$logdate:$1" >> ./logs/setnetwork.log.$logextension
 }
 
 # obtain interface name

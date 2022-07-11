@@ -6,14 +6,18 @@
 # v0.4 what if no wget or curl available??
 # v0.5 fix install directory permissions to include execute bit
 # v0.6 fix wget/curl presence test logic; misc improvements
+# v0.7 use a consistent log file name for all messages during one run
+# v0.8 set the copied install CD contents to writeable so the user can easily
+#      delete the directory later
 
 ubuntuURL="http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-s390x.iso"
 ubuntuISO="ubuntu-18.04.5-server-s390x.iso"
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/getiso.log.$logdate
+    echo "$logdate:$1" >> ./logs/getiso.log.$logextension
 }
 
 set_colors() {
@@ -88,6 +92,7 @@ $SUDO mount -o loop,ro $ubuntuISO $point
 
 mkdir -p install # create dir if not exist
 cp -r $point/* install/  # copy install DVD into install/ folder
+chmod -R +w install
 echo "${yellow}Ubuntu 18.04 was obtained, mounted and copied to install/ ...${reset}"
 $SUDO umount $point
 rmdir $point

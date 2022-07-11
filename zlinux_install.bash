@@ -26,6 +26,11 @@
 # v1.7 use a Hercules build with a relative rpath set
 # v1.8 run as regular user, only using sudo when necessary
 # v1.9 detect successful installation
+# v1.10 misc fixes:
+#         put all log messages for this run in same log file
+#         fixup permissions of set_network log
+#         dasdinit log typo
+#         rename assets directory to templates
 
 version="0.5" # of zlinux system, not of this script
 
@@ -38,7 +43,7 @@ export SUDO
 test_sudo () {
     echo "${yellow}Testing if '$SUDO' command works ${reset}"
     if [[ $($SUDO id -u) -ne 0 ]]; then
-        echo "${rev} ${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
+        echo "${rev}${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
         exit 1
     fi
 }
@@ -46,15 +51,16 @@ test_sudo () {
 check_if_root () {
     # check if I am root and terminate if so
     if [[ $(id -u) -eq 0 ]]; then
-        echo "${rev} ${red}You are root. You must run this installer as a regular user. Terminating...${reset}"
+        echo "${rev}${red}You are root. You must run this installer as a regular user. Terminating...${reset}"
         exit 1
     fi
 }
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logdate
+    echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logextension
 }
 
 set_colors() {
@@ -135,7 +141,7 @@ set_hercenv () {
 }
 
 create_conf () {
-    cp assets/hercules.cnf.template hercules.cnf
+    cp templates/hercules.cnf.template hercules.cnf
     chmod +w hercules.cnf
     sed -i "s/__CPU__/$intcores/" hercules.cnf
     sed -i "s/__RAM__/$hercram/" hercules.cnf
@@ -190,7 +196,7 @@ while [[ $diskvalid = "no" ]]; do
         echo "${yellow}Roger, ${cyan} 3GB  ${reset}"
         logit "user asked for 3GB DASD size"
         [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
-        dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+        dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasdinit_error.log
         dasdresult=$?
         diskvalid="yes"
         ;;
@@ -198,7 +204,7 @@ while [[ $diskvalid = "no" ]]; do
         echo "${yellow}Roger, ${cyan} 9GB ${reset}"
         logit "user asked for 9GB DASD size"
         [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
-        dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+        dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasdinit_error.log
         dasdresult=$?
         diskvalid="yes"
         ;;
@@ -206,7 +212,7 @@ while [[ $diskvalid = "no" ]]; do
         echo "${yellow}Roger, ${cyan} 27GB ${reset}"
         logit "user asked for 27GB DASD size"
         [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
-        dasdinit64 -z ./dasd/hd0.120 3390-27 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+        dasdinit64 -z ./dasd/hd0.120 3390-27 HD0 > logs/dasdinit.log 2> ./logs/dasdinit_error.log
         dasdresult=$?
         diskvalid="yes"
         ;;
@@ -232,6 +238,7 @@ echo "${reset}"
 
 # execute network configurator
 $SUDO ./scripts/set_network
+$SUDO chown $(id -u):$(id -g) ./logs/setnetwork.log*
 
 # The hercifc util needs to be setuid root to manage network interface. We will
 # copy the as-installed copy, which is owned by the user and not root, so that
@@ -245,11 +252,8 @@ $SUDO chown root:root herc4x/bin/hercifc
 $SUDO chmod +s herc4x/bin/hercifc
 
 # copy correct .rc file for installation
-cp assets/hercules.rc.DVD hercules.rc
-chmod +w hercules.rc   # in case this is a subsequent run and the copy from
-                       # assets was already set to read-only, we don't want to
-                       # create trouble later when we try to swap the runtime
-                       # one in place.
+cp templates/hercules.rc.DVD hercules.rc
+chmod +w hercules.rc   # ...just in case, for easy replacement later
 
 echo "${yellow} Starting hercules with installation script now. Be patient. ${reset}"
 read -p "${white} Please press ENTER to continue with install now. ${reset}" pressenter
@@ -272,7 +276,7 @@ if [[ ! -f install_success ]]; then
 fi
 
 # copy the correct hercules.rc for future use
-cp assets/hercules.rc.hd0 hercules.rc
+cp templates/hercules.rc.hd0 hercules.rc
 
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}./run_zlinux.bash ${reset}"

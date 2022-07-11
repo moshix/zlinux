@@ -13,6 +13,7 @@
 #      modified by the user. Do not recalc CPU and RAM tuning.
 # v0.6 use a Hercules build with a relative rpath set
 # v0.7 run as regular user, only using sudo when necessary
+# v0.8 consistent log file name for all message during one run
 
 version="0.5" # of zlinux system, not of this script
 
@@ -23,7 +24,7 @@ SUDO="sudo"
 test_sudo () {
     echo "${yellow}Testing if '$SUDO' command works ${reset}"
     if [[ $($SUDO id -u) -ne 0 ]]; then
-        echo "${rev} ${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
+        echo "${rev}${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
         exit 1
     fi
 }
@@ -31,15 +32,16 @@ test_sudo () {
 check_if_root () {
     # check if I am root and terminate if so
     if [[ $(id -u) -eq 0 ]]; then
-        echo "${rev} ${red}You are root. There is no need to be root to run zlinux. Please run as a normal user...${reset}"
+        echo "${rev}${red}You are root. There is no need to be root to run zlinux. Please run as a normal user...${reset}"
         exit 1
     fi
 }
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/zLinux_runtime.log.$logdate
+    echo "$logdate:$1" >> ./logs/zLinux_runtime.log.$logextension
 }
 
 set_colors() {
@@ -91,7 +93,7 @@ run_sudo () {
     # are we running as sudo? If not inform user and exit
     arewesudo=`id -u`
     if [ $arewesudo  -ne 0 ]; then
-        echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
+        echo "${red}${rev}You need to execute this script with sudo or it won't work!${reset}"
         exit 1
     fi
 }
@@ -116,6 +118,7 @@ logit "Starting zLinux "
 
 # execute network configurator
 $SUDO ./scripts/set_network
+$SUDO chown $(id -u):$(id -g) ./logs/setnetwork.log*
 
 # The hercifc util needs to be setuid root to manage network interface. We will
 # copy the as-installed copy, which is owned by the user and not root, so that
