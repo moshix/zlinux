@@ -42,6 +42,7 @@ export HERCULES_RC properly
 auto-tune now finally works. It's been only 3 weeks fiddling with it...
 set assets/ to non-writable
 
+
 v 0.5
 -----
 General script cleanup and fixes
@@ -50,3 +51,5 @@ Offer 27GB (3390-27) disk type; improve DASD creation
 Switch to template-based preseed and hercules.cnf creation. Only create config
   during initial installation; don't overwrite user changes on future runs
 Fix wget/curl detection; improvements to ISO download and mount
+Use a Hercules built with ./herc4x/lib and ./herc4x/lib/hercules runpath;
+  include build script for reference

@@ -23,6 +23,7 @@
 # v1.4 do not leave directories without execute bit set
 # v1.5 offer 27GB (3390-27) disk option; improve DASD creation
 # v1.6 switch to template-based preseed and hercules.cnf creation
+# v1.7 use a Hercules build with a relative rpath set
 
 version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -123,8 +124,6 @@ get_ram ()  {
 set_hercenv () {
     # set path to supplied hercules
     export PATH=./herc4x/bin:$PATH
-    export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
 }
 
 create_conf () {

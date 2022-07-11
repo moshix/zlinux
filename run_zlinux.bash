@@ -11,6 +11,7 @@
 #      always exit with error status when exiting due to error.
 # v0.5 use the Hercules config as it was created at install time, or later
 #      modified by the user. Do not recalc CPU and RAM tuning.
+# v0.6 use a Hercules build with a relative rpath set
 
 version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -69,8 +70,6 @@ check_os () {
 set_hercenv () {
     # set path to supplied hercules
     export PATH=./herc4x/bin:$PATH
-    export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
 }
 
 run_sudo () {

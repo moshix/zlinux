@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L./crypto/lib -L./decNumber/lib -L./SoftFloat/lib -L./telnet/lib /usr/local/lib/libherct.la /usr/local/lib/libhercd.la /usr/local/lib/libhercu.la /usr/local/lib/libhercs.la -lrt -lresolv -lnsl -lm -ldl -lbz2 -lz -lcrypto64 -ldecNumber64 -lSoftFloat64 -ltelnet64'
+dependency_libs=' -L../sdl-hyperion-git/crypto/lib -L../sdl-hyperion-git/decNumber/lib -L../sdl-hyperion-git/SoftFloat/lib -L../sdl-hyperion-git/telnet/lib /tmp/herc4x/lib/libherct.la /tmp/herc4x/lib/libhercd.la /tmp/herc4x/lib/libhercu.la /tmp/herc4x/lib/libhercs.la -lrt -lresolv -lnsl -lm -ldl -lbz2 -lz -lcrypto64 -ldecNumber64 -lSoftFloat64 -ltelnet64'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/usr/local/lib'
+libdir='/tmp/herc4x/lib'
