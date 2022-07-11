@@ -25,6 +25,7 @@
 # v1.6 switch to template-based preseed and hercules.cnf creation
 # v1.7 use a Hercules build with a relative rpath set
 # v1.8 run as regular user, only using sudo when necessary
+# v1.9 detect successful installation
 
 version="0.5" # of zlinux system, not of this script
 
@@ -140,6 +141,18 @@ create_conf () {
     sed -i "s/__RAM__/$hercram/" hercules.cnf
 }
 
+check_already_installed () {
+    if [[ -f install_success ]]; then
+        logit "there is already an install_success file"
+        echo "${yellow}It appears you have already completed a successful installation."
+        echo -n "Do you really want to start over? (Y/N):${reset} "
+        read startover
+        startover && [[ $startover == [yY] || $startover == [yY][eE][sS] ]] || exit 1
+        logit "user chose to overwrite current installation"
+        rm -f install_success
+    fi
+}
+
 # main starts here
 mkdir -p logs/
 mkdir -p dasd/
@@ -252,11 +265,14 @@ HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
 $SUDO rm -f herc4x/bin/hercifc
 mv herc4x/bin/hercifc.orig herc4x/bin/hercifc
 
+if [[ ! -f install_success ]]; then
+    echo "${rev}${red}It seems Hercules quit before the installation finished successfully."
+    echo "Check for errors in the logs in logs/, and try running the installation script again.${reset}"
+    exit 1
+fi
+
 # copy the correct hercules.rc for future use
 cp assets/hercules.rc.hd0 hercules.rc
-
-# protect ISO from accidental modification
-chmod -w *.iso
 
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}./run_zlinux.bash ${reset}"

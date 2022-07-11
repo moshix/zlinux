@@ -73,6 +73,15 @@ check_os () {
     fi
 }
 
+check_install_success () {
+    if [[ ! -f install_success ]]; then
+        logit "No install_success file found"
+        echo "${rev}${red}It does not appear an installation has succeeded."
+        echo "Please run ./zlinus_install.bash to install your zlinux system.${reset}"
+        exit 1
+    fi
+}
+
 set_hercenv () {
     # set path to supplied hercules
     export PATH=./herc4x/bin:$PATH
@@ -98,6 +107,7 @@ test_sudo       # but we must have sudo capability
 
 # quick sanity checks
 check_os
+check_install_success()
 
 set_hercenv   # set paths for local herc4x hyperion instance
 

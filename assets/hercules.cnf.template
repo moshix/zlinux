@@ -7,6 +7,9 @@ CPUMODEL  2086
 OSTAILOR  LINUX
 ARCHMODE  z/Arch
 
+# Allow shell commands from the Hercules console, but not from guests
+SHCMDOPT ENABLE NODIAG8
+
 # DASD
 0120 3390  ./dasd/hd0.120
 
