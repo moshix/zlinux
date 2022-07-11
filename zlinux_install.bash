@@ -21,6 +21,7 @@
 # v1.3 remove unused, unnecessary, and broken code;
 #      always exist with error status when exiting due to error
 # v1.4 do not leave directories without execute bit set
+# v1.5 offer 27GB (3390-27) disk option; improve DASD creation
 
 version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -193,27 +194,45 @@ logit "Starting zLinux installer"
 check_os
 get_distro
 
-# ask user for disk size
-read -p "${white}How big do you want your zLinux disk to be?  (3GB, 9GB): ${reset} " dsize
+# ask user for disk size; loop until we get valid selection
+diskvalid="no"
+while [[ $diskvalid = "no" ]]; do
+    read -p "${white}How big do you want your zLinux disk to be?  (3GB, 9GB, 27GB): ${reset} " dsize
 
-case "$dsize" in
-3*)
-    echo "${yellow}Roger, ${cyan} 3GB  ${reset}"
-    logit "user asked for 3GB DASD size "
-    [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
-    dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
-    ;;
-9*)
-    echo "${yellow}Roger, ${cyan} 9GB ${reset}"
-    logit "user asked for 9GB DASD size"
-    [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
-    dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
-    ;;
-*)
-    echo "${red}Unrecognized selection: $dsize. Restart and supply correct input, either 3GB or 9GB... ${reset}"
-    exit 1
-    ;;
-esac
+    case "$dsize" in
+    3*)
+        echo "${yellow}Roger, ${cyan} 3GB  ${reset}"
+        logit "user asked for 3GB DASD size"
+        [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
+        dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+        dasdresult=$?
+        diskvalid="yes"
+        ;;
+    9*)
+        echo "${yellow}Roger, ${cyan} 9GB ${reset}"
+        logit "user asked for 9GB DASD size"
+        [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
+        dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+        dasdresult=$?
+        diskvalid="yes"
+        ;;
+    27*)
+        echo "${yellow}Roger, ${cyan} 27GB ${reset}"
+        logit "user asked for 27GB DASD size"
+        [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
+        dasdinit64 -z ./dasd/hd0.120 3390-27 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+        dasdresult=$?
+        diskvalid="yes"
+        ;;
+    *)
+        echo "${red}Unrecognized selection: $dsize. Try again and supply correct input, either 3GB, 9GB, or 27GB.${reset}"
+        ;;
+    esac
+
+    if [[ $dasdresult -ne 0 ]]; then
+        echo "${red}Error creating DASD file. Check logs/dasdinit.log and logs/dasdinit_error.log.${reset}"
+        exit 1
+done
 
 # ask for confirmation before downloading iso....
 read -p "${white}Continue with 700MB ISO download? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1

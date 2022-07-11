@@ -46,3 +46,4 @@ v 0.5
 -----
 General script cleanup and fixes
 Fix RAM auto-tune
+Offer 27GB (3390-27) disk type; improve DASD creation
