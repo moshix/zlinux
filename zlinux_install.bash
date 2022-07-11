@@ -119,7 +119,7 @@ get_ram () {
     let "gbram=$bkram/1024"
 
     if [[ $gbram -lt 1300 ]]; then
-        echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
+        echo "${rev}${red}You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to install zLinux. Exiting now. ${reset}"
         exit 1
     elif [[ $gbram -lt 2200 ]]; then
         hercram=1024
@@ -255,8 +255,8 @@ $SUDO chmod +s herc4x/bin/hercifc
 cp templates/hercules.rc.DVD hercules.rc
 chmod +w hercules.rc   # ...just in case, for easy replacement later
 
-echo "${yellow} Starting hercules with installation script now. Be patient. ${reset}"
-read -p "${white} Please press ENTER to continue with install now. ${reset}" pressenter
+echo "${yellow}Starting hercules with installation script now. Be patient. ${reset}"
+read -p "${white}Please press ENTER to continue with install now. ${reset}" pressenter
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
