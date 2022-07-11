@@ -24,20 +24,28 @@
 # v1.5 offer 27GB (3390-27) disk option; improve DASD creation
 # v1.6 switch to template-based preseed and hercules.cnf creation
 # v1.7 use a Hercules build with a relative rpath set
+# v1.8 run as regular user, only using sudo when necessary
 
 version="0.5" # of zlinux system, not of this script
-caller=""     # will contain the user name who invoked this script
 
-who_called () {
-    # establish which user called before sudo
-    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
+# This is the command we will use when we need superuser privileges. It is
+# exported so scripts we call will also use this value. If you use "doas" you
+# may change it here.
+SUDO="sudo"
+export SUDO
+
+test_sudo () {
+    echo "${yellow}Testing if '$SUDO' command works ${reset}"
+    if [[ $($SUDO id -u) -ne 0 ]]; then
+        echo "${rev} ${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
+        exit 1
+    fi
 }
 
 check_if_root () {
-    # check if I am root
-    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
-    if [[ $caller == "root" ]]; then
-        echo "${rev} ${red}You are root. This installer must run with sudo, but not as root. Terminating...${reset}"
+    # check if I am root and terminate if so
+    if [[ $(id -u) -eq 0 ]]; then
+        echo "${rev} ${red}You are root. You must run this installer as a regular user. Terminating...${reset}"
         exit 1
     fi
 }
@@ -94,12 +102,11 @@ get_cores () {
         intcores=1
     fi
 
-    # now put in config file
     echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
-    sleep 3
+    sleep 2
 }
 
-get_ram ()  {
+get_ram () {
     # this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
     bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
     let "gbram=$bkram/1024"
@@ -118,7 +125,7 @@ get_ram ()  {
     fi
 
     echo "${yellow}RAM in KB ${cyan}${gbram}. ${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
-    sleep 3
+    sleep 2
 }
 
 set_hercenv () {
@@ -133,26 +140,16 @@ create_conf () {
     sed -i "s/__RAM__/$hercram/" hercules.cnf
 }
 
-run_sudo () {
-    # are we running as sudo? If not inform user and exit
-    arewesudo=`id -u`
-    if [ $arewesudo  -ne 0 ]; then
-        echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
-        exit 1
-    fi
-}
-
 # main starts here
 mkdir -p logs/
 mkdir -p dasd/
 
 set_colors
 
-who_called
-logit "user invoking install script: $caller"
-
 check_if_root # cannot be root
-run_sudo
+logit "user invoking install script: $(whoami)"
+
+test_sudo     # but we must have sudo capability
 
 # quick sanity checks
 check_os
@@ -221,11 +218,21 @@ echo "${reset}"
 ./scripts/config_preseed
 
 # execute network configurator
-./scripts/set_network
+$SUDO ./scripts/set_network
+
+# The hercifc util needs to be setuid root to manage network interface. We will
+# copy the as-installed copy, which is owned by the user and not root, so that
+# we can restore the original owner and permissions after Hercules is done.
+# But we won't overwrite an existing backup, in case previous runs failed and
+# we're starting again
+if [[ ! -f herc4x/bin/hercifc.orig ]]; then
+    cp herc4x/bin/hercifc herc4x/bin/hercifc.orig
+fi
+$SUDO chown root:root herc4x/bin/hercifc
+$SUDO chmod +s herc4x/bin/hercifc
 
 # copy correct .rc file for installation
 cp assets/hercules.rc.DVD hercules.rc
-chown $caller.$caller hercules.rc
 chmod +w hercules.rc   # in case this is a subsequent run and the copy from
                        # assets was already set to read-only, we don't want to
                        # create trouble later when we try to swap the runtime
@@ -238,24 +245,21 @@ logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
 HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
 
+# After hercules finishes, restore the original hercifc
+# This is for two reasons: less time leaving a suid binary sitting around,
+# and make it easier for the user to clean up later by "rm -rf ..." this
+# entire directory and not run into problems deleting a file owned by root.
+$SUDO rm -f herc4x/bin/hercifc
+mv herc4x/bin/hercifc.orig herc4x/bin/hercifc
+
 # copy the correct hercules.rc for future use
 cp assets/hercules.rc.hd0 hercules.rc
 
-# set correct permissions
-who_called
-chmod 644 ./dasd/hd0.120
-chown $caller ./dasd/*
-chown $caller.$caller ./hercules*
-chmod 644 ./hercules*
-chown $caller.$caller ./hercules*
-chmod 644 ./logs/*
-chmod -w ./assets/*
-chown $caller *.iso*
+# protect ISO from accidental modification
 chmod -w *.iso
-chown -R $caller ./install/
 
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
-echo "${magenta}sudo ./run_zlinust.bash ${reset}"
+echo "${magenta}./run_zlinux.bash ${reset}"
 echo
 echo "${yellow}Good bye!${reset}"
 

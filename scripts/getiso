@@ -29,11 +29,6 @@ set_colors() {
     reset=`tput sgr0`
 }
 
-who_called () {
-    # establish which user called before sudo
-    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
-}
-
 get_iso () {
     if command -v wget &> /dev/null
     then
@@ -52,7 +47,12 @@ get_iso () {
 
 set_colors
 
-who_called # establish name of caller
+# This script should be called from the main zlinux_install script, which will
+# define $SUDO for us
+if [[ -z "$SUDO" ]]; then
+    echo "${rev}${red}The getiso script should only be called by the zlinux_install script.${reset}"
+    exit 1
+fi
 
 # check if we have wget or curl installed
 foundtool="true"
@@ -84,23 +84,18 @@ else
 fi
 
 point=$(mktemp -d)
-mount -o loop,ro $ubuntuISO $point
+$SUDO mount -o loop,ro $ubuntuISO $point
 
 mkdir -p install # create dir if not exist
-chown $caller.$caller install/
-chmod 755 install/
 cp -r $point/* install/  # copy install DVD into install/ folder
 echo "${yellow}Ubuntu 18.04 was obtained, mounted and copied to install/ ...${reset}"
-umount $point
+$SUDO umount $point
 rmdir $point
 
 # sanity check if there is stuff in install/
-if [ -z "$(ls -A ./install)" ]; then
-    echo "${rev}${red}Catastrophic error. No content in install/. Either mount or download did not succeed in mysterioius ways. Terminating...${reset}"
+if [[ $(ls install | wc -l) -lt 10 ]]; then
+    echo "${rev}${red}Catastrophic error. Not enough files in install/. Either mount or download did not succeed in mysterious ways. Terminating...${reset}"
     exit 1
 else
     echo "${yellow}Download, mount, and copy of install DVD has succeeded...${reset}"
 fi
-
-# set right privileges for the iso
-chown $caller.$caller *.iso*

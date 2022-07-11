@@ -6,7 +6,7 @@ This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.0
 
 You just execute the the installer by doing:
 
->sudo ./zlinux_install.bash
+>./zlinux_install.bash
 
 The script will proceed to download Ubuntu 18.0.4-5 for s390x in ISO form to your local machine.
 
@@ -62,7 +62,7 @@ You will have Ubuntu/s390x installed in dasd/hd0.120
 
 You can remove all unnecessary files by executing
 
->sudo ./cleanup_after_successful_install.bash
+>./cleanup_after_successful_install.bash
 
 
 

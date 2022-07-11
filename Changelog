@@ -53,3 +53,4 @@ Switch to template-based preseed and hercules.cnf creation. Only create config
 Fix wget/curl detection; improvements to ISO download and mount
 Use a Hercules built with ./herc4x/lib and ./herc4x/lib/hercules runpath;
   include build script for reference
+Run as regular user, not with sudo or as root. Run specific commands with sudo

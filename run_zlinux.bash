@@ -12,19 +12,25 @@
 # v0.5 use the Hercules config as it was created at install time, or later
 #      modified by the user. Do not recalc CPU and RAM tuning.
 # v0.6 use a Hercules build with a relative rpath set
+# v0.7 run as regular user, only using sudo when necessary
 
 version="0.5" # of zlinux system, not of this script
-caller=""     # will contain the user name who invoked this script
 
-who_called () {
-    # establish which user called before sudo
-    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
+# This is the command we will use when we need superuser privileges.
+# If you use "doas" you may change it here.
+SUDO="sudo"
+
+test_sudo () {
+    echo "${yellow}Testing if '$SUDO' command works ${reset}"
+    if [[ $($SUDO id -u) -ne 0 ]]; then
+        echo "${rev} ${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
+        exit 1
+    fi
 }
 
 check_if_root () {
-    # check if I am root
-    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
-    if [[ $caller == "root" ]]; then
+    # check if I am root and terminate if so
+    if [[ $(id -u) -eq 0 ]]; then
         echo "${rev} ${red}You are root. There is no need to be root to run zlinux. Please run as a normal user...${reset}"
         exit 1
     fi
@@ -85,11 +91,10 @@ run_sudo () {
 
 set_colors
 
-who_called
-logit "user invoking install script: $caller"
+check_if_root   # cannot be root
+logit "user invoking run script: $(whoami)"
 
-check_if_root # cannot be root
-run_sudo      # must run with sudo (because of NAT setting)
+test_sudo       # but we must have sudo capability
 
 # quick sanity checks
 check_os
@@ -100,11 +105,29 @@ echo; echo; echo
 logit "Starting zLinux "
 
 # execute network configurator
-./scripts/set_network
+$SUDO ./scripts/set_network
+
+# The hercifc util needs to be setuid root to manage network interface. We will
+# copy the as-installed copy, which is owned by the user and not root, so that
+# we can restore the original owner and permissions after Hercules is done.
+# But we won't overwrite an existing backup, in case previous runs failed and
+# we're starting again
+if [[ ! -f herc4x/bin/hercifc.orig ]]; then
+    cp herc4x/bin/hercifc herc4x/bin/hercifc.orig
+fi
+$SUDO chown root:root herc4x/bin/hercifc
+$SUDO chmod +s herc4x/bin/hercifc
 
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
 HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
+
+# After hercules finishes, restore the original hercifc
+# This is for two reasons: less time leaving a suid binary sitting around,
+# and make it easier for the user to clean up later by "rm -rf ..." this
+# entire directory and not run into problems deleting a file owned by root.
+$SUDO rm -f herc4x/bin/hercifc
+mv herc4x/bin/hercifc.orig herc4x/bin/hercifc
 
 logit "Ending zlinux"
 

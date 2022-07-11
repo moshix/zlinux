@@ -5,26 +5,12 @@
 # removes the following:
 #   install/ directory
 #   logs/ files relating to installation
-#   unmounts /tmp/mntiso
 #   removes the *.iso files (can be several files!)
 
 # v0.3 clean up
+# v0.4 no sudo required
 
-version="0.3"
-
-run_sudo () {
-# are we running as sudo? If not inform user and exit
-arewesudo=`id -u`
-if [ $arewesudo  -ne 0 ]; then
-    echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
-    exit
-fi
-}
-
-who_called () {
-    # establish which user called before sudo
-    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
-}
+version="0.5"
 
 logit () {
     # log to file all messages
@@ -47,14 +33,12 @@ set_colors() {
 
 clean_stuff () {
     echo "${yellow}Cleanup Procedure ${reset}"
-    echo " "
+    echo
     sleep 1
 
     rm -fr install/
-    umount /tmp/mntiso
     rm -fr logs/install*
     rm -fr ./ubuntu-18.04.5-server-s390x.iso*
-    sleep 2
 
     echo "${yellow}All clean now! Goodbye. ${reset}"
     exit 0
@@ -63,7 +47,6 @@ clean_stuff () {
 # main starts here
 
 set_colors
-run_sudo
 
 while true; do
     read -p "${white} Do you want to clean up your directory after a successful install? (y/n) ${reset}" runvar
@@ -75,10 +58,9 @@ while true; do
         ;;
     [Nn]*)
         echo "${yellow}Ok, terminating now....  ${reset}"
-        exit;;
+        exit
+        ;;
     *)
         echo "${red}Unrecognized selection: $runvar. y or n  ${reset}" ;;
     esac
 done
-
-exit
