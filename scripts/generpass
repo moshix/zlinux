@@ -35,4 +35,3 @@ done
 echo "${yellow}Encrypted password has been generated ${reset}"
 sed -i "39i d-i passwd/user-password-crypted password $encryptedPass" -i ./assets/preseed
 echo "${reset}"
-exit

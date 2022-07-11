@@ -11,4 +11,3 @@ gzip initrd
 mv initrd.gz initrd.ubuntu
 chmod +w initrd.siz
 printf "0: %08x" $(du -b initrd.ubuntu | awk '{print $1}') | xxd -r > initrd.siz
-exit

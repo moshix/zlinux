@@ -7,8 +7,10 @@
 # v0.1 copied over a lot of stuff from installer script
 # v0.2 fixed sudo stuff
 # v0.3 fixed RAM calculation
+# v0.4 more cleanup; remove unused, unnecessary, and broken code;
+#      always exit with error status when exiting due to error.
 
-version="0.4" # of zlinux system, not of this script
+version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
 
 who_called () {
@@ -46,23 +48,19 @@ set_colors() {
 
 check_os () {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "  "
+        echo
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo "${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
-        exit
+        exit 1
     elif [[ "$OSTYPE" == "cygwin" ]]; then
         echo "${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
-        exit
+        exit 1
     elif [[ "$OSTYPE" == "win32" ]]; then
         echo "${red}Windows detected. Sorry, Windows is not supported.${reset}"
-        exit
-    # I'm not sure this can happen.
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        echo "${red}FreeBSD detected. Sorry, FreeBSD is not yet supported.${reset}"
-        exit
+        exit 1
     else
         echo "${red}Unrecognzied operating system. Exiting now.${reset}"
-        exit
+        exit 1
     fi
 }
 
@@ -85,12 +83,6 @@ get_distro() {
         # Older Debian/Ubuntu/etc.
         OS=Debian
         VER=$(cat /etc/debian_version)
-    elif [ -f /etc/SuSe-release ]; then
-        # Older SuSE/etc.
-        ...
-    elif [ -f /etc/redhat-release ]; then
-        # Older Red Hat, CentOS, etc.
-        ...
     else
         # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
         OS=$(uname -s)
@@ -126,10 +118,6 @@ get_cores () {
     echo "MAXCPU           $intcores"  >> /tmp/.hercules.cf1
 }
 
-get_cpu() {
-    cputype=`cat /proc/cpuinfo`
-}
-
 get_ram ()  {
     # this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
     bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
@@ -155,7 +143,7 @@ get_ram ()  {
 }
 
 set_hercenv () {
-    # set path to  supplied hercules
+    # set path to supplied hercules
     export PATH=./herc4x/bin:$PATH
     export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
@@ -188,7 +176,7 @@ run_sudo () {
     arewesudo=`id -u`
     if [ $arewesudo  -ne 0 ]; then
         echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
-        exit
+        exit 1
     fi
 }
 
@@ -215,16 +203,15 @@ get_distro
 # remove MAINSIZE and NUMCPU and MAXCPU from hercules.cnf and copy hercules.rc into place
 clean_conf
 
-
 get_cores     # autotune CP for hercules.cnf
 
 get_ram       # autotune RAM
 
 set_hercenv   #set paths for local herc4x hyperion instance
 
-echo " "
-echo " "
-echo " "
+echo
+echo
+echo
 logit "Starting zLinux "
 
 # execute network configurator
@@ -245,10 +232,10 @@ FILE=./logs/hercules.log.$logdate
 hercules -f hercules.cnf > $FILE
 
 logit "Ending zlinux"
+
 # moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED
 # WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED
 # WARRANTIES TO THE FULL EXTENT ALLOWED BY APPLICABLE LAW, INCLUDING WITHOUT
 # LIMITATION ALL IMPLIED WARRANTIES OF, NON-INFRINGEMENT, MERCHANTABILITY, TITLE
 # OR FITNESS FOR ANY PARTICULAR PURPOSE. NO ORAL OR WRITTEN INFORMATION OR ADVICE
 # GIVEN BY moshix, ITS AGENTS OR EMPLOYEES SHALL CREATE A WARRANTY
-exit

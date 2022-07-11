@@ -18,13 +18,15 @@
 # v1.0 fix permissions
 # v1.1 don't allow execution as user root
 # v1.2 fixed RAM calculation
+# v1.3 remove unused, unnecessary, and broken code;
+#      always exist with error status when exiting due to error
 
-version="0.4" # of zlinux system, not of this script
+version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
 
 who_called () {
-# establish which user called before sudo
-if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
+    # establish which user called before sudo
+    if [ $SUDO_USER ]; then caller=$SUDO_USER; else caller=`whoami`; fi
 }
 
 check_if_root () {
@@ -57,55 +59,19 @@ set_colors() {
 
 check_os () {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "  "
+        echo
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo "${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
-        exit
+        exit 1
     elif [[ "$OSTYPE" == "cygwin" ]]; then
         echo "${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
-        exit
+        exit 1
     elif [[ "$OSTYPE" == "win32" ]]; then
         echo "${red}Windows detected. Sorry, Windows is not supported.${reset}"
-        exit
-    # I'm not sure this can happen.
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        echo "${red}FreeBSD detected. Sorry, FreeBSD  is not yet supported.${reset}"
-        exit
+        exit 1
     else
         echo "${red}Unrecognized operating system. Exiting now.${reset}"
-        exit
-    fi
-}
-
-get_distro() {
-    if [ -f /etc/os-release ]; then
-        # freedesktop.org and systemd
-        . /etc/os-release
-        OS=$NAME
-        VER=$VERSION_ID
-    elif type lsb_release >/dev/null 2>&1; then
-        # linuxbase.org
-        OS=$(lsb_release -si)
-        VER=$(lsb_release -sr)
-    elif [ -f /etc/lsb-release ]; then
-        # For some versions of Debian/Ubuntu without lsb_release command
-        . /etc/lsb-release
-        OS=$DISTRIB_ID
-        VER=$DISTRIB_RELEASE
-    elif [ -f /etc/debian_version ]; then
-        # Older Debian/Ubuntu/etc.
-        OS=Debian
-        VER=$(cat /etc/debian_version)
-    elif [ -f /etc/SuSe-release ]; then
-        # Older SuSE/etc.
-        ...
-    elif [ -f /etc/redhat-release ]; then
-        # Older Red Hat, CentOS, etc.
-        ...
-    else
-        # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
-        OS=$(uname -s)
-        VER=$(uname -r)
+        exit 1
     fi
 }
 
@@ -136,10 +102,6 @@ get_cores () {
     echo "MAXCPU           $intcores"  >> /tmp/.hercules.cf1
 }
 
-get_cpu() {
-    cputype=`cat /proc/cpuinfo`
-}
-
 get_ram ()  {
     # this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
     bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
@@ -164,10 +126,6 @@ get_ram ()  {
     echo "MAINSIZE      $hercram" >> /tmp/.hercules.cf1
 }
 
-clear_conf () {
-    [-e ./hercules.rc ] && /bin/cp -rf ./assets/hercules.rc.ipl.hd0 ./hercules.rc
-}
-
 clean_conf () {
     # remove MAINSIZE, MAXCPU and NUMCPU from hercules.cnf file
     # so we can then add the auto-tuned values before starting hercules
@@ -180,10 +138,10 @@ clean_conf () {
 }
 
 set_hercenv () {
-        # set path to supplied hercules
-        export PATH=./herc4x/bin:$PATH
-        export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
-        export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
+    # set path to supplied hercules
+    export PATH=./herc4x/bin:$PATH
+    export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
 }
 
 run_sudo () {
@@ -191,7 +149,7 @@ run_sudo () {
     arewesudo=`id -u`
     if [ $arewesudo  -ne 0 ]; then
         echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
-        exit
+        exit 1
     fi
 }
 
@@ -205,9 +163,6 @@ remove_env () {
 # main starts here
 mkdir -p logs/
 mkdir -p dasd/
-
-oldpath=`echo $PATH`               # needed so we can use supplied Hercules
-oldldpath=`echo $LD_LIBRARY_PATH`
 
 set_colors
 
@@ -226,11 +181,11 @@ get_ram
 
 set_hercenv
 
-echo " "
-echo " "
+echo
+echo
 echo "${green}    Starting zLinux installer Version $version ${reset}"
 echo "${green}    ===================================== ${reset}"
-echo " "
+echo
 logit "Starting zLinux installer"
 
 # quick sanity checks
@@ -245,15 +200,18 @@ case "$dsize" in
     echo "${yellow}Roger, ${cyan} 3GB  ${reset}"
     logit "user asked for 3GB DASD size "
     [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
-    dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
+    dasdinit64 -z ./dasd/hd0.120 3390-3 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+    ;;
 9*)
     echo "${yellow}Roger, ${cyan} 9GB ${reset}"
     logit "user asked for 9GB DASD size"
     [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
-    dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log;;
+    dasdinit64 -z ./dasd/hd0.120 3390-9 HD0 > logs/dasdinit.log 2> ./logs/dasddinit_error.log
+    ;;
 *)
     echo "${red}Unrecognized selection: $dsize. Restart and supply correct input, either 3GB or 9GB... ${reset}"
-    exit 1;;
+    exit 1
+    ;;
 esac
 
 # ask for confirmation before downloading iso....
@@ -277,7 +235,7 @@ rm -f ./hercules.rc
 /bin/cp -rf ./assets/hercules.rc.DVD ./hercules.rc
 chown $caller.$caller ./hercules.rc
 
-# remove MAINSIZE AND NUMCPU AND MAXCPU from hercules.cnf
+# remove MAINSIZE and NUMCPU and MAXCPU from hercules.cnf
 clean_conf
 
 # attach rest of hercules.cnf (without MAINSIZE AND NUMCPU)
@@ -307,13 +265,8 @@ chmod -R 644 ./install
 
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}sudo ./run_zlinust.bash ${reset}"
-echo " "
+echo
 echo "${yellow}Good bye!${reset}"
-
-exit
-
-# ask if to clean up after successful install
-#./cleanup_after_successful_install.bash
 
 # moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED
 # WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED
