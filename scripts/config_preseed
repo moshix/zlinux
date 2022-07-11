@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Script to create the preseed file and update the initrd in the Ubuntu
+# install CD file tree.
+
+logit () {
+    # log to file all messages
+    logdate=`date "+%F-%T"`
+    echo "$logdate:$1" >> ./logs/config_preseed.log.$logdate
+}
+
+set_colors() {
+    red=`tput setaf 1`
+    green=`tput setaf 2`
+    yellow=`tput setaf 3`
+    blue=`tput setaf 4`
+    magenta=`tput setaf 5`
+    cyan=`tput setaf 6`
+    white=`tput setaf 7`
+    blink=`tput blink`
+    rev=`tput rev`
+    reset=`tput sgr0`
+}
+
+set_pass() {
+    echo "${white}You will now be asked for a password for zLinux user zubuntu.."
+    # now let's inject the newly created password
+    until encryptedPass=`openssl passwd -6`
+    do
+        echo "${red}Passwords not matching! Retry...${reset}"
+        sleep 1
+    done
+    echo "${yellow}Encrypted password has been generated ${reset}"
+
+    # Note we use '#' here as the sed delimiter since the encryptedPass value
+    # has '/' characters in it.
+    sed -i "s#__CRYPT_PASSWORD__#$encryptedPass#" preseed.cfg
+}
+
+rebuild_initrd() {
+    chmod +w install/boot
+    cd install/boot
+
+    # The first time, create a backup of the original initrd, then always
+    # assume that backup is there.
+    if [[ ! -f initrd.ubuntu.orig ]]; then
+        cp initrd.ubuntu initrd.ubuntu.orig
+    fi
+
+    cp initrd.ubuntu.orig initrd.gz
+    gunzip initrd.gz
+    chmod +w initrd
+    mv ../../preseed.cfg ./preseed.cfg
+    echo "preseed.cfg" | cpio -o -H newc -A -F initrd
+    gzip initrd
+    chmod +w initrd.ubuntu
+    mv initrd.gz initrd.ubuntu
+    chmod +w initrd.siz
+    printf "0: %08x" $(du -b initrd.ubuntu | awk '{print $1}') | xxd -r > initrd.siz
+
+    cd ../..
+}
+
+# main starts here
+
+set_colors
+
+# Prepare the preseed template
+cp assets/preseed.template preseed.cfg
+set_pass
+
+rebuild_initrd

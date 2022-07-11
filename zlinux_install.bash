@@ -22,6 +22,7 @@
 #      always exist with error status when exiting due to error
 # v1.4 do not leave directories without execute bit set
 # v1.5 offer 27GB (3390-27) disk option; improve DASD creation
+# v1.6 switch to template-based preseed and hercules.cnf creation
 
 version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -95,13 +96,6 @@ get_cores () {
     # now put in config file
     echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
     sleep 3
-    echo  "NUMCPU       $intcores" >> ./tmp/herc_env
-    echo  "MAXCPU       $intcores" >> ./tmp/herc_env
-    logit "NUMCPU       $intcores"
-    logit "MAXCPU       $intcores"
-    # below to start to prepare new hercules.cnf
-    echo "NUMCPU           $intcores"  > /tmp/.hercules.cf1
-    echo "MAXCPU           $intcores"  >> /tmp/.hercules.cf1
 }
 
 get_ram ()  {
@@ -122,21 +116,8 @@ get_ram ()  {
         hercram=8192
     fi
 
-    echo "${yellow}RAM in KB ${cyan}${gbram}.${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
-    echo "MAINSIZE      $hercram" >> ./tmp/herc_env
-    logit "MAINSIZE     $hercram"
-    echo "MAINSIZE      $hercram" >> /tmp/.hercules.cf1
-}
-
-clean_conf () {
-    # remove MAINSIZE, MAXCPU and NUMCPU from hercules.cnf file
-    # so we can then add the auto-tuned values before starting hercules
-    sed '/^MAINSIZE/d' hercules.cnf > ./tmp/.hercules.cnfc
-    sed '/^NUMCPU/d' ./tmp/.hercules.cnfc > ./tmp/.hercules.cnfd
-    sed '/^MAXCPU/d' ./tmp/.hercules.cnfd > ./tmp/.hercules.cnfe
-    mv ./tmp/.hercules.cnfe hercules.cnf
-    rm ./tmp/.hercules.cnfc
-    rm ./tmp/.hercules.cnfd
+    echo "${yellow}RAM in KB ${cyan}${gbram}. ${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
+    sleep 3
 }
 
 set_hercenv () {
@@ -146,6 +127,13 @@ set_hercenv () {
     export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
 }
 
+create_conf () {
+    cp assets/hercules.cnf.template hercules.cnf
+    chmod +w hercules.cnf
+    sed -i "s/__CPU__/$intcores/" hercules.cnf
+    sed -i "s/__RAM__/$hercram/" hercules.cnf
+}
+
 run_sudo () {
     # are we running as sudo? If not inform user and exit
     arewesudo=`id -u`
@@ -153,13 +141,6 @@ run_sudo () {
         echo "${red}${rev} You need to execute this script with sudo or it won't work! ${reset}"
         exit 1
     fi
-}
-
-remove_env () {
-    # this function checks if the environment file is there from previous run and
-    # deletes it, if it is.
-    local FILE=./tmp/herc_env
-    rm $FILE
 }
 
 # main starts here
@@ -172,14 +153,14 @@ who_called
 logit "user invoking install script: $caller"
 
 check_if_root # cannot be root
-
 run_sudo
 
-remove_env
+# quick sanity checks
+check_os
 
 get_cores
-
 get_ram
+create_conf
 
 set_hercenv
 
@@ -189,9 +170,6 @@ echo "${green}    Starting zLinux installer Version $version ${reset}"
 echo "${green}    ===================================== ${reset}"
 echo
 logit "Starting zLinux installer"
-
-# quick sanity checks
-check_os
 
 # ask user for disk size; loop until we get valid selection
 diskvalid="no"
@@ -231,6 +209,7 @@ while [[ $diskvalid = "no" ]]; do
     if [[ $dasdresult -ne 0 ]]; then
         echo "${red}Error creating DASD file. Check logs/dasdinit.log and logs/dasdinit_error.log.${reset}"
         exit 1
+    fi
 done
 
 # ask for confirmation before downloading iso....
@@ -240,33 +219,29 @@ echo "${reset}"
 ./scripts/getiso
 # assume download succeded
 
-#ask password for user zubuntu
-./scripts/generpass
-
-#create initrd
-./scripts/create_initrd
+# Get user password and embed the preseed file into the initrd for install
+./scripts/config_preseed
 
 # execute network configurator
 ./scripts/set_network
 
-# place DVD IPL hercules.rc into working dir
-rm -f ./hercules.rc
-/bin/cp -rf ./assets/hercules.rc.DVD ./hercules.rc
-chown $caller.$caller ./hercules.rc
-
-# remove MAINSIZE and NUMCPU and MAXCPU from hercules.cnf
-clean_conf
-
-# attach rest of hercules.cnf (without MAINSIZE AND NUMCPU)
-cat hercules.cnf >> /tmp/.hercules.cf1
-mv /tmp/.hercules.cf1 hercules.cnf
+# copy correct .rc file for installation
+cp assets/hercules.rc.DVD hercules.rc
+chown $caller.$caller hercules.rc
+chmod +w hercules.rc   # in case this is a subsequent run and the copy from
+                       # assets was already set to read-only, we don't want to
+                       # create trouble later when we try to swap the runtime
+                       # one in place.
 
 echo "${yellow} Starting hercules with installation script now. Be patient. ${reset}"
 read -p "${white} Please press ENTER to continue with install now. ${reset}" pressenter
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
-hercules -f hercules.cnf > $FILE
+HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
+
+# copy the correct hercules.rc for future use
+cp assets/hercules.rc.hd0 hercules.rc
 
 # set correct permissions
 who_called

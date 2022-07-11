@@ -9,6 +9,8 @@
 # v0.3 fixed RAM calculation
 # v0.4 more cleanup; remove unused, unnecessary, and broken code;
 #      always exit with error status when exiting due to error.
+# v0.5 use the Hercules config as it was created at install time, or later
+#      modified by the user. Do not recalc CPU and RAM tuning.
 
 version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -64,85 +66,11 @@ check_os () {
     fi
 }
 
-get_cores () {
-    # tune CPU number
-    cores=`grep -c ^processor /proc/cpuinfo`
-    intcores=1
-
-    if [[ $cores -gt 7 ]]; then
-        intcores=6
-    elif [[ $cores -gt 5 ]]; then
-        intcores=5
-    elif [[ $cores -gt 3 ]]; then
-        intcores=2
-    else
-        intcores=1
-    fi
-
-    # now put in config file
-    echo "${yellow}Number of cores present ${cyan} $cores. ${yellow}Setting Hercules to ${cyan} $intcores ${reset}"
-
-    sleep 2
-    echo  "NUMCPU       $intcores" >> ./tmp/herc_env
-    echo  "MAXCPU       $intcores" >> ./tmp/herc_env
-    logit "NUMCPU       $intcores"
-    logit "MAXCPU       $intcores"
-    # below to start to prepare new hercules.cnf
-    echo "NUMCPU           $intcores"  > /tmp/.hercules.cf1
-    echo "MAXCPU           $intcores"  >> /tmp/.hercules.cf1
-}
-
-get_ram ()  {
-    # this function sets a sensible amount of RAM for the Ubuntu/s390x installation procedure
-    bkram=`grep MemTotal /proc/meminfo | awk '{print $2}'`
-    let "gbram=$bkram/1024"
-
-    if [[ $gbram -lt 1300 ]]; then
-        echo "${rev}${red} You have only ${cyan} $gbram ${red} in RAM in your system. That is not enough to IPL zLinux. Exiting now. ${reset}"
-        exit 1
-    elif [[ $gbram -lt 2200 ]]; then
-        hercram=1024
-    elif [[ $gbram -lt 6000 ]]; then
-        hercram=2048
-    elif [[ $gbram -lt 16000 ]]; then
-        hercram=4096
-    else
-        hercram=8192
-    fi
-
-    echo "${yellow}RAM in KB ${cyan}${gbram}.${yellow}Setting Hercules to ${cyan}${hercram}${reset}"
-    echo "MAINSIZE      $hercram" >> ./tmp/herc_env
-    logit "MAINSIZE     $hercram"
-    echo "MAINSIZE      $hercram" >> /tmp/.hercules.cf1
-}
-
 set_hercenv () {
     # set path to supplied hercules
     export PATH=./herc4x/bin:$PATH
     export LD_LIBRARY_PATH=./herc4x/lib:$LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=./herc4x/lib/hercules:$LD_LIBRARY_PATH
-}
-
-clear_conf () {
-    /bin/cp -rf ./assets/hercules.rc.hd0 ./hercules.rc
-}
-
-clean_conf () {
-    # remove MAINSIZE, MAXCPU and NUMCPU from hercules.cnf file
-    # so we can then add the auto-tuned values before starting hercules
-    sed '/^MAINSIZE/d' hercules.cnf > ./tmp/.hercules.cnfc
-    sed '/^NUMCPU/d' ./tmp/.hercules.cnfc > ./tmp/.hercules.cnfd
-    sed '/^MAXCPU/d' ./tmp/.hercules.cnfd > ./tmp/.hercules.cnfe
-    mv ./tmp/.hercules.cnfe hercules.cnf
-    rm ./tmp/.hercules.cnfc
-    rm ./tmp/.hercules.cnfd
-}
-
-remove_env () {
-    # this function checks if the environment file is there from previous run and
-    # deletes it, if it is.
-    local FILE=./tmp/herc_env
-    rm $FILE
 }
 
 run_sudo () {
@@ -156,53 +84,28 @@ run_sudo () {
 
 # main starts here
 
-oldpath=`echo $PATH`               # needed so we can use supplied Hercules
-oldldpath=`echo $LD_LIBRARY_PATH`
-
 set_colors
 
 who_called
 logit "user invoking install script: $caller"
 
 check_if_root # cannot be root
-
 run_sudo      # must run with sudo (because of NAT setting)
-
-remove_env
 
 # quick sanity checks
 check_os
 
-# remove MAINSIZE and NUMCPU and MAXCPU from hercules.cnf and copy hercules.rc into place
-clean_conf
+set_hercenv   # set paths for local herc4x hyperion instance
 
-get_cores     # autotune CP for hercules.cnf
-
-get_ram       # autotune RAM
-
-set_hercenv   #set paths for local herc4x hyperion instance
-
-echo
-echo
-echo
+echo; echo; echo
 logit "Starting zLinux "
 
 # execute network configurator
 ./scripts/set_network
 
-# attach rest of hercules.cnf (without MAINSIZE and NUMCPU)
-cat hercules.cnf >> /tmp/.hercules.cf1
-mv /tmp/.hercules.cf1 hercules.cnf
-chown $caller.$caller hercules.cnf
-
-# copy correct .rc file
-clear_conf
-chown $caller.$caller hercules.rc
-
-export HERCULES_RC=hercules.rc
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
-hercules -f hercules.cnf > $FILE
+HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
 
 logit "Ending zlinux"
 

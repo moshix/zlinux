@@ -36,7 +36,7 @@ d-i network-console/start note
 # user setup
 d-i passwd/user-fullname string zubuntu
 d-i passwd/username string zubuntu
-d-i passwd/user-password-crypted password $6$7Vm6IdAyUitBN8g7$i0o.m3yLmt0jmrDfBDLUDMp629BydltfkNOnUKNA/b3gC7GYOQ7vBIFUJeMpJ5GP4F4E/YCfHye9Nt0641E5C.
+d-i passwd/user-password-crypted password __CRYPT_PASSWORD__
 d-i user-setup/allow-password-weak boolean true
 d-i user-setup/encrypt-home boolean false
 
@@ -85,5 +85,3 @@ d-i libssl1.1/restart-services ssh
 
 # reboot at the end
 d-i finish-install/reboot_in_progress note
-
-

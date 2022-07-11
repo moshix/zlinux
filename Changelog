@@ -47,3 +47,5 @@ v 0.5
 General script cleanup and fixes
 Fix RAM auto-tune
 Offer 27GB (3390-27) disk type; improve DASD creation
+Switch to template-based preseed and hercules.cnf creation. Only create config
+  during initial installation; don't overwrite user changes on future runs
