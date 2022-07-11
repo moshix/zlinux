@@ -4,7 +4,7 @@ zLinux Installer
 
 This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on fresh DASD 3390 virtual disk under Hercules.
 
-You just execute the the installer by doing:
+You just execute the installer by doing:
 
 >sudo ./zlinux_install.bash
 
@@ -51,7 +51,7 @@ Why Ubuntu 18.04
 
 The latest version of Ubuntu supported currently (as of July 2022) by Hercules is Ubuntu 18.04. If you attempt to upgrade an existing Ubuntu 18.04 install to version 20.04 or higher, it will fail on IPL.
 
-By the same token, the last version of CentOS (or RHEL) that will IPL on the current Hercules is CentOS 7, or ClefOS 7.
+By that same token, the last version of CentOS (or RHEL) that will IPL on the current Hercules is CentOS 7, or ClefOS 7.
 
 
 
