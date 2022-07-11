@@ -114,7 +114,7 @@ test_sudo       # but we must have sudo capability
 
 # quick sanity checks
 check_os
-check_install_success()
+check_install_success
 
 set_hercenv   # set paths for local herc4x hyperion instance
 
