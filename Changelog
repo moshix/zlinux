@@ -44,5 +44,5 @@ set assets/ to non-writable
 
 v 0.5
 -----
-General script cleanup
+General script cleanup and fixes
 Fix RAM auto-tune

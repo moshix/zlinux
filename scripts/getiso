@@ -4,6 +4,7 @@
 # v0.2 inform user where it's being taken from
 # v0.3 give out error if wget failed
 # v0.4 what if no wget or curl available??
+# v0.5 fix install directory permissions to include execute bit
 
 logit () {
     # log to file all messages
@@ -98,7 +99,7 @@ fi
 
 mkdir -p install # create dir if not exist
 chown $caller.$caller install/
-chmod 644 install/
+chmod 755 install/
 /bin/cp -r /tmp/mntiso/* install/.  # copy install DVD into install/ folder
 echo "${yellow}Ubuntu 18.04 was obtained, mounted and copied to install/ ...${reset}"
 umount /tmp/mntiso

@@ -20,6 +20,7 @@
 # v1.2 fixed RAM calculation
 # v1.3 remove unused, unnecessary, and broken code;
 #      always exist with error status when exiting due to error
+# v1.4 do not leave directories without execute bit set
 
 version="0.5" # of zlinux system, not of this script
 caller=""     # will contain the user name who invoked this script
@@ -261,7 +262,6 @@ chmod -w ./assets/*
 chown $caller *.iso*
 chmod -w *.iso
 chown -R $caller ./install/
-chmod -R 644 ./install
 
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}sudo ./run_zlinust.bash ${reset}"
