@@ -43,8 +43,8 @@ auto-tune now finally works. It's been only 3 weeks fiddling with it...
 set assets/ to non-writable
 
 
-v 0.5
------
+v 0.5 (all by Racingmars)
+-------------------------
 General script cleanup and fixes
 Fix RAM auto-tune
 Offer 27GB (3390-27) disk type; improve DASD creation
@@ -58,3 +58,4 @@ Detect installation success
 Only make one log file per script per run
 Don't remove write permissions on anything -- we want user to be able to
   easily rm this entire directory without trouble if they want to
+  Mark apparent success or failure of Ubuntu automated install process

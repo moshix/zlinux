@@ -31,8 +31,8 @@
 #         fixup permissions of set_network log
 #         dasdinit log typo
 #         rename assets directory to templates
-
-version="0.5" # of zlinux system, not of this script
+source ./Version
+#version="0.5" # of zlinux system, not of this script
 
 # This is the command we will use when we need superuser privileges. It is
 # exported so scripts we call will also use this value. If you use "doas" you

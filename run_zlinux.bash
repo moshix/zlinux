@@ -14,8 +14,13 @@
 # v0.6 use a Hercules build with a relative rpath set
 # v0.7 run as regular user, only using sudo when necessary
 # v0.8 consistent log file name for all message during one run
+# v0.9 check for installation success upton launching
 
-version="0.5" # of zlinux system, not of this script
+
+source ./Version
+#version="0.5" # of zlinux system, not of this script
+
+
 
 # This is the command we will use when we need superuser privileges.
 # If you use "doas" you may change it here.
