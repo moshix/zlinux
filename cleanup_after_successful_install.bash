@@ -34,10 +34,6 @@ set_colors() {
 }
 
 clean_stuff () {
-    echo "${yellow}Cleanup Procedure Version: $version${reset}"
-    echo
-    sleep 1
-
     rm -fr install/
     rm -fr logs/install*
     rm -fr ./ubuntu-18.04.5-server-s390x.iso*
@@ -49,6 +45,12 @@ clean_stuff () {
 # main starts here
 
 set_colors
+
+echo "${yellow}Cleanup Procedure Version: $version${reset}"
+echo  " "
+
+sleep 1
+
 
 while true; do
     read -p "${white} Do you want to clean up your directory after a successful install? (y/n) ${reset}" runvar
