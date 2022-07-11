@@ -1,4 +1,22 @@
+# Automatically select the default boot loader option
+
+hao tgt ^[ ]*zIPL v[^ ]+ interactive boot menu
+hao cmd .0
+
+# When the Linux system reboots or shuts down, stop hercules.
+# While it would be nice to re-IPL on reboot and quit on shutdown, testing
+# has shown that re-IPLing Linux in the same Hercules instance doesn't seem
+# reliable, so in both cases we quit Hercules and the user needs to re-run
+# ./run_zlinux.bash
+
+hao tgt ^[ ]*Requesting system reboot
+hao cmd quit force
+hao tgt ^[ ]*Starting Reboot\.\.\.
+hao cmd quit force
+hao tgt ^[ ]*Starting Power-Off\.\.\.
+hao cmd quit force
+
+# At startup, IPL from the zlinux DASD
+
 pause 2
 ipl 120
-pause 7
-.1

@@ -1,5 +1,14 @@
+# Detect when we are in the last installation step and create the
+# installation_success file in the host filesystem
+
 hao tgt Finishing the installation
 hao cmd sh touch install_success
+
+# Quit Hercules when the installation finishes
+
 hao tgt Requesting system reboot
 hao cmd quit force
+
+# IPL from the Ubuntu installation media at startup
+
 ipl install/ubuntu.ins
