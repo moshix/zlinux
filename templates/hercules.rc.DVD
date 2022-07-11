@@ -1,5 +1,5 @@
-hao tgt Requesting system reboot
+hao tgt Finishing the installation
 hao cmd sh touch install_success
-hao tgt HHC01603I sh touch install_success
+hao tgt Requesting system reboot
 hao cmd quit force
 ipl install/ubuntu.ins
