@@ -153,7 +153,7 @@ check_already_installed () {
         echo "${yellow}It appears you have already completed a successful installation."
         echo -n "Do you really want to start over? (Y/N):${reset} "
         read startover
-        startover && [[ $startover == [yY] || $startover == [yY][eE][sS] ]] || exit 1
+        [[ "$startover" == [yY] || "$startover" == [yY][eE][sS] ]] || exit 1
         logit "user chose to overwrite current installation"
         rm -f install_success
     fi
@@ -167,6 +167,8 @@ set_colors
 
 check_if_root # cannot be root
 logit "user invoking install script: $(whoami)"
+
+check_already_installed
 
 test_sudo     # but we must have sudo capability
 
