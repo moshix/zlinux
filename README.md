@@ -2,7 +2,7 @@ zLinux Installer
 ================
 
 
-This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on fresh DASD 3390 virtual disk under Hercules.
+This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on fresh DASD 3390 virtual disk under Hercules. It was put together by Matthew Wilson and moshix over a period of a week or so.  
 
 You just execute the the installer by doing:
 
