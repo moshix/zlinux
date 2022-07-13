@@ -60,3 +60,4 @@ Don't remove write permissions on anything -- we want user to be able to
   easily rm this entire directory without trouble if they want to
   Mark apparent success or failure of Ubuntu automated install process
   Enahnced hercules console automation 
+  logs have proper time stamps in file name now

@@ -31,8 +31,8 @@
 #         fixup permissions of set_network log
 #         dasdinit log typo
 #         rename assets directory to templates
+
 source ./Version
-#version="0.5" # of zlinux system, not of this script
 
 # This is the command we will use when we need superuser privileges. It is
 # exported so scripts we call will also use this value. If you use "doas" you
@@ -56,9 +56,9 @@ check_if_root () {
     fi
 }
 
-logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
+    logextension=`date "+%F-%T"`
     logdate=`date "+%F-%T"`
     echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logextension
 }
@@ -71,6 +71,8 @@ set_colors() {
     magenta=`tput setaf 5`
     cyan=`tput setaf 6`
     white=`tput setaf 7`
+    bold=`tput bold`
+    uline=`tput smul`
     blink=`tput blink`
     rev=`tput rev`
     reset=`tput sgr0`

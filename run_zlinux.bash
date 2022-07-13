@@ -18,7 +18,6 @@
 
 
 source ./Version
-#version="0.5" # of zlinux system, not of this script
 
 
 
@@ -42,9 +41,9 @@ check_if_root () {
     fi
 }
 
-logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
+    logextension=`date "+%F-%T"`
     logdate=`date "+%F-%T"`
     echo "$logdate:$1" >> ./logs/zLinux_runtime.log.$logextension
 }
@@ -57,6 +56,8 @@ set_colors() {
     magenta=`tput setaf 5`
     cyan=`tput setaf 6`
     white=`tput setaf 7`
+    bold=`tput bold`
+    uline=`tput smul`
     blink=`tput blink`
     rev=`tput rev`
     reset=`tput sgr0`
@@ -106,7 +107,6 @@ run_sudo () {
 # main starts here
 
 set_colors
-
 check_if_root   # cannot be root
 logit "user invoking run script: $(whoami)"
 
@@ -135,6 +135,8 @@ if [[ ! -f herc4x/bin/hercifc.orig ]]; then
 fi
 $SUDO chown root:root herc4x/bin/hercifc
 $SUDO chmod +s herc4x/bin/hercifc
+echo "${bold}${uline}${yellow}Starting zLinux now....${reset}"
+sleep 1
 
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
