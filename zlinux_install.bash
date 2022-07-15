@@ -197,6 +197,12 @@ while [[ $diskvalid = "no" ]]; do
 
     case "$dsize" in
     3*)
+	# test if there is at least 3GB of disk space
+        FREE=`df -k --output=avail "$PWD" | tail -n1`
+        if [[ $FREE -lt 3847168 ]]; then               # 3G = 3*1024*1024k + ISO !!
+           echo "${rev}${red}Sorry you don't have enough disk space. Terminating now... ${reset}"   # less than 10GBs free!
+           exit 1
+        fi
         echo "${yellow}Roger, ${cyan} 3GB  ${reset}"
         logit "user asked for 3GB DASD size"
         [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if it exists
@@ -205,6 +211,11 @@ while [[ $diskvalid = "no" ]]; do
         diskvalid="yes"
         ;;
     9*)
+        FREE=`df -k --output=avail "$PWD" | tail -n1` 
+        if [[ $FREE -lt 10138624 ]]; then               # 9G = 9*1024*1024k + ISO
+           echo "${rev}${red}Sorry you don't have enough disk space. Terminating now... ${reset}"   # less than 10GBs free!
+           exit 1
+        fi
         echo "${yellow}Roger, ${cyan} 9GB ${reset}"
         logit "user asked for 9GB DASD size"
         [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists
@@ -213,6 +224,11 @@ while [[ $diskvalid = "no" ]]; do
         diskvalid="yes"
         ;;
     27*)
+        FREE=`df -k --output=avail "$PWD" | tail -n1`  
+        if [[ $FREE -lt 29012992 ]]; then               # 27G = 27*1024*1024k + ISO !!
+           echo "${rev}${red}Sorry you don't have enough disk space. Terminating now... ${reset}"   # less than 10GBs free!
+           exit 1
+        fi
         echo "${yellow}Roger, ${cyan} 27GB ${reset}"
         logit "user asked for 27GB DASD size"
         [ -e ./dasd/hd0.120 ] && rm -f dasd/hd0.120 # remove if file already exists

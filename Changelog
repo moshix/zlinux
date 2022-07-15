@@ -61,3 +61,4 @@ Don't remove write permissions on anything -- we want user to be able to
   Mark apparent success or failure of Ubuntu automated install process
   Enahnced hercules console automation 
   logs have proper time stamps in file name now
+  check if enough disk space exists before allocating DASD
