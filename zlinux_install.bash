@@ -41,7 +41,7 @@ SUDO="sudo"
 export SUDO
 
 test_sudo () {
-    echo "${yellow}Testing if '$SUDO' command works ${reset}"
+#    echo "${yellow}Testing if '$SUDO' command works ${reset}"
     if [[ $($SUDO id -u) -ne 0 ]]; then
         echo "${rev}${red}$SUDO did not set us to uid 0; you must run this script with a user that has $SUDO privileges.${reset}"
         exit 1
@@ -82,16 +82,16 @@ check_os () {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
+        echo "${rev}${red}MacOS detected. Sorry, MacOS is not yet supported.${reset}"
         exit 1
     elif [[ "$OSTYPE" == "cygwin" ]]; then
-        echo "${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
+        echo "${rev}${red}Cygwin detected. Sorry, Cygwin is not supported.${reset}"
         exit 1
     elif [[ "$OSTYPE" == "win32" ]]; then
-        echo "${red}Windows detected. Sorry, Windows is not supported.${reset}"
+        echo "${rev}${red}Windows detected. Sorry, Windows is not supported.${reset}"
         exit 1
     else
-        echo "${red}Unrecognized operating system. Exiting now.${reset}"
+        echo "${rev}${red}Unrecognized operating system. Exiting now.${reset}"
         exit 1
     fi
 }
