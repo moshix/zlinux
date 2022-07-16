@@ -2,22 +2,22 @@ zLinux Installer
 ================
 
 
-This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on fresh DASD 3390 virtual disk under Hercules. It was put together by Matthew Wilson and moshix over a period of a week or so.  
+This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on an IBM 3390 virtual disk under Hercules. It was put together by Matthew Wilson and moshix over a period of a week or so.  
 
-You just execute the the installer by doing:
+Start the installer by doing:
 
 >./zlinux_install.bash
 
-The script will proceed to download Ubuntu 18.0.4-5 for s390x in ISO form to your local machine.
+The script will proceed to download Ubuntu 18.0.4-5 for s390x ISO to your local machine.  
 
 It will then ask you to pick a password for the user "zubuntu" on the new system.
 
-After that it will automatically start a modern Hyperion (which is provided with this repo) and run the full Ubuntu 18.04 server installation procedure.
+After that it will automatically start an up-to-date Hercules emulator (which is provided with this repo) and run the full Ubuntu 18.04 server installation procedure, fully automated. No user interaction is needed for the complete installaton.  
 
-This could take 90 minutes to 2 hours, depending on the speed of your machine.
+The installation can take 90 minutes to 2 hours, depending on the speed of your machine.  
 
-At the end, the script will shut down Hercules and restart Hercules with the newly installed DASD and you can then ssh into the zLinux instance.
 
+A standard server Ubuntu 18.04 will be installed with an ssh server, so you will be able to ssh into Linux. 
 
 
 Operation
@@ -27,7 +27,7 @@ After the successful install, you start Ubuntu by running the following script:
 
 >./run_zlinux.bash
 
-A standard Ubuntu 18.04 will be installed. It will have full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
+Once Linux has booten, it has full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
 
 >ssh zubuntu@10.1.1.2
 
