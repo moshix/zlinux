@@ -56,9 +56,9 @@ check_if_root () {
     fi
 }
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
-    logextension=`date "+%F-%T"`
     logdate=`date "+%F-%T"`
     echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logextension
 }
@@ -286,8 +286,10 @@ HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
 # This is for two reasons: less time leaving a suid binary sitting around,
 # and make it easier for the user to clean up later by "rm -rf ..." this
 # entire directory and not run into problems deleting a file owned by root.
-$SUDO rm -f herc4x/bin/hercifc
-mv herc4x/bin/hercifc.orig herc4x/bin/hercifc
+if [[ -f herc4x/bin/hercifc.orig ]]; then
+    $SUDO rm -f herc4x/bin/hercifc
+    mv herc4x/bin/hercifc.orig herc4x/bin/hercifc
+fi
 
 if [[ ! -f install_success ]]; then
     echo "${rev}${red}It seems Hercules quit before the installation finished successfully."

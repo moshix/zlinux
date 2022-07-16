@@ -41,9 +41,9 @@ check_if_root () {
     fi
 }
 
+logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
-    logextension=`date "+%F-%T"`
     logdate=`date "+%F-%T"`
     echo "$logdate:$1" >> ./logs/zLinux_runtime.log.$logextension
 }
