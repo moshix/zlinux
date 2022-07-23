@@ -217,7 +217,7 @@ while [[ $diskvalid = "no" ]]; do
     3*)
 	# test if there is at least 3GB of disk space
         FREE=`df -k --output=avail "$PWD" | tail -n1`
-        if [[ $FREE -lt 3847168 ]]; then               # 3G = 3*1024*1024k + ISO !!
+        if [[ $FREE -lt 4545728 ]]; then               # 3G = 3*1024*1024k + ISO + copy_of_ISO
            echo "${rev}${red}Sorry you don't have enough disk space. Terminating now... ${reset}"   # less than 10GBs free!
            exit 1
         fi
@@ -230,7 +230,7 @@ while [[ $diskvalid = "no" ]]; do
         ;;
     9*)
         FREE=`df -k --output=avail "$PWD" | tail -n1` 
-        if [[ $FREE -lt 10138624 ]]; then               # 9G = 9*1024*1024k + ISO
+        if [[ $FREE -lt 10837184 ]]; then               # 9G = 9*1024*1024k + IS + copy_of_ISO
            echo "${rev}${red}Sorry you don't have enough disk space. Terminating now... ${reset}"   # less than 10GBs free!
            exit 1
         fi
@@ -243,7 +243,7 @@ while [[ $diskvalid = "no" ]]; do
         ;;
     27*)
         FREE=`df -k --output=avail "$PWD" | tail -n1`  
-        if [[ $FREE -lt 29012992 ]]; then               # 27G = 27*1024*1024k + ISO !!
+        if [[ $FREE -lt 29711552 ]]; then               # 27G = 27*1024*1024k + ISO  + copy_of_ISO!!
            echo "${rev}${red}Sorry you don't have enough disk space. Terminating now... ${reset}"   # less than 10GBs free!
            exit 1
         fi
@@ -300,6 +300,7 @@ logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
 HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
 
+logit "finished hercules run"
 # After hercules finishes, restore the original hercifc
 # This is for two reasons: less time leaving a suid binary sitting around,
 # and make it easier for the user to clean up later by "rm -rf ..." this
@@ -310,6 +311,7 @@ if [[ -f herc4x/bin/hercifc.orig ]]; then
 fi
 
 if [[ ! -f install_success ]]; then
+    logit "install determined to be a failure!!!!!"	
     echo "${rev}${red}It seems Hercules quit before the installation finished successfully."
     echo "Check for errors in the logs in logs/, and try running the installation script again.${reset}"
     exit 1
@@ -318,10 +320,14 @@ fi
 # copy the correct hercules.rc for future use
 cp templates/hercules.rc.hd0 hercules.rc
 
+
+logit "Successful install! Yesh!"
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}./run_zlinux.bash ${reset}"
 echo
 echo "${yellow}Good bye!${reset}"
+
+logit "zlinux_install is now quitting"
 
 # moshix LICENSES THE LICENSED SOFTWARE "AS IS," AND MAKES NO EXPRESS OR IMPLIED
 # WARRANTY OF ANY KIND. moshix SPECIFICALLY DISCLAIMS ALL INDIRECT OR IMPLIED
