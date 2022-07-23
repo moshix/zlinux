@@ -32,6 +32,7 @@
 #         dasdinit log typo
 #         rename assets directory to templates
 # v1.11 Make sure we have the route command available before we go too far
+# v1.12 Syntax improvements, better logging
 
 source ./Version
 
@@ -61,7 +62,7 @@ logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/zLinux_installer.log.$logextension
+    echo "$logdate:$1" >> ./logs/zLinux_installer.log."$logextension"
 }
 
 set_colors() {
@@ -298,7 +299,7 @@ read -p "${white}Please press ENTER to continue with install now. ${reset}" pres
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
-HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
+HERCULES_RC=hercules.rc hercules -f hercules.cnf > "$FILE"
 
 logit "finished hercules run"
 # After hercules finishes, restore the original hercifc

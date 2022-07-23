@@ -70,3 +70,5 @@ Check if if the scripts are being executed from zlinux/
 Fix README a bit
 more logging, especially at the end of Ubuntu install automated procedure
 Fixed space requirements calculations
+fixed variable double quoting here and there
+Other syntax improvements 

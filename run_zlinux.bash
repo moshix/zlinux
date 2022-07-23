@@ -46,7 +46,7 @@ logextension=`date "+%F-%T"`
 logit () {
     # log to file all messages
     logdate=`date "+%F-%T"`
-    echo "$logdate:$1" >> ./logs/zLinux_runtime.log.$logextension
+    echo "$logdate:$1" >> ./logs/zLinux_runtime.log."$logextension"
 }
 
 set_colors() {
@@ -153,7 +153,7 @@ sleep 1
 
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
-HERCULES_RC=hercules.rc hercules -f hercules.cnf > $FILE
+HERCULES_RC=hercules.rc hercules -f hercules.cnf > "$FILE"
 
 # After hercules finishes, restore the original hercifc
 # This is for two reasons: less time leaving a suid binary sitting around,
