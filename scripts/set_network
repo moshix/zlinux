@@ -9,7 +9,7 @@
 # v0.04 give sensible feedback to user about which network interface is being used
 # v0.05 logging for debugging purposes and problem determination
 # v0.06 use a consistent log file name for all messages during one run
-# v0.7  check if net-tools commands (route and ifconfig) are available, if not exit. 
+# v0.07 check if net-tools commands (route and ifconfig) are available, if not exit. 
 
 
 logextension=`date "+%F-%T"`
@@ -32,13 +32,14 @@ blink=`tput blink`
 rev=`tput rev`
 reset=`tput sgr0`
 
-# obtain interface name
+# first check if we ahve the route command installed....
 if ! command -v route  &> /dev/null
 then
    echo "${red}${rev}The route command is not installed. Please install the net-tools package and restart. ${reset}"
    exit
 fi
 
+# obtain interface name
 interface=`route | grep '^default' | grep -o '[^ ]*$'`
 
 

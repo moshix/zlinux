@@ -31,6 +31,7 @@
 #         fixup permissions of set_network log
 #         dasdinit log typo
 #         rename assets directory to templates
+# v1.11 Make sure we have the route command available before we go too far
 
 source ./Version
 
@@ -171,6 +172,13 @@ curdir=`basename "$cpwd"`
 if [[ "$curdir"  != "zlinux" ]]; then
 	echo "${rev}${red}This script needs to be executed from inside the zlinux directory. Please retry. ${red}"
 	exit 1
+fi
+
+# first check if we have the route command installed....
+if ! command -v route  &> /dev/null
+then
+   echo "${red}${rev}The route command is not installed. Please install the net-tools package and restart. ${reset}"
+   exit
 fi
 
 mkdir -p logs/
