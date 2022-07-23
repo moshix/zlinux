@@ -10,6 +10,7 @@
 # v0.3 clean up
 # v0.4 no sudo required
 # v0.5 consistent log file name for all messages during one run
+# v0.6 Check if script is being executed from correct directory
 
 source ./Version
 
@@ -45,6 +46,16 @@ clean_stuff () {
 # main starts here
 
 set_colors
+
+# are we running from the zlinux directory (instead of higher or lower directory?)
+cpwd=`pwd`
+curdir=`basename "$cpwd"`
+
+if [[ "$curdir"  != "zlinux" ]]; then
+  echo "${rev}${red}This script needs to be executed from inside the zlinux directory. Please retry. ${red}"
+  exit 1
+fi
+
 
 echo "${yellow}Cleanup Procedure Version: $version${reset}"
 echo  " "

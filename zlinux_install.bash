@@ -162,10 +162,20 @@ check_already_installed () {
 }
 
 # main starts here
+
+set_colors
+# are we running from the zlinux directory (instead of higher or lower directory?)
+cpwd=`pwd`
+curdir=`basename "$cpwd"`
+
+if [[ "$curdir"  != "zlinux" ]]; then
+	echo "${rev}${red}This script needs to be executed from inside the zlinux directory. Please retry. ${red}"
+	exit 1
+fi
+
 mkdir -p logs/
 mkdir -p dasd/
 
-set_colors
 
 check_if_root # cannot be root
 logit "user invoking install script: $(whoami)"

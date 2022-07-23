@@ -43,22 +43,27 @@ auto-tune now finally works. It's been only 3 weeks fiddling with it...
 set assets/ to non-writable
 
 
-v 0.5 (all by Racingmars)
+v 0.5 (most  by Racingmars)
 -------------------------
 General script cleanup and fixes
 Fix RAM auto-tune
 Offer 27GB (3390-27) disk type; improve DASD creation
 Switch to template-based preseed and hercules.cnf creation. Only create config
-  during initial installation; don't overwrite user changes on future runs
+during initial installation; don't overwrite user changes on future runs
 Fix wget/curl detection; improvements to ISO download and mount
 Use a Hercules built with ./herc4x/lib and ./herc4x/lib/hercules runpath;
-  include build script for reference
+include build script for reference
 Run as regular user, not with sudo or as root. Run specific commands with sudo
 Detect installation success
 Only make one log file per script per run
 Don't remove write permissions on anything -- we want user to be able to
-  easily rm this entire directory without trouble if they want to
-  Mark apparent success or failure of Ubuntu automated install process
-  Enahnced hercules console automation 
-  logs have proper time stamps in file name now
-  check if enough disk space exists before allocating DASD
+easily rm this entire directory without trouble if they want to
+Mark apparent success or failure of Ubuntu automated install process
+Enahnced hercules console automation 
+logs have proper time stamps in file name now
+check if enough disk space exists before allocating DASD
+
+v 0.6
+-----
+Check for net-tools availability; the set_network script needs it
+Check if if the scripts are being executed from zlinux/ 

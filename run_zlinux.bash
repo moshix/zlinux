@@ -15,6 +15,7 @@
 # v0.7 run as regular user, only using sudo when necessary
 # v0.8 consistent log file name for all message during one run
 # v0.9 check for installation success upton launching
+# v1.0 Check if script is being executed from correct directory
 
 
 source ./Version
@@ -107,6 +108,18 @@ run_sudo () {
 # main starts here
 
 set_colors
+
+# are we running from the zlinux directory (instead of higher or lower directory?)
+cpwd=`pwd`
+curdir=`basename "$cpwd"`
+
+if [[ "$curdir"  != "zlinux" ]]; then
+   echo "${rev}${red}This script needs to be executed from inside the zlinux directory. Please retry. ${red}"
+   exit 1
+fi
+
+
+
 check_if_root   # cannot be root
 logit "user invoking run script: $(whoami)"
 
