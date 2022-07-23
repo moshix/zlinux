@@ -27,7 +27,7 @@ After the successful install, you start Ubuntu by running the following script:
 
 >./run_zlinux.bash
 
-Once Linux has booten, it has full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
+Once Linux has finished booting, it has full connectivity to the Internet (thru NAT) and you can ssh into the user zubuntu by doing:
 
 >ssh zubuntu@10.1.1.2
 
@@ -37,10 +37,10 @@ Everything else is just normal Linux; i.e. you can run apt-get, etc., etc.
 
 A few things to know about the generated Ubuntu instance that will IPL from DASD after the install:
 
->Internal IP:   10.1.1.2
->IP of gateway: 10.1.1.1
->DNS server:    1.1.1.1
->user name:     zubuntu/password as set up by you during installation process
+>Internal IP:   10.1.1.2  
+>IP of gateway: 10.1.1.1  
+>DNS server:    1.1.1.1  
+>user name:     zubuntu/password as set up by you during installation process  
 
 The s/390x Linux instance will connect through a tunnel interface which is set up by the the run_zlinux.bash script in this directory. It then further uses NAT on your default NIC interface to connect to the Internet.
 
