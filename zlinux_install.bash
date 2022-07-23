@@ -178,7 +178,7 @@ fi
 if ! command -v route  &> /dev/null
 then
    echo "${red}${rev}The route command is not installed. Please install the net-tools package and restart. ${reset}"
-   exit
+   exit 1
 fi
 
 mkdir -p logs/

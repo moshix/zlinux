@@ -32,11 +32,11 @@ blink=`tput blink`
 rev=`tput rev`
 reset=`tput sgr0`
 
-# first check if we ahve the route command installed....
+# first check if we have  the route command installed....
 if ! command -v route  &> /dev/null
 then
    echo "${red}${rev}The route command is not installed. Please install the net-tools package and restart. ${reset}"
-   exit
+   exit 1
 fi
 
 # obtain interface name
