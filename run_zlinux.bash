@@ -16,6 +16,8 @@
 # v0.8 consistent log file name for all message during one run
 # v0.9 check for installation success upton launching
 # v1.0 Check if script is being executed from correct directory
+# v1.1 More logging
+# v1.2 Follow proper syntax 
 
 
 source ./Version
@@ -99,7 +101,7 @@ set_hercenv () {
 run_sudo () {
     # are we running as sudo? If not inform user and exit
     arewesudo=`id -u`
-    if [ $arewesudo  -ne 0 ]; then
+    if [ "$arewesudo"  -ne 0 ]; then
         echo "${red}${rev}You need to execute this script with sudo or it won't work!${reset}"
         exit 1
     fi
@@ -132,7 +134,7 @@ check_install_success
 set_hercenv   # set paths for local herc4x hyperion instance
 
 echo; echo; echo
-logit "Starting zLinux "
+logit "executing set_network script"
 
 # execute network configurator
 $SUDO ./scripts/set_network
@@ -146,10 +148,11 @@ $SUDO chown $(id -u):$(id -g) ./logs/setnetwork.log*
 if [[ ! -f herc4x/bin/hercifc.orig ]]; then
     cp herc4x/bin/hercifc herc4x/bin/hercifc.orig
 fi
+logit "Starting zLinux "
 $SUDO chown root:root herc4x/bin/hercifc
 $SUDO chmod +s herc4x/bin/hercifc
 echo "${bold}${uline}${yellow}Starting zLinux now....${reset}"
-sleep 1
+sleep 1.2
 
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
