@@ -212,7 +212,7 @@ logit "Starting zLinux installer"
 # ask user for disk size; loop until we get valid selection
 diskvalid="no"
 while [[ $diskvalid = "no" ]]; do
-    read -p "${white}How big do you want your zLinux disk to be?  (3GB, 9GB, 27GB): ${reset} " dsize
+    read -p "${white}Please input desired zLinux disk size:  (3GB, 9GB, 27GB): ${reset} " dsize
 
     case "$dsize" in
     3*)
