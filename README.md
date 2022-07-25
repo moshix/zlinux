@@ -4,6 +4,20 @@ zLinux Installer
 
 This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on an IBM 3390 virtual disk under Hercules. It was put together by Matthew Wilson and moshix over a period of a week or so.  
 
+Features
+========
+
+| Hands-off installation  | :white_check_mark: |
+| Full network capability | :white_check_mark: |
+| Automatic routing       | :white_check_mark: |
+| Hercules binaries       | :white_check_mark: |
+| Teleportation support   | :x:                |
+
+  
+
+Installation
+============
+
 Start the installer by doing:
 
 >./zlinux_install.bash
