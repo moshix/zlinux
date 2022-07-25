@@ -7,6 +7,8 @@ This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.0
 Features
 ========
 
+| Version                 | Supported          |
+| ----------------------  | ------------------ |
 | Hands-off installation  | :white_check_mark: |  
 | Full network capability | :white_check_mark: |  
 | Automatic routing       | :white_check_mark: |  
