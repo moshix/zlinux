@@ -10,9 +10,11 @@ Features
 | Feature                    | Supported          |
 | -------------------------- | ------------------ |
 | Hands-off installation     | :white_check_mark: |  
+| Automatic ISO download     | :white_check_mark: |  
+| Automagic DASD creation    | :white_check_mark: |  
 | Full network capability    | :white_check_mark: |  
-| Automatic network routiing | :white_check_mark: |  
-| Hercules binaries incl.    | :white_check_mark: |  
+| Automatic network routing  | :white_check_mark: |  
+| Hercules binaries included | :white_check_mark: |  
 | Teleportation support      | :x:                |  
 
   
