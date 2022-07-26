@@ -10,6 +10,7 @@
 # v0.05 logging for debugging purposes and problem determination
 # v0.06 use a consistent log file name for all messages during one run
 # v0.07 check if net-tools commands (route and ifconfig) are available, if not exit. 
+# v0.08 remove requirement for net-tools
 
 
 logextension=`date "+%F-%T"`
@@ -35,12 +36,12 @@ reset=`tput sgr0`
 # first check if we have  the route command installed....
 if ! command -v route  &> /dev/null
 then
-   echo "${red}${rev}The route command is not installed. Please install the net-tools package and restart. ${reset}"
-   exit 1
+   logit "net-tools is not installed, we use ip instead"
+   interface=`ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}' | head -n 1`
+else
+   logit "we have net-tools installed"
+   interface=`route | grep '^default' | grep -o '[^ ]*$'`
 fi
-
-# obtain interface name
-interface=`route | grep '^default' | grep -o '[^ ]*$'`
 
 
 echo "${yellow}Interface ${cyan} $interface ${yellow} will be setup for zLinux internet access...${reset}"

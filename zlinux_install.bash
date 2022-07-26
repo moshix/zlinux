@@ -33,6 +33,7 @@
 #         rename assets directory to templates
 # v1.11 Make sure we have the route command available before we go too far
 # v1.12 Syntax improvements, better logging
+# v1.13 remove requirement for net-tools
 
 source ./Version
 
@@ -175,12 +176,6 @@ if [[ "$curdir"  != "zlinux" ]]; then
 	exit 1
 fi
 
-# first check if we have the route command installed....
-if ! command -v route  &> /dev/null
-then
-   echo "${red}${rev}The route command is not installed. Please install the net-tools package and restart. ${reset}"
-   exit 1
-fi
 
 mkdir -p logs/
 mkdir -p dasd/
