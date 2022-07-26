@@ -37,7 +37,8 @@ reset=$(tput sgr0)
 if ! command -v route  &> /dev/null
 then
    logit "net-tools is not installed, we use ip instead"
-   interface=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
+#   interface=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
+    interface=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
 else
    logit "we have net-tools installed"
    interface=$(route | grep '^default' | grep -o '[^ ]*$')
