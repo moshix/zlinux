@@ -37,7 +37,7 @@ reset=$(tput sgr0)
 if ! command -v route  &> /dev/null
 then
    logit "net-tools is not installed, we use ip instead"
-   interface=$(ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}' | head -n 1)
+   interface=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 else
    logit "we have net-tools installed"
    interface=$(route | grep '^default' | grep -o '[^ ]*$')
