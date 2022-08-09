@@ -4,6 +4,8 @@ zLinux Installer
 
 This is a collection of scripts, recipes and stratagems to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on an IBM 3390 virtual disk under Hercules. It was put together by Matthew Wilson and moshix over a period of a week or so.  
 
+[:tada: Just launch the script, have yourself a nice cup of coffee, and return to a fully installed Ubuntu/s390x system!]
+
 Features
 ========
 
