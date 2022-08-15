@@ -87,6 +87,6 @@ You can remove all unnecessary files by executing
 
 
 
-Racingmars/Moshix  
-July 2022  
-Southhold,NY
+Racingmars/Moshix    
+August, 2022  
+New York, NY  
