@@ -75,3 +75,9 @@ Other syntax improvements
 Automated shellcheck syntax checking before pushing repo...zlinux embraces
 devops
 net-tools no longer needed. We use it, if there, but not required
+cleaned up syntax a bit more
+
+v0.7
+----
+
+

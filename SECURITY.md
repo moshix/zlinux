@@ -7,9 +7,9 @@ currently being supported with security updates.
 
 | Version           | Supported          |
 | ----------------- | ------------------ |
-| 0.5 St. Moritz    | :white_check_mark: |
 | 0.6 Portland, OR  | :white_check_mark: |
-| < 0.5             | :x:                |
+| 0.7 Southhold,NY  | :white_check_mark: |
+| < 0.6             | :x:                |
 
 ## Reporting a Vulnerability
 
