@@ -83,3 +83,4 @@ v0.7
 whole new set of Hyperion binaries, built for wider compatibiity with new CPUs
 README updates
 tested with more systems
+Switched to sudo hercules launch for now

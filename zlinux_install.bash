@@ -294,7 +294,7 @@ read -p "${white}Please press ENTER to continue with install now. ${reset}" pres
 # just giving user a chance to see
 logdate=`date "+%F-%T"`
 FILE=./logs/hercules.log.$logdate
-HERCULES_RC=hercules.rc hercules -f hercules.cnf > "$FILE"
+$SUDO HERCULES_RC=hercules.rc hercules -f hercules.cnf > "$FILE"
 
 logit "finished hercules run"
 # After hercules finishes, restore the original hercifc
