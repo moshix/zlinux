@@ -19,7 +19,6 @@ Features
 | Full network capability    | :white_check_mark: |  
 | Automatic network routing  | :white_check_mark: |  
 | Hercules binaries included | :white_check_mark: |  
-| Teleportation support      | :x:                |
 | Windows host               | :x:                |  
 
   
