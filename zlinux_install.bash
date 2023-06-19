@@ -40,7 +40,7 @@ source ./Version
 # This is the command we will use when we need superuser privileges. It is
 # exported so scripts we call will also use this value. If you use "doas" you
 # may change it here.
-SUDO="sudo"
+SUDO="sudo -E"
 export SUDO
 
 test_sudo () {
