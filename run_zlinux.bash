@@ -26,7 +26,7 @@ source ./Version
 
 # This is the command we will use when we need superuser privileges.
 # If you use "doas" you may change it here.
-SUDO="sudo"
+SUDO="sudo -E"
 
 test_sudo () {
     echo "${yellow}Testing if '$SUDO' command works ${reset}"
