@@ -72,7 +72,7 @@ The s/390x Linux instance will connect through a tunnel interface which is set u
 Why Ubuntu 18.04
 ================
 
-As of June 2023 and as of Hyperion Hercules version 4.6, Ubuntu 18.04 is the newest version that can be IPLd on Hercules. If you attempt to upgrade an existing Ubuntu 18.04 install to version 20.04 or higher, it will fail on IPL.  
+As of October 2023 and as of Hyperion Hercules version 4.6, Ubuntu 18.04 is the newest version that can be IPLd on Hercules. If you attempt to upgrade an existing Ubuntu 18.04 install to version 20.04 or higher, it will fail on IPL.  
 
 By the same token, the last version of CentOS (or RHEL) that will IPL on the current Hercules is CentOS 7, or ClefOS 7.  
 
@@ -91,5 +91,5 @@ You can remove all unnecessary files by executing
 
 
 Racingmars/Moshix    
-June, 2023  
+October, 2023  
 
