@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2022 by moshix
+# Copyright 2022-2024 by moshix
 # Installation script for S390x Ubuntu 18.04 .
 # Does not necessarily work with prior or later version of Ubuntu.
 # Obtains virgin ISO from Ubuntu, runs hercules-based install and then creates runtime environment.
@@ -19,7 +19,7 @@
 # v1.1 don't allow execution as user root
 # v1.2 fixed RAM calculation
 # v1.3 remove unused, unnecessary, and broken code;
-#      always exist with error status when exiting due to error
+#      always exit with error status when exiting due to error
 # v1.4 do not leave directories without execute bit set
 # v1.5 offer 27GB (3390-27) disk option; improve DASD creation
 # v1.6 switch to template-based preseed and hercules.cnf creation
@@ -317,7 +317,7 @@ fi
 cp templates/hercules.rc.hd0 hercules.rc
 
 
-logit "Successful install! Yesh!"
+logit "Successful install!"
 echo "${yellow}It seems that the installation was successful. Start it with: ${reset}"
 echo "${magenta}./run_zlinux.bash ${reset}"
 echo
