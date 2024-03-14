@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2022 by moshix
+# Copyright 2022-2024 by moshix
 # sets up networking etc. and then IPLs zlinux
 # Uses a provided Hercules environment and not any pre-installed version of Hercules
 
