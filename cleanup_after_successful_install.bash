@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2022 by moshix
+# Copyright 2022-2024 by moshix
 # cleanup script after successful install
 # removes the following:
 #   install/ directory
