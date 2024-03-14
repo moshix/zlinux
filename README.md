@@ -74,7 +74,7 @@ Why Ubuntu 18.04
 
 As of March 2024, and as of Hyperion Hercules version 4.7, Ubuntu 18.04 is the newest version that can be IPLd on Hercules. If you attempt to upgrade an existing Ubuntu 18.04 install to version 20.04 or higher, it will fail on IPL.  
 
-By the same token, the last version of CentOS (or RHEL) that will IPL on the current Hercules is CentOS 7, or ClefOS 7.  
+By the same token, the newest version of CentOS (or RHEL) that will IPL on the current Hercules is CentOS 7, or ClefOS 7.  
 
 The reason for this is that later versions of Linux require special CPU instructions of IBM architecture level z12 and up, which Hyperion Hercules currently is not able to emulate. At the time of this writing, we don't expect a change in this situation any time soon. 
 
