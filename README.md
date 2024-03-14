@@ -82,9 +82,9 @@ The reason for this is that later versions of Linux require special CPU instruct
 After Installation
 ==================
 
-You will have Ubuntu/s390x installed in dasd/hd0.120
+You will have Ubuntu/s390x 18.04 installed on disk dasd/hd0.120
 
-You can remove all unnecessary files by executing
+You can remove all unnecessary installation temporary files by executing this: 
 
 >./cleanup_after_successful_install.bash
 
