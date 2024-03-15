@@ -7,7 +7,7 @@ zLinux Installer
 
 This is a fully automated bash script system to obtain an Ubuntu 18.04 ISO image for the s390x architecture, and then install it on an IBM 3390 virtual disk under Hercules. [Why Ubuntu 18.04?](https://github.com/moshix/zlinux/blob/main/README.md#why-ubuntu-1804)  
 
-:tada: Just launch the script, have yourself a nice cup of coffee, and return to a fully installed Ubuntu/s390x system!
+:tada: Just launch the script, have yourself a nice cup of coffee, and return to a fully installed Ubuntu/s390x system!:tada:
 
 Features
 ========
