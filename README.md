@@ -19,7 +19,8 @@ Features
 | Automagic DASD creation    | :white_check_mark: |  
 | Full network capability    | :white_check_mark: |  
 | Automatic network routing  | :white_check_mark: |  
-| Hercules binaries included | :white_check_mark: |  
+| Hercules binaries included | :white_check_mark: |
+| Awesomeness included       | :white_check_mark: | 
 | Windows host               | :x:                |  
 
   
@@ -88,8 +89,12 @@ You can remove all unnecessary installation temporary files by executing this:
 
 >./cleanup_after_successful_install.bash
 
+Many thanks
+===========
+
+Many thanks to @racingmars, aka Matthew Wilson for working with me to make this happen. 
 
 
 Moshix     
-March, 2024  
+January 2025
 
